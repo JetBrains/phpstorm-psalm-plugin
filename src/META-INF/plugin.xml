@@ -1,9 +1,44 @@
 <idea-plugin>
   <name>Psalm Support</name>
   <id>com.intellij.php.psalm</id>
+  <description>Plugin provides Psalm static analysis tool support</description>
   <vendor>JetBrains</vendor>
   <depends>com.jetbrains.php</depends>
   <depends>com.intellij.modules.ultimate</depends>
   <category>Other Tools</category>
-  <resource-bundle>messages.PhpBundle</resource-bundle>
+  <resource-bundle>messages.PsalmBundle</resource-bundle>
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService
+      serviceImplementation="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager$PsalmAppConfigurationManager"/>
+    <projectService serviceImplementation="com.jetbrains.php.tools.quality.psalm.PsalmBlackList"/>
+    <projectService serviceImplementation="com.jetbrains.php.tools.quality.psalm.PsalmProjectConfiguration"/>
+    <projectService serviceImplementation="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager"/>
+    <projectService
+      serviceImplementation="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager$PsalmProjectConfigurationManager"/>
+    <localInspection language="PHP" shortName="PsalmValidationInspection"
+                     displayName="Psalm validation"
+                     groupPath="PHP"
+                     groupName="Quality tools"
+                     enabledByDefault="false"
+                     level="WEAK WARNING"
+                     implementationClass="com.jetbrains.php.tools.quality.psalm.PsalmValidationInspection"/>
+    <externalAnnotator language="PHP" implementationClass="com.jetbrains.php.tools.quality.psalm.PsalmAnnotatorProxy"/>
+  </extensions>
+
+  <extensions defaultExtensionNs="com.jetbrains.php">
+    <tools.projectConfigurableForm instance="com.jetbrains.php.tools.quality.psalm.PsalmConfigurable"/>
+    <tools.quality.type implementation="com.jetbrains.php.tools.quality.psalm.PsalmQualityToolType"/>
+  </extensions>
+
+  <extensionPoints>
+    <extensionPoint qualifiedName="com.jetbrains.php.tools.quality.Psalm.PsalmConfigurationProvider"
+                    interface="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationProvider"/>
+  </extensionPoints>
+
+  <actions>
+    <action id="PsalmAddToIgnored"
+            class="com.jetbrains.php.tools.quality.psalm.PsalmAddToIgnoredAction">
+      <add-to-group group-id="PHPQualityToolsAddToIgnoredList"/>
+    </action>
+  </actions>
 </idea-plugin>
