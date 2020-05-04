@@ -33,6 +33,11 @@ public class PsalmConfigurableForm<C extends PsalmConfiguration> extends Quality
   }
 
   @Override
+  protected boolean validateWithNoAnsi() {
+    return false;
+  }
+
+  @Override
   public boolean isValidToolFile(VirtualFile file) {
     return file.getName().startsWith("psalm");
   }
