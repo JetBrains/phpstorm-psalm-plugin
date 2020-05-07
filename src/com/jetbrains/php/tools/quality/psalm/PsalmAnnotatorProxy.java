@@ -1,52 +1,19 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.codeInspection.LocalInspectionTool;
-import com.intellij.execution.ExecutionException;
 import com.intellij.openapi.project.Project;
-import com.jetbrains.php.config.interpreters.PhpSdkFileTransfer;
 import com.jetbrains.php.tools.quality.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.runToolProcess;
+import java.util.List;
 
-public class PsalmAnnotatorProxy extends QualityToolAnnotator {
+public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationInspection> {
   public final static PsalmAnnotatorProxy INSTANCE = new PsalmAnnotatorProxy();
 
+  @Override
   @Nullable
-  @Override
-  protected QualityToolConfiguration getConfiguration(@NotNull Project project, @NotNull LocalInspectionTool inspection) {
-    try {
-      return PsalmProjectConfiguration.getInstance(project).findSelectedConfiguration(project);
-    }
-    catch (QualityToolValidationException ignore) {
-    }
-    return null;
-  }
-
-  @NotNull
-  @Override
-  protected String getInspectionId() {
-    return new PsalmValidationInspection().getID();
-  }
-
-  @Override
-  protected void runTool(@NotNull QualityToolMessageProcessor messageProcessor,
-                         @NotNull final QualityToolAnnotatorInfo collectedInfo,
-                         @NotNull PhpSdkFileTransfer transfer) throws ExecutionException {
-    PsalmValidationInspection inspection = (PsalmValidationInspection)collectedInfo.getInspection();
-
-    final PsalmBlackList blackList = PsalmBlackList.getInstance(collectedInfo.getProject());
-    runToolProcess(collectedInfo, blackList, messageProcessor, collectedInfo.getProject().getBasePath(), transfer,
-                   inspection.getCommandLineOptions(collectedInfo.getOriginalFile().getPath()));
-    if (messageProcessor.getInternalErrorMessage() != null && collectedInfo.isOnTheFly()) {
-      if (collectedInfo.isOnTheFly()) {
-        final String message = messageProcessor.getInternalErrorMessage().getMessageText();
-        showProcessErrorMessage(collectedInfo, blackList, message);
-        logWarning(collectedInfo, message, null);
-      }
-      messageProcessor.setFatalError();
-    }
+  protected List<String> getOptions(@NotNull String filePath, @NotNull PsalmValidationInspection inspection, @NotNull Project project) {
+    return inspection.getCommandLineOptions(filePath);
   }
 
   @Override
@@ -56,6 +23,11 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator {
 
   @Override
   protected void addAdditionalAnnotatorInfo(QualityToolAnnotatorInfo collectedInfo, QualityToolValidationInspection tool) {
+  }
+
+  @Override
+  protected @NotNull QualityToolType getQualityToolType() {
+    return PsalmQualityToolType.INSTANCE;
   }
 }
 
