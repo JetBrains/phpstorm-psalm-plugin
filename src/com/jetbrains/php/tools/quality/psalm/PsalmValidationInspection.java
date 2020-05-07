@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NonNls;
@@ -15,17 +14,6 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManage
 
 public class PsalmValidationInspection extends QualityToolValidationInspection {
   public String config = "";
-
-  @Override
-  public String @NotNull [] getGroupPath() {
-    return PhpInspection.GROUP_PATH_GENERAL;
-  }
-
-  @NotNull
-  @Override
-  public String getShortName() {
-    return getClass().getSimpleName();
-  }
 
   @Override
   public JComponent createOptionsPanel() {
