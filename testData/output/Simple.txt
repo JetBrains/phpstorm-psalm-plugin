@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle>
+<file name="test.php">
+ <error line="4" column="12" severity="error" message="InvalidReturnType: The declared return type 'array&lt;array-key, string&gt;' for takesAnInt is incorrect, got 'array{0: int, 1: string(hello)}'"/>
+</file>
+<file name="test.php">
+ <error line="8" column="12" severity="error" message="InvalidReturnStatement: The inferred type 'array{0: int, 1: string(hello)}' does not match the declared return type 'array&lt;array-key, string&gt;' for takesAnInt"/>
+</file>
+<file name="test.php">
+ <error line="12" column="12" severity="error" message="InvalidScalarArgument: Argument 1 of takesAnInt expects int, string(some text) provided"/>
+</file>
+<file name="test.php">
+ <error line="16" column="11" severity="error" message="TypeDoesNotContainType: Found a contradiction when evaluating $condition and trying to reconcile type 'int(0)' to !falsy"/>
+</file>
+</checkstyle>
