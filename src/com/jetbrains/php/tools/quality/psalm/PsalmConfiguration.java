@@ -50,11 +50,6 @@ public class PsalmConfiguration implements QualityToolConfiguration {
   }
 
   @Override
-  public void setMaxMessagesPerFile(int maxMessagesPerFile) {
-    myMaxMessagesPerFile = maxMessagesPerFile;
-  }
-
-  @Override
   @Attribute("timeout")
   public int getTimeout() {
     return myTimeoutMs;
