@@ -15,6 +15,7 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   @NonNls private final static String WARNING_MESSAGE_START = "<error";
   @NonNls private final static String WARNING_MESSAGE_END = "/>";
   @NonNls private final static String LINE_NUMBER_ATTR = "line";
+  @NonNls private final static String COLUMN_NUMBER_ATTR = "column";
   private final static String MESSAGE_ATTR = "message";
   @NonNls private final static String SEVERITY_ATTR = "severity";
 
@@ -55,12 +56,19 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   private static class PsalmXmlMessageHandler extends XMLMessageHandler {
+    int myColumn = 0;
 
     @Override
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
       myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
       mySeverity = attributes.getValue(SEVERITY_ATTR) == "error" ? ERROR: WARNING;
       myMessageBuf.append(attributes.getValue(MESSAGE_ATTR));
+      myColumn = parseLineNumber(attributes.getValue(COLUMN_NUMBER_ATTR));
+    }
+
+    @Override
+    protected int getColumn() {
+      return myColumn;
     }
   }
 }
