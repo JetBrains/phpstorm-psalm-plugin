@@ -39,6 +39,7 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
     if (!isEmpty(config)) {
       options.add("--config=" + config);
     }
+    options.add("--no-progress");
     options.add(filePath);
     return options;
   }
