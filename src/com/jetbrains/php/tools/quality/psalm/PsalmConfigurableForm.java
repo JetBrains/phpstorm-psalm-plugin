@@ -3,7 +3,6 @@ package com.jetbrains.php.tools.quality.psalm;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.Version;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
 import org.jetbrains.annotations.NonNls;
@@ -35,10 +34,5 @@ public class PsalmConfigurableForm<C extends PsalmConfiguration> extends Quality
   @Override
   protected boolean validateWithNoAnsi() {
     return false;
-  }
-
-  @Override
-  public boolean isValidToolFile(VirtualFile file) {
-    return file.getName().startsWith("psalm");
   }
 }
