@@ -14,6 +14,7 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManage
 
 public class PsalmValidationInspection extends QualityToolValidationInspection {
   public String config = "";
+  public boolean showInfo = false;
 
   @Override
   public JComponent createOptionsPanel() {

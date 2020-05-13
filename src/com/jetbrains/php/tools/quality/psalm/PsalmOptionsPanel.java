@@ -2,6 +2,7 @@ package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.DocumentAdapter;
+import com.intellij.ui.components.JBCheckBox;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,7 @@ import javax.swing.event.DocumentEvent;
 public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private JPanel myOptionsPanel;
   private PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
+  private JBCheckBox myShowInfoJBCheckBox;
   private final PsalmValidationInspection myInspection;
 
   public PsalmOptionsPanel(PsalmValidationInspection inspection) {
@@ -27,6 +29,9 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
         myInspection.config = myConfigPathTextField.getText();
       }
     });
+
+    myShowInfoJBCheckBox.setSelected(inspection.showInfo);
+    myShowInfoJBCheckBox.addActionListener(event -> myInspection.showInfo = myShowInfoJBCheckBox.isSelected());
   }
   
   private void createUIComponents(){
