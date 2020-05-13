@@ -13,11 +13,6 @@ public class PsalmConfigurable extends QualityToolProjectConfigurableForm implem
   }
 
   @Override
-  public String getHelpTopic() {
-    return "reference.settings.php.Psalm";
-  }
-
-  @Override
   protected QualityToolType<PsalmConfiguration> getQualityToolType() {
     return PsalmQualityToolType.INSTANCE;
   }
