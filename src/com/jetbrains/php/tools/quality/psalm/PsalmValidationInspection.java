@@ -15,6 +15,7 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManage
 public class PsalmValidationInspection extends QualityToolValidationInspection {
   public String config = "";
   public boolean showInfo = false;
+  public boolean findUnusedCode = false;
 
   @Override
   public JComponent createOptionsPanel() {
@@ -42,6 +43,9 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
     }
     if (showInfo) {
       options.add("--show-info");
+    }
+    if (findUnusedCode) {
+      options.add("--find-unused-code");
     }
     options.add(filePath);
     return options;

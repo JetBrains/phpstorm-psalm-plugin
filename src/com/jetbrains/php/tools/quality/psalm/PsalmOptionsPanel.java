@@ -14,6 +14,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private JPanel myOptionsPanel;
   private PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
   private JBCheckBox myShowInfoJBCheckBox;
+  private JBCheckBox myFindUnusedCheckbox;
   private final PsalmValidationInspection myInspection;
 
   public PsalmOptionsPanel(PsalmValidationInspection inspection) {
@@ -32,6 +33,9 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
 
     myShowInfoJBCheckBox.setSelected(inspection.showInfo);
     myShowInfoJBCheckBox.addActionListener(event -> myInspection.showInfo = myShowInfoJBCheckBox.isSelected());
+    
+    myFindUnusedCheckbox.setSelected(inspection.findUnusedCode);
+    myFindUnusedCheckbox.addActionListener(event -> myInspection.findUnusedCode = myFindUnusedCheckbox.isSelected());
   }
   
   private void createUIComponents(){
