@@ -40,6 +40,9 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
     if (!isEmpty(config)) {
       options.add("--config=" + config);
     }
+    if (showInfo) {
+      options.add("--show-info");
+    }
     options.add(filePath);
     return options;
   }
