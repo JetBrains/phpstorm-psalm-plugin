@@ -1,13 +1,14 @@
 import com.intellij.openapi.util.SystemInfo;
 import com.jetbrains.php.config.composer.QualityToolsComposerConfigTest;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
+import com.jetbrains.php.tools.quality.psalm.PsalmConfiguration;
 import com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager;
 import org.jetbrains.annotations.NotNull;
 
 public class PsalmComposerConfigTest extends QualityToolsComposerConfigTest {
 
   @Override
-  protected QualityToolConfigurationManager getQualityToolConfigurationManager() {
+  protected QualityToolConfigurationManager<PsalmConfiguration> getQualityToolConfigurationManager() {
     return PsalmConfigurationManager.getInstance(getProject());
   }
 

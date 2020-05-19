@@ -25,7 +25,7 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
 
   @NotNull
   @Override
-  protected QualityToolAnnotator getAnnotator() {
+  protected QualityToolAnnotator<PsalmValidationInspection> getAnnotator() {
     return PsalmAnnotatorProxy.INSTANCE;
   }
 

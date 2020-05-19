@@ -26,7 +26,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
   }
 
   @Override
-  protected @NotNull QualityToolType getQualityToolType() {
+  protected @NotNull QualityToolType<PsalmConfiguration> getQualityToolType() {
     return PsalmQualityToolType.INSTANCE;
   }
 }
