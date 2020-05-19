@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.psalm;
 
+import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NonNls;
@@ -16,6 +17,7 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
   public String config = "";
   public boolean showInfo = false;
   public boolean findUnusedCode = false;
+  public boolean findUnusedSuppress = false;
 
   @Override
   public JComponent createOptionsPanel() {
@@ -46,6 +48,9 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
     }
     if (findUnusedCode) {
       options.add("--find-unused-code");
+    }
+    if (findUnusedSuppress) {
+      options.add("--find-unused-psalm-suppress");
     }
     options.add(filePath);
     return options;
