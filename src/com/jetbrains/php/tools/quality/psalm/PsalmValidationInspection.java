@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NonNls;
@@ -52,6 +51,7 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
     if (findUnusedSuppress) {
       options.add("--find-unused-psalm-suppress");
     }
+    options.add("--monochrome");
     options.add(filePath);
     return options;
   }
