@@ -9,7 +9,7 @@ public class PsalmOutputParsingTest extends PhpHeavyCodeInsightFixtureTestCase {
     PsalmConfigurationManager.getInstance(myFixture.getProject()).getLocalSettings().setToolPath("psalm"); // Dummy, needed to run annotator
     configureByFiles(getFileBeforeRelativePath().replace(".php", ".txt"));
     myFixture.enableInspections(PsalmValidationInspection.class);
-    myFixture.testHighlighting(false, false, true);
+    myFixture.testHighlighting(true, false, true);
   }
 
   @Override
