@@ -1,0 +1,9 @@
+<idea-plugin>
+  <name>Psalm Support</name>
+  <id>com.intellij.php.psalm</id>
+  <vendor>JetBrains</vendor>
+  <depends>com.jetbrains.php</depends>
+  <depends>com.intellij.modules.ultimate</depends>
+  <category>Other Tools</category>
+  <resource-bundle>messages.PhpBundle</resource-bundle>
+</idea-plugin>
