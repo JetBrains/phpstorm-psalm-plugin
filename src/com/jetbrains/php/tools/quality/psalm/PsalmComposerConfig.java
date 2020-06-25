@@ -2,13 +2,20 @@ package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.jetbrains.php.composer.ComposerOpenSettingsProvider;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
+import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
+import com.jetbrains.php.tools.quality.phpCSFixer.PhpCSFixerConfiguration;
+import com.jetbrains.php.tools.quality.phpCSFixer.PhpCSFixerQualityToolType;
+import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfiguration, PsalmValidationInspection> {
+public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfiguration, PsalmValidationInspection> implements 
+                                         ComposerOpenSettingsProvider {
   @NonNls private static final String PACKAGE = "vimeo/psalm";
   @NonNls private static final String RELATIVE_PATH = "bin/psalm";
   @NonNls private static final String PSALM_XML = "psalm.xml";
@@ -45,6 +52,16 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
       return modifyRulesetInspectionSetting(project, tool -> applyRuleset(tool, path));
     }
     return false;
+  }
+
+  @Override
+  public void openSettings(@NotNull Project project) {
+    PhpUiUtil.editConfigurable(project, new QualityToolConfigurableList<PsalmConfiguration>(project, PsalmQualityToolType.INSTANCE, null) {
+      @Override
+      protected QualityToolType<PsalmConfiguration> getQualityToolType() {
+        return PsalmQualityToolType.INSTANCE;
+      }
+    });
   }
 
 
