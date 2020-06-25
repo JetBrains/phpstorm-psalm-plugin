@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.composer.ComposerOpenSettingsProvider;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
@@ -17,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfiguration, PsalmValidationInspection> implements 
                                          ComposerOpenSettingsProvider {
   @NonNls private static final String PACKAGE = "vimeo/psalm";
-  @NonNls private static final String RELATIVE_PATH = "bin/psalm";
+  @NonNls private static final String RELATIVE_PATH = "bin/psalm" + (SystemInfo.isWindows ? ".bat": "");
   @NonNls private static final String PSALM_XML = "psalm.xml";
   private static final PsalmValidationInspection PSALM_VALIDATION_INSPECTION = new PsalmValidationInspection();
 
