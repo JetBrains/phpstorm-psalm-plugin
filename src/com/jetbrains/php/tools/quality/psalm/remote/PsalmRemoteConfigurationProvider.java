@@ -49,7 +49,12 @@ public class PsalmRemoteConfigurationProvider extends PsalmConfigurationProvider
       final PsalmRemoteConfiguration remoteConfiguration = (PsalmRemoteConfiguration)settings;
       final PsalmConfigurableForm<PsalmRemoteConfiguration> delegate =
         new PsalmConfigurableForm<>(project, remoteConfiguration);
-      return new QualityToolByInterpreterConfigurableForm<>(project, remoteConfiguration, delegate);
+      return new QualityToolByInterpreterConfigurableForm<PsalmRemoteConfiguration>(project, remoteConfiguration, delegate){
+        @Override
+        protected boolean validateWithNoAnsi() {
+          return false;
+        }
+      };
     }
     return null;
   }
