@@ -7,7 +7,7 @@ import org.jetbrains.annotations.PropertyKey;
 
 import java.util.function.Supplier;
 
-public class PsalmBundle extends DynamicBundle {
+public final class PsalmBundle extends DynamicBundle {
   @NonNls public static final String BUNDLE = "messages.PsalmBundle";
   private static final PsalmBundle INSTANCE = new PsalmBundle();
 

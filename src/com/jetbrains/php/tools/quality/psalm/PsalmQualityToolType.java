@@ -9,12 +9,12 @@ import org.jetbrains.annotations.Nullable;
 
 import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManager.PSALM;
 
-public class PsalmQualityToolType extends QualityToolType<PsalmConfiguration> {
+public final class PsalmQualityToolType extends QualityToolType<PsalmConfiguration> {
   public static final PsalmQualityToolType INSTANCE = new PsalmQualityToolType();
 
   private PsalmQualityToolType() {
   }
-  
+
   @NotNull
   @Override
   public String getDisplayName() {
