@@ -43,4 +43,7 @@
       <add-to-group group-id="PHPQualityToolsAddToIgnoredList"/>
     </action>
   </actions>
+  <extensions defaultExtensionNs="com.jetbrains.php">
+    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmParamTypeProvider"/>
+  </extensions>
 </idea-plugin>
