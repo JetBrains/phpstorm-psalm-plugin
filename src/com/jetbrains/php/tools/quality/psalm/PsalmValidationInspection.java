@@ -40,7 +40,8 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
     @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("--output-format=checkstyle");
     if (!isEmpty(config)) {
-      options.add("--config=" + config);
+      options.add("-c");
+      options.add(config);
     }
     if (showInfo) {
       options.add("--show-info");
