@@ -4,11 +4,15 @@ import com.intellij.openapi.project.Project;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBCheckBox;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
+import com.jetbrains.php.tools.quality.QualityToolCommonConfigurable;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
+
+import static com.jetbrains.php.lang.inspections.PhpInspectionsUtil.createPanelWithSettingsLink;
+import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManager.PSALM;
 
 public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private JPanel myOptionsPanel;
@@ -16,6 +20,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private JBCheckBox myShowInfoJBCheckBox;
   private JBCheckBox myFindUnusedCheckbox;
   private JBCheckBox myFindUnusedSuppressCheckbox;
+  private JPanel myLinkPanel;
   private final PsalmValidationInspection myInspection;
 
   public PsalmOptionsPanel(PsalmValidationInspection inspection) {
@@ -43,6 +48,10 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   }
   
   private void createUIComponents(){
+    myLinkPanel = createPanelWithSettingsLink(PSALM,
+                                              QualityToolCommonConfigurable.class,
+                                              QualityToolCommonConfigurable::new,
+                                              i -> i.showConfigurable(PSALM));
   }
 
   @Override
