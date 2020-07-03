@@ -1,0 +1,98 @@
+<?php
+class Cart {
+    /**
+     * @psalm-var $param Cart|mixed cart to copy
+     * @psalm-var param Cart|mixed cart to copy
+     * @psalm-var list<string> $param
+     */
+   private $param;
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n')
+    PhpClass: Cart
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('Cart')
+      PsiWhiteSpace(' ')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiWhiteSpace('\n    ')
+      PhpDocCommentImpl
+        PsiElement(DOC_COMMENT_START)('/**')
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-var
+          PsiElement(DOC_TAG_NAME)('@psalm-var')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: param
+            PsiElement(DOC_VARIABLE)('$param')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: Cart
+            PsiElement(DOC_IDENTIFIER)('Cart')
+          PsiElement(DOC_PIPE)('|')
+          PhpDocTypeImpl: mixed
+            PsiElement(DOC_IDENTIFIER)('mixed')
+          PsiWhiteSpace(' ')
+          PhpPsiElementImpl
+            PsiElement(DOC_IDENTIFIER)('cart')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('to')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('copy')
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-var
+          PsiElement(DOC_TAG_NAME)('@psalm-var')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: param
+            PsiElement(DOC_IDENTIFIER)('param')
+          PsiWhiteSpace(' ')
+          PhpPsiElementImpl
+            PsiElement(DOC_IDENTIFIER)('Cart')
+            PsiElement(DOC_PIPE)('|')
+            PsiElement(DOC_IDENTIFIER)('mixed')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('cart')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('to')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('copy')
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-var
+          PsiElement(DOC_TAG_NAME)('@psalm-var')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: list
+            PsiElement(DOC_IDENTIFIER)('list')
+            PhpPsiElementImpl
+              PsiElement(DOC_LAB)('<')
+              PhpDocTypeImpl: string
+                PsiElement(DOC_IDENTIFIER)('string')
+              PsiElement(DOC_RAB)('>')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: param
+            PsiElement(DOC_VARIABLE)('$param')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_COMMENT_END)('*/')
+      PsiWhiteSpace('\n   ')
+      PhpPsiElementImpl
+        PhpModifierListImpl: private
+          PsiElement(private)('private')
+        PsiWhiteSpace(' ')
+        FieldImpl: param
+          PsiElement(variable)('$param')
+        PsiElement(semicolon)(';')
+      PsiWhiteSpace('\n')
+      PsiElement(})('}')

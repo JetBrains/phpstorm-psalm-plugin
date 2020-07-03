@@ -40,4 +40,20 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericArray$union() {
     doTypeTest(PhpType.or(PhpType.STRING, PhpType.INT).pluralise());
   }
+
+  public void testPsalmParam() {
+    doTypeTest(PhpType.STRING);
+  }
+
+  public void testPsalmReturn() {
+    doTypeTest(PhpType.INT, PhpType.STRING);
+  }
+
+  public void testPsalmVarField() {
+    doTypeTest(PhpType.FLOAT);
+  }
+
+  public void testPsalmVarVar() {
+    doTypeTest(PhpType.INT.pluralise());
+  }
 }
