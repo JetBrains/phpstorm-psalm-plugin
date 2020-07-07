@@ -1,3 +1,5 @@
+package com.jetbrains.php.psalm.quality.tools;
+
 import com.jetbrains.php.fixtures.PhpHeavyCodeInsightFixtureTestCase;
 import com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager;
 import com.jetbrains.php.tools.quality.psalm.PsalmValidationInspection;
