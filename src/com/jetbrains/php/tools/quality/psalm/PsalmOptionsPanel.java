@@ -1,6 +1,9 @@
 package com.jetbrains.php.tools.quality.psalm;
 
+import com.intellij.ide.DataManager;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBCheckBox;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
@@ -25,11 +28,15 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
 
   public PsalmOptionsPanel(PsalmValidationInspection inspection) {
     myInspection = inspection;
-
-    final Project project = getCurrentProject();
-    myConfigPathTextField.setText(inspection.config);
-    myConfigPathTextField
-      .init(project, getSdkAdditionalData(project), PsalmBundle.message("psalm.configuration.file"), true, false);
+    DataManager.getInstance().getDataContextFromFocusAsync().onSuccess(context -> {
+      Project project = CommonDataKeys.PROJECT.getData(context);
+      if (project == null) {
+        project = ProjectManager.getInstance().getDefaultProject();
+      }
+      myConfigPathTextField.setText(inspection.config);
+      myConfigPathTextField
+        .init(project, getSdkAdditionalData(project), PsalmBundle.message("psalm.configuration.file"), true, false);
+    });
     myConfigPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
       @Override
       protected void textChanged(@NotNull DocumentEvent e) {
