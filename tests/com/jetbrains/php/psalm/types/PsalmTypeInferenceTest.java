@@ -56,4 +56,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testPsalmVarVar() {
     doTypeTest(PhpType.INT.pluralise());
   }
+
+  public void testClassString() {
+    doTypeTest(PhpType.STRING);
+  }
 }
