@@ -1,0 +1,22 @@
+package com.jetbrains.php.psalm.lang;
+
+import com.jetbrains.php.PhpInspectionTestCase;
+import com.jetbrains.php.lang.inspections.PhpUndefinedClassInspection;
+import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
+import org.jetbrains.annotations.NotNull;
+
+public class PsalmInspectionsTest extends PhpInspectionTestCase {
+  @Override
+  protected @NotNull String getTestDataHome() {
+    return PsalmTypeInferenceTest.TEST_DATA_HOME;
+  }
+
+  @Override
+  protected String getFixtureTestDataFolder() {
+    return "codeInsight/inspections";
+  }
+
+  public void testUndefinedClassClassString() {
+    doInspectionTest(PhpUndefinedClassInspection.class);
+  }
+}
