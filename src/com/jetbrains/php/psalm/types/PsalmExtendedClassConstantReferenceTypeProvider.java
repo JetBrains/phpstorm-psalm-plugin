@@ -28,10 +28,11 @@ public class PsalmExtendedClassConstantReferenceTypeProvider implements PhpTypeP
 
 
   private static final Condition<PsiElement> IS_DOC_IDENTIFIER = e -> PhpPsiUtil.isOfType(e, DOC_IDENTIFIER);
+  private static final char KEY = 'ᢕ';
 
   @Override
   public char getKey() {
-    return 'ᢕ';
+    return KEY;
   }
 
   @Override
@@ -84,5 +85,9 @@ public class PsalmExtendedClassConstantReferenceTypeProvider implements PhpTypeP
       .flatMap(c -> c.getFields().stream()).filter(Field::isConstant)
       .filter(e -> StringUtil.startsWith(e.getName(), pattern))
       .collect(Collectors.toSet());
+  }
+
+  public static boolean isSigned(String type) {
+    return StringUtil.startsWith(type, "#" + KEY);
   }
 }

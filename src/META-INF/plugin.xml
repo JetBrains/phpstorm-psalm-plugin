@@ -54,5 +54,6 @@
   </extensions>
   <extensions defaultExtensionNs="com.intellij">
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.psalm.completion.PsalmCompletionContributor"/>
+    <psi.referenceContributor language="PHP" implementation="com.jetbrains.php.psalm.lang.PsalmReferenceContributor"/>
   </extensions>
 </idea-plugin>
