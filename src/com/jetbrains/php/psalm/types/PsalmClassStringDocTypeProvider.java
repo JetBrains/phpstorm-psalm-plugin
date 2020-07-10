@@ -12,6 +12,9 @@ import java.util.Collection;
 import java.util.Set;
 
 public class PsalmClassStringDocTypeProvider implements PhpTypeProvider4 {
+
+  public static final String CLASS_STRING = "class-string";
+
   @Override
   public char getKey() {
     return 'ᢔ';
@@ -19,7 +22,7 @@ public class PsalmClassStringDocTypeProvider implements PhpTypeProvider4 {
 
   @Override
   public @Nullable PhpType getType(PsiElement element) {
-    if (element instanceof PhpDocType && "class-string".equalsIgnoreCase(((PhpDocType)element).getName())) {
+    if (element instanceof PhpDocType && CLASS_STRING.equalsIgnoreCase(((PhpDocType)element).getName())) {
       return PhpType.STRING;
     }
     return null;
