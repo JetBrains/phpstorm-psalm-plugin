@@ -60,4 +60,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testClassString() {
     doTypeTest(PhpType.STRING);
   }
+
+  public void testTypesFromExtendedClassConstants() {
+    doTypeTest(PhpType.INT);
+  }
+
+  public void testTypesFromExtendedClassConstantsWildcard() {
+    doTypeTest(PhpType.INT, PhpType.STRING);
+  }
 }
