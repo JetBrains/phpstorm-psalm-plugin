@@ -1,0 +1,123 @@
+<?php
+class Cart {
+    /**
+     * @psalm-var $f A::F
+     */
+    private $f;
+    /**
+     * @psalm-param $param A::F*
+     * @psalm-return \nsp\A::F|A::F*
+     */
+    function m($param) {
+    }
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n')
+    PhpClass: Cart
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('Cart')
+      PsiWhiteSpace(' ')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiWhiteSpace('\n    ')
+      PhpDocCommentImpl
+        PsiElement(DOC_COMMENT_START)('/**')
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-var
+          PsiElement(DOC_TAG_NAME)('@psalm-var')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: f
+            PsiElement(DOC_VARIABLE)('$f')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: %EMPTY%
+            PhpDocRefImpl: %EMPTY%
+              PsiElement(DOC_IDENTIFIER)('A')
+              PsiElement(DOC_STATIC)('::')
+              PsiElement(DOC_IDENTIFIER)('F')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_COMMENT_END)('*/')
+      PsiWhiteSpace('\n    ')
+      PhpPsiElementImpl
+        PhpModifierListImpl: private
+          PsiElement(private)('private')
+        PsiWhiteSpace(' ')
+        FieldImpl: f
+          PsiElement(variable)('$f')
+        PsiElement(semicolon)(';')
+      PsiWhiteSpace('\n    ')
+      PhpDocCommentImpl
+        PsiElement(DOC_COMMENT_START)('/**')
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocParamTagImpl: @psalm-param
+          PsiElement(DOC_TAG_NAME)('@psalm-param')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: param
+            PsiElement(DOC_VARIABLE)('$param')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: %EMPTY%
+            PhpDocRefImpl: %EMPTY%
+              PsiElement(DOC_IDENTIFIER)('A')
+              PsiElement(DOC_STATIC)('::')
+              PsiElement(DOC_IDENTIFIER)('F')
+              PsiElement(DOC_TEXT)('*')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocReturnTagImpl: @psalm-return
+          PsiElement(DOC_TAG_NAME)('@psalm-return')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: %EMPTY%
+            PhpDocRefImpl: %EMPTY%
+              PhpNamespaceReferenceImpl
+                PsiElement(DOC_NAMESPACE)('\')
+                PsiElement(DOC_IDENTIFIER)('nsp')
+                PsiElement(DOC_NAMESPACE)('\')
+              PsiElement(DOC_IDENTIFIER)('A')
+              PsiElement(DOC_STATIC)('::')
+              PsiElement(DOC_IDENTIFIER)('F')
+          PsiElement(DOC_PIPE)('|')
+          PhpDocTypeImpl: %EMPTY%
+            PhpDocRefImpl: %EMPTY%
+              PsiElement(DOC_IDENTIFIER)('A')
+              PsiElement(DOC_STATIC)('::')
+              PsiElement(DOC_IDENTIFIER)('F')
+              PsiElement(DOC_TEXT)('*')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_COMMENT_END)('*/')
+      PsiWhiteSpace('\n    ')
+      MethodImpl: m
+        PhpModifierListImpl: %EMPTY%
+          <empty list>
+        PsiElement(function)('function')
+        PsiWhiteSpace(' ')
+        PsiElement(identifier)('m')
+        PsiElement(()('(')
+        Parameter list
+          ParameterImpl: param
+            PsiElement(variable)('$param')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        PsiElement(Group statement)
+          PsiElement({)('{')
+          PsiWhiteSpace('\n    ')
+          PsiElement(})('}')
+      PsiWhiteSpace('\n')
+      PsiElement(})('}')

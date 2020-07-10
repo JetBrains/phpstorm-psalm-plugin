@@ -23,4 +23,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$Var() throws Throwable {
     doTest();
   }
+
+  public void test$ExtendedConstantsInPhpDocType() throws Throwable {
+    doTest();
+  }
 }
