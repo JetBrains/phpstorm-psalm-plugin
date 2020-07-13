@@ -20,11 +20,12 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
 
   public void testCustomDocTypes() {
     doInitCompletion();
-    List<String> lookupElementStrings = myFixture.getLookupElementStrings();
-    assertContainsElements(lookupElementStrings, "class-string");
-    assertContainsElements(lookupElementStrings, "callable-string");
-    assertContainsElements(lookupElementStrings, "numeric-string");
-    assertContainsElements(lookupElementStrings, "scalar");
-    assertContainsElements(lookupElementStrings, "numeric");
+    assertContainsElements(myFixture.getLookupElementStrings(), "class-string"
+      , "callable-string"
+      , "numeric-string"
+      , "scalar"
+      , "numeric"
+      , "array-key"
+    );
   }
 }

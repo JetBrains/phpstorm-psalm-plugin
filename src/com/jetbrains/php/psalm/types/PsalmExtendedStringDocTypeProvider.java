@@ -27,8 +27,9 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
 
   private static final String SCALAR = "scalar";
   private static final String NUMERIC = "numeric";
+  private static final String ARRAY_KEY = "array-key";
 
-  public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, Arrays.asList(SCALAR, NUMERIC));
+  public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, Arrays.asList(SCALAR, NUMERIC, ARRAY_KEY));
   private static final @NotNull PhpType NUMERIC_TYPE = PhpType.builder().add(PhpType.STRING).add(PhpType.INT).add(PhpType.FLOAT).build();
 
   @Override
@@ -45,6 +46,9 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
       }
       if (NUMERIC.equals(name)) {
         return NUMERIC_TYPE;
+      }
+      if (ARRAY_KEY.equals(name)) {
+        return PhpType.NUMERIC;
       }
       if (EXTENDED_STRINGS.contains(name)) {
         return PhpType.STRING;
