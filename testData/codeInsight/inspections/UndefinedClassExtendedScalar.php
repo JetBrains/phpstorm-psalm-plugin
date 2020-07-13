@@ -7,6 +7,11 @@
  * @param class-string
  * @param class-string[]
  * @param class-string[][]
+ * @param numeric
+ * @param numeric-string
+ * @param callable-string
+ * @param callable-string
+ * @param scalar
  */
 function f()
 {

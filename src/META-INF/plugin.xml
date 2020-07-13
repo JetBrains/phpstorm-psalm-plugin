@@ -46,7 +46,7 @@
   <extensions defaultExtensionNs="com.jetbrains.php">
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmParamTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmDocTagTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmClassStringDocTypeProvider"/>
+    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedStringDocTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedClassConstantReferenceTypeProvider"/>
     <docTagParserExtension tagName="psalm-param" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
     <docTagParserExtension tagName="psalm-return" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocReturnTagParser" />

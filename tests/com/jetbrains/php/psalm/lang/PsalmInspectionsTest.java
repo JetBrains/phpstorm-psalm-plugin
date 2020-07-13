@@ -16,7 +16,7 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
     return "codeInsight/inspections";
   }
 
-  public void testUndefinedClassClassString() {
+  public void testUndefinedClassExtendedScalar() {
     doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
