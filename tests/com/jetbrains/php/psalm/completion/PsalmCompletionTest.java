@@ -4,6 +4,8 @@ import com.jetbrains.php.fixtures.PhpCompletionTestCase;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class PsalmCompletionTest extends PhpCompletionTestCase {
 
   @Override
@@ -16,8 +18,13 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     return "completion";
   }
 
-  public void testClassString() {
+  public void testCustomDocTypes() {
     doInitCompletion();
-    assertContainsElements(myFixture.getLookupElementStrings(), "class-string");
+    List<String> lookupElementStrings = myFixture.getLookupElementStrings();
+    assertContainsElements(lookupElementStrings, "class-string");
+    assertContainsElements(lookupElementStrings, "callable-string");
+    assertContainsElements(lookupElementStrings, "numeric-string");
+    assertContainsElements(lookupElementStrings, "scalar");
+    assertContainsElements(lookupElementStrings, "numeric");
   }
 }

@@ -2,7 +2,7 @@
 interface DependentFixtureInterface
 {
     /**
-     * @return class-s<caret>
+     * @return <caret>
      */
     public function getDependencies();
 }
