@@ -41,6 +41,14 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest(PhpType.or(PhpType.STRING, PhpType.INT).pluralise());
   }
 
+  public void testGenericArray$nonArray() {
+    doTypeTest("\\nonArray"); // no particular guarantees here
+  }
+
+  public void testGenericArray$nestedClassString() {
+    doTypeTest(PhpType.STRING.pluralise(2));
+  }
+
   public void testPsalmParam() {
     doTypeTest(PhpType.STRING);
   }
