@@ -17,10 +17,12 @@ import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
 import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.*;
+import static com.jetbrains.php.tools.quality.psalm.PsalmOpenSettingsProvider.PSALM_OPEN_SETTINGS_PROVIDER;
 
 public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfiguration, PsalmValidationInspection> implements 
                                          ComposerOpenSettingsProvider {
@@ -103,6 +105,10 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
     });
   }
 
+  @Override
+  public @Nullable ComposerLogMessageBuilder.Settings getSettings() {
+    return PSALM_OPEN_SETTINGS_PROVIDER;
+  }
 
   private static void applyRuleset(PsalmValidationInspection tool, String customRuleset) {
     tool.config = customRuleset;

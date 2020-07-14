@@ -30,6 +30,7 @@
     <tools.projectConfigurableForm instance="com.jetbrains.php.tools.quality.psalm.PsalmConfigurable"/>
     <tools.quality.type implementation="com.jetbrains.php.tools.quality.psalm.PsalmQualityToolType"/>
     <composerConfigClient implementation="com.jetbrains.php.tools.quality.psalm.PsalmComposerConfig"/>
+    <openSettingsProvider implementation="com.jetbrains.php.tools.quality.psalm.PsalmOpenSettingsProvider"/>
   </extensions>
 
   <extensionPoints>
