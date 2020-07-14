@@ -23,6 +23,7 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
     "class-string"
     ,"callable-string"
     ,"numeric-string"
+    ,"trait-string"
   );
 
   private static final String SCALAR = "scalar";

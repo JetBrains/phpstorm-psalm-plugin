@@ -26,6 +26,7 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
       , "scalar"
       , "numeric"
       , "array-key"
+      , "trait-string"
     );
   }
 }

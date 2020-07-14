@@ -77,6 +77,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest(PhpType.STRING);
   }
 
+  public void testTraitString() {
+    doTypeTest(PhpType.STRING);
+  }
+
   public void testScalar() {
     assertEquals(getActualType().getTypes(), PhpType.SCALAR.getTypes());
   }
