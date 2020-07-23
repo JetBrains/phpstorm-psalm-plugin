@@ -4,6 +4,7 @@ import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
     return PSALM;
   }
 
-  public List<String> getCommandLineOptions(String filePath) {
+  public List<String> getCommandLineOptions(@Nullable String filePath) {
     @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("--output-format=checkstyle");
     if (!isEmpty(config)) {
@@ -53,7 +54,9 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
       options.add("--find-unused-psalm-suppress");
     }
     options.add("--monochrome");
-    options.add(filePath);
+    if (filePath != null) {
+      options.add(filePath);
+    }
     return options;
   }
 }

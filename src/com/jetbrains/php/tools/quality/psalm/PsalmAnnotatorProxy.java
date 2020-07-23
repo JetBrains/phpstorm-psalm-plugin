@@ -12,7 +12,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
 
   @Override
   @Nullable
-  protected List<String> getOptions(@NotNull String filePath, @NotNull PsalmValidationInspection inspection, @NotNull Project project) {
+  protected List<String> getOptions(@Nullable String filePath, @NotNull PsalmValidationInspection inspection, @NotNull Project project) {
     return inspection.getCommandLineOptions(filePath);
   }
 
