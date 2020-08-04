@@ -22,9 +22,9 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private JBCheckBox myFindUnusedCheckbox;
   private JBCheckBox myFindUnusedSuppressCheckbox;
   private JPanel myLinkPanel;
-  private final PsalmValidationInspection myInspection;
+  private final PsalmGlobalInspection myInspection;
 
-  public PsalmOptionsPanel(PsalmValidationInspection inspection) {
+  public PsalmOptionsPanel(PsalmGlobalInspection inspection) {
     myInspection = inspection;
     DataManager.getInstance().getDataContextFromFocusAsync().onSuccess(context -> {
       Project project = getCurrentProject(context);

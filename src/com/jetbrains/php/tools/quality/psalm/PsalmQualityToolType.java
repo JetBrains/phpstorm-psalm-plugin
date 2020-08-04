@@ -1,12 +1,16 @@
 package com.jetbrains.php.tools.quality.psalm;
 
+import com.intellij.codeInspection.InspectionProfile;
+import com.intellij.codeInspection.ex.InspectionToolWrapper;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
+import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.jetbrains.php.tools.quality.*;
 import com.jetbrains.php.tools.quality.phpcs.PhpCSConfigurable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static com.intellij.util.ObjectUtils.tryCast;
 import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManager.PSALM;
 
 public final class PsalmQualityToolType extends QualityToolType<PsalmConfiguration> {
@@ -66,5 +70,21 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   @Override
   public @Nullable String getHelpTopic() {
     return "reference.settings.php.Psalm";
+  }
+  
+  @Override
+  public QualityToolValidationGlobalInspection getGlobalTool(@NotNull Project project) {
+    final InspectionToolWrapper inspectionTool = ((InspectionProfile)InspectionProjectProfileManager.getInstance(project)
+      .getCurrentProfile())
+      .getInspectionTool(getInspectionId(), project);
+    if (inspectionTool == null) {
+      return null;
+    }
+    return tryCast(inspectionTool.getTool(), PsalmGlobalInspection.class);
+  }
+
+  @Override
+  public String getInspectionId() {
+    return "PsalmGlobalInspection";
   }
 }
