@@ -17,12 +17,12 @@
     <projectService
       serviceImplementation="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager$PsalmProjectConfigurationManager"/>
     <globalInspection language="PHP" shortName="PsalmGlobal"
-                      displayName="Psalm Global validation"
                       groupPath="PHP"
                       groupName="Quality tools"
                       enabledByDefault="false"
                       level="WEAK WARNING"
-                      implementationClass="com.jetbrains.php.tools.quality.psalm.PsalmGlobalInspection"/>
+                      implementationClass="com.jetbrains.php.tools.quality.psalm.PsalmGlobalInspection"
+                      key="inspection.psalm.global.display.name" bundle="messages.PsalmBundle"/>
     <externalAnnotator language="PHP" implementationClass="com.jetbrains.php.tools.quality.psalm.PsalmAnnotatorProxy"/>
   </extensions>
 
