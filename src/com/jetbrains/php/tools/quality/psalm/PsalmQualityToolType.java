@@ -68,7 +68,7 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   }
 
   @Override
-  public @Nullable String getHelpTopic() {
+  public @NotNull String getHelpTopic() {
     return "reference.settings.php.Psalm";
   }
   
