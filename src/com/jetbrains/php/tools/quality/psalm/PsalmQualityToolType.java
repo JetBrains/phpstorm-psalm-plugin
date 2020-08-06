@@ -85,6 +85,6 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
 
   @Override
   public String getInspectionId() {
-    return "PsalmGlobalInspection";
+    return "PsalmGlobal";
   }
 }

@@ -16,7 +16,7 @@
     <projectService serviceImplementation="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager"/>
     <projectService
       serviceImplementation="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager$PsalmProjectConfigurationManager"/>
-    <globalInspection language="PHP" shortName="PsalmGlobalInspection"
+    <globalInspection language="PHP" shortName="PsalmGlobal"
                       displayName="Psalm Global validation"
                       groupPath="PHP"
                       groupName="Quality tools"
