@@ -29,8 +29,6 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
   @NonNls private static final String PACKAGE = "vimeo/psalm";
   @NonNls private static final String RELATIVE_PATH = "bin/psalm" + (SystemInfo.isWindows ? ".bat" : "");
   @NonNls private static final String PSALM_XML = "psalm.xml";
-  private static final PsalmValidationInspection PSALM_VALIDATION_INSPECTION = new PsalmValidationInspection();
-
 
   public PsalmComposerConfig() {
     super(PACKAGE, RELATIVE_PATH);
@@ -42,8 +40,8 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
   }
 
   @Override
-  public PsalmValidationInspection getQualityInspection() {
-    return PSALM_VALIDATION_INSPECTION;
+  public String getQualityInspectionShortName() {
+    return PsalmQualityToolType.INSTANCE.getInspectionId();
   }
 
   @Override
@@ -119,7 +117,7 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
 
   @NotNull
   @Override
-  protected QualityToolConfigurationManager<PsalmConfiguration> getConfigurationManager(@NotNull Project project) {
+  public QualityToolConfigurationManager<PsalmConfiguration> getConfigurationManager(@NotNull Project project) {
     return PsalmConfigurationManager.getInstance(project);
   }
 }
