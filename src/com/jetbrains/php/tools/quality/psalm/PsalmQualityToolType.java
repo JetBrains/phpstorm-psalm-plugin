@@ -87,4 +87,13 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   public String getInspectionId() {
     return "PsalmGlobal";
   }
+
+  @Override
+  public String getInspectionShortName(@NotNull Project project) {
+    final QualityToolValidationGlobalInspection tool = getGlobalTool(project);
+    if (tool != null) {
+      return tool.getShortName();
+    }
+    return getInspection().getShortName();
+  }
 }
