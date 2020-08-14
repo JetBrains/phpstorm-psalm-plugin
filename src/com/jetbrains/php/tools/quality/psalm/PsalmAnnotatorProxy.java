@@ -28,11 +28,9 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
   }
   
   @Override
-  protected void checkOptions(@NotNull List<String> options, @NotNull String workingDir, @NotNull QualityToolMessageProcessor processor) {
+  protected void checkOptions(@NotNull List<String> options, @NotNull String workingDir, @NotNull Project project) {
     if (!options.contains("-c") && !Files.exists(Paths.get(workingDir, "psalm.xml"))) {
-      Notifications.Bus
-        .notify(new Notification(GROUP_ID, getQualityToolType().getDisplayName(), PsalmBundle.message("psalm.config.not.found", workingDir),
-                                 WARNING));
+      PsalmGlobalInspection.notifyAboutMissingConfig(project);
     }
   }
 

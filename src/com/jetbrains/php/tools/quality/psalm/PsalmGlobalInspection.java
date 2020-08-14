@@ -3,8 +3,11 @@ package com.jetbrains.php.tools.quality.psalm;
 import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.notification.Notification;
 import com.intellij.notification.Notifications;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
+import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
@@ -18,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.intellij.codeInspection.ex.EditInspectionToolsSettingsAction.editToolSettings;
 import static com.intellij.notification.NotificationType.WARNING;
 import static com.intellij.openapi.util.text.StringUtilRt.isEmpty;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.GROUP_ID;
@@ -39,9 +43,23 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
   @Override
   protected void checkCmdOptions(@NotNull Project project) {
     if (!getCommandLineOptions(null).contains("-c") && !Files.exists(Paths.get(project.getBasePath(), "psalm.xml"))) {
-      Notifications.Bus
-        .notify(new Notification(GROUP_ID, getDisplayName(), PsalmBundle.message("psalm.config.not.found", project.getBasePath()), WARNING));
+      notifyAboutMissingConfig(project);
     }
+  }
+
+  public static void notifyAboutMissingConfig(@NotNull Project project) {
+    final Notification notification =
+      new Notification(GROUP_ID, PsalmQualityToolType.INSTANCE.getDisplayName(),
+                       PsalmBundle.message("psalm.config.not.found", project.getBasePath()), WARNING);
+
+    notification.addAction(new AnAction("Show inspection settings") {
+      @Override
+      public void actionPerformed(@NotNull AnActionEvent e) {
+        editToolSettings(project, ProjectInspectionProfileManager.getInstance(project).getCurrentProfile(),
+                         PsalmQualityToolType.INSTANCE.getInspectionShortName(project));
+      }
+    });
+    Notifications.Bus.notify(notification);
   }
 
   @Override
