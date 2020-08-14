@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.execution.ExecutionException;
 import com.intellij.notification.Notification;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -9,6 +10,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
+import com.jetbrains.php.tools.quality.QualityToolValidationException;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
@@ -16,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -24,7 +27,9 @@ import java.util.List;
 import static com.intellij.codeInspection.ex.EditInspectionToolsSettingsAction.editToolSettings;
 import static com.intellij.notification.NotificationType.WARNING;
 import static com.intellij.openapi.util.text.StringUtilRt.isEmpty;
+import static com.intellij.openapi.vfs.VfsUtil.markDirtyAndRefresh;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.GROUP_ID;
+import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection {
   public String config = "";
@@ -48,15 +53,38 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
   }
 
   public static void notifyAboutMissingConfig(@NotNull Project project) {
+    final String path = project.getBasePath();
     final Notification notification =
       new Notification(GROUP_ID, PsalmQualityToolType.INSTANCE.getDisplayName(),
-                       PsalmBundle.message("psalm.config.not.found", project.getBasePath()), WARNING);
+                       PsalmBundle.message("psalm.config.not.found", path), WARNING);
 
-    notification.addAction(new AnAction("Show inspection settings") {
+    notification.addAction(new AnAction(PsalmBundle.message("action.show.inspection.settings.text")) {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
         editToolSettings(project, ProjectInspectionProfileManager.getInstance(project).getCurrentProfile(),
                          PsalmQualityToolType.INSTANCE.getInspectionShortName(project));
+      }
+    });
+    //noinspection DialogTitleCapitalization
+    notification.addAction(new AnAction(PsalmBundle.message("action.generate.psalm.xml.in.project.root.text")) {
+      @Override
+      public void actionPerformed(@NotNull AnActionEvent e) {
+        try {
+          final PsalmConfiguration configuration = PsalmProjectConfiguration.getInstance(project).findSelectedConfiguration(project, false);
+          if (configuration == null) {
+            return;
+          }
+          getToolOutput(project, configuration.getInterpreterId(), configuration.getToolPath(), configuration.getTimeout(),
+                        PsalmBundle.message("action.generate.psalm.xml.in.project.root"), null, "--init");
+          if (path != null) {
+            markDirtyAndRefresh(true, false, false, new File(Paths.get(path, "psalm.xml").toString()));
+          }
+        }
+        catch (QualityToolValidationException | ExecutionException exception) {
+          Notifications.Bus.notify(new Notification(GROUP_ID, PsalmQualityToolType.INSTANCE.getDisplayName(),
+                                                  PsalmBundle.message("psalm.config.not.generated"), WARNING));
+          
+        }
       }
     });
     Notifications.Bus.notify(notification);
