@@ -1,6 +1,9 @@
 package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.notification.Notification;
+import com.intellij.notification.Notifications;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
@@ -10,10 +13,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.intellij.notification.NotificationType.WARNING;
 import static com.intellij.openapi.util.text.StringUtilRt.isEmpty;
+import static com.jetbrains.php.tools.quality.QualityToolAnnotator.GROUP_ID;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection {
   public String config = "";
@@ -29,6 +36,13 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
     return optionsPanel.getOptionsPanel();
   }
 
+  @Override
+  protected void checkCmdOptions(@NotNull Project project) {
+    if (!getCommandLineOptions(null).contains("-c") && !Files.exists(Paths.get(project.getBasePath(), "psalm.xml"))) {
+      Notifications.Bus
+        .notify(new Notification(GROUP_ID, getDisplayName(), PsalmBundle.message("psalm.config.not.found", project.getBasePath()), WARNING));
+    }
+  }
 
   @Override
   public @Nullable LocalInspectionTool getSharedLocalInspectionTool() {
