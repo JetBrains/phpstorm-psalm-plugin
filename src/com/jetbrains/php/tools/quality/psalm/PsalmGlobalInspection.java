@@ -63,6 +63,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
       public void actionPerformed(@NotNull AnActionEvent e) {
         editToolSettings(project, ProjectInspectionProfileManager.getInstance(project).getCurrentProfile(),
                          PsalmQualityToolType.INSTANCE.getInspectionShortName(project));
+        notification.expire();
       }
     });
     //noinspection DialogTitleCapitalization
@@ -79,6 +80,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
           if (path != null) {
             markDirtyAndRefresh(true, false, false, new File(Paths.get(path, "psalm.xml").toString()));
           }
+          notification.expire();
         }
         catch (QualityToolValidationException | ExecutionException exception) {
           Notifications.Bus.notify(new Notification(GROUP_ID, PsalmQualityToolType.INSTANCE.getDisplayName(),
