@@ -6,6 +6,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Transient;
 import com.jetbrains.php.tools.quality.QualityToolConfiguration;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -69,7 +70,7 @@ public class PsalmConfiguration implements QualityToolConfiguration {
 
   @Override
   @NotNull
-  public String getId() {
+  public @Nls String getId() {
     return LOCAL;
   }
 

@@ -7,6 +7,7 @@ import com.intellij.util.xmlb.annotations.Tag;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
 import com.jetbrains.php.config.interpreters.PhpSdkDependentConfiguration;
 import com.jetbrains.php.tools.quality.psalm.PsalmConfiguration;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,7 +39,7 @@ public class PsalmRemoteConfiguration extends PsalmConfiguration implements PhpS
 
   @NotNull
   @Override
-  public String getId() {
+  public @Nls String getId() {
     final String interpreterId = getInterpreterId();
     return isEmpty(interpreterId) ? UNDEFINED : interpreterId;
   }
