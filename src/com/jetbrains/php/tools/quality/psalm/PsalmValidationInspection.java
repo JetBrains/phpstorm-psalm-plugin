@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.psalm;
 
+import com.intellij.openapi.util.NlsSafe;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +17,7 @@ public class PsalmValidationInspection extends QualityToolValidationInspection {
   }
 
   @Override
-  public String getToolName() {
+  public @NlsSafe String getToolName() {
     return PSALM;
   }
 
