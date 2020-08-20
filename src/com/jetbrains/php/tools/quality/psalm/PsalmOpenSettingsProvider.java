@@ -14,7 +14,7 @@ public class PsalmOpenSettingsProvider extends ComposerLogMessageBuilder.Setting
 
   @Override
   public void show(@NotNull Project project) {
-    PhpUiUtil.editConfigurable(project, new QualityToolConfigurableList<PsalmConfiguration>(project, PsalmQualityToolType.INSTANCE, null) {
+    PhpUiUtil.editConfigurable(project, new QualityToolConfigurableList<>(project, PsalmQualityToolType.INSTANCE, null) {
       @Override
       protected QualityToolType<PsalmConfiguration> getQualityToolType() {
         return PsalmQualityToolType.INSTANCE;
