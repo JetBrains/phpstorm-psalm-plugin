@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationBaseManager;
 import com.jetbrains.php.tools.quality.QualityToolType;
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PsalmConfigurationBaseManager extends QualityToolConfigurationBaseManager<PsalmConfiguration> {
   @NonNls private static final String PSALM_PATH = "PsalmPath";
-  @NonNls public static final String PSALM = "Psalm";
+  public static final @NlsSafe String PSALM = "Psalm";
   @NonNls private static final String ROOT_NAME = "Psalm_settings";
 
   @Override

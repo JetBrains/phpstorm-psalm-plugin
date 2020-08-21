@@ -17,7 +17,6 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager.DE
  * Stores configuration needed to run Psalm in selected environment.
  */
 public class PsalmConfiguration implements QualityToolConfiguration {
-  private static final String LOCAL = "Local";
   private String myPsalmPath = "";
   private int myMaxMessagesPerFile = DEFAULT_MAX_MESSAGES_PER_FILE;
   private int myTimeoutMs = 30000;
@@ -71,7 +70,7 @@ public class PsalmConfiguration implements QualityToolConfiguration {
   @Override
   @NotNull
   public @Nls String getId() {
-    return LOCAL;
+    return PsalmBundle.message("local");
   }
 
   @Override
@@ -100,10 +99,10 @@ public class PsalmConfiguration implements QualityToolConfiguration {
       return 1;
     }
 
-    if (StringUtil.equals(getPresentableName(null), LOCAL)) {
+    if (StringUtil.equals(getPresentableName(null), PsalmBundle.message("local"))) {
       return -1;
     }
-    else if (StringUtil.equals(o.getPresentableName(null), LOCAL)) {
+    else if (StringUtil.equals(o.getPresentableName(null), PsalmBundle.message("local"))) {
       return 1;
     }
     return StringUtil.compare(getPresentableName(null), o.getPresentableName(null), false);

@@ -2,10 +2,13 @@ package com.jetbrains.php.tools.quality.psalm.remote;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Tag;
+import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
 import com.jetbrains.php.config.interpreters.PhpSdkDependentConfiguration;
+import com.jetbrains.php.tools.quality.psalm.PsalmBundle;
 import com.jetbrains.php.tools.quality.psalm.PsalmConfiguration;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -15,14 +18,12 @@ import static com.intellij.openapi.util.text.StringUtil.isEmpty;
 
 @Tag("psalm_fixer_by_interpreter")
 public class PsalmRemoteConfiguration extends PsalmConfiguration implements PhpSdkDependentConfiguration {
-  private static final String UNDEFINED = "Undefined interpreter";
-  private static final String INTERPRETER = "Interpreter: ";
   private String myInterpreterId;
 
   @Override
   @Nullable
   @Attribute("interpreter_id")
-  public String getInterpreterId() {
+  public @NlsSafe String getInterpreterId() {
     return myInterpreterId;
   }
 
@@ -41,12 +42,12 @@ public class PsalmRemoteConfiguration extends PsalmConfiguration implements PhpS
   @Override
   public @Nls String getId() {
     final String interpreterId = getInterpreterId();
-    return isEmpty(interpreterId) ? UNDEFINED : interpreterId;
+    return isEmpty(interpreterId) ? PhpBundle.message("undefined.interpreter") : interpreterId;
   }
 
   @NotNull
-  public static String getDefaultName(@Nullable String interpreterName) {
-    return isEmpty(interpreterName) ? UNDEFINED : INTERPRETER + interpreterName;
+  public static @NlsContexts.Label String getDefaultName(@Nullable String interpreterName) {
+    return isEmpty(interpreterName) ? PhpBundle.message("undefined.interpreter") : PsalmBundle.message("label.interpreter", interpreterName);
   }
 
   @Override

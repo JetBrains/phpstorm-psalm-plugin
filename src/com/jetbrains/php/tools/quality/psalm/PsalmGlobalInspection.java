@@ -8,6 +8,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationException;
@@ -32,7 +33,7 @@ import static com.jetbrains.php.tools.quality.QualityToolAnnotator.GROUP_ID;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection {
-  public String config = "";
+  public @NlsSafe String config = "";
   public boolean showInfo = false;
   public boolean findUnusedCode = false;
   public boolean findUnusedSuppress = false;
