@@ -9,7 +9,11 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.profile.codeInspection.InspectionProfileManager;
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiManager;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationException;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
@@ -21,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +84,9 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
           getToolOutput(project, configuration.getInterpreterId(), configuration.getToolPath(), configuration.getTimeout(),
                         PsalmBundle.message("action.generate.psalm.xml.in.project.root"), null, "--init");
           if (path != null) {
-            markDirtyAndRefresh(true, false, false, new File(Paths.get(path, "psalm.xml").toString()));
+            final Path configPath = Paths.get(path, "psalm.xml");
+            markDirtyAndRefresh(true, false, false, new File(configPath.toString()));
+            updateInspectionSettings(configPath);
           }
           notification.expire();
         }
@@ -88,6 +95,16 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
                                                   PsalmBundle.message("psalm.config.not.generated"), WARNING));
           
         }
+      }
+
+      private void updateInspectionSettings(Path configPath) {
+        VirtualFile projectDir = project.getBaseDir();
+        if (projectDir == null) return;
+        final PsiDirectory file = PsiManager.getInstance(project).findDirectory(projectDir);
+        if (file == null) return;
+        InspectionProfileManager.getInstance(project).getCurrentProfile().modifyToolSettings(
+          Key.<PsalmGlobalInspection>create(PsalmQualityToolType.INSTANCE.getInspectionId()), file,
+          inspection -> inspection.config = configPath.toString());
       }
     });
     Notifications.Bus.notify(notification);
