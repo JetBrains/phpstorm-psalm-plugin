@@ -53,13 +53,20 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
 
   @Override
   protected void checkCmdOptions(@NotNull Project project) {
-    if (!getCommandLineOptions(null).contains("-c") && !Files.exists(Paths.get(project.getBasePath(), "psalm.xml"))) {
-      notifyAboutMissingConfig(project);
+    final List<String> options = getCommandLineOptions(null);
+    Path path = Paths.get(project.getBasePath(), "psalm.xml");
+    if (!options.contains("-c") && !Files.exists(path)) {
+      notifyAboutMissingConfig(project, path.toString());
+    }
+    else {
+      path = Paths.get(options.get(options.indexOf("-c") + 1));
+      if (options.contains("-c") && !Files.exists(path)) {
+        notifyAboutMissingConfig(project, path.toString());
+      }
     }
   }
 
-  public static void notifyAboutMissingConfig(@NotNull Project project) {
-    final String path = project.getBasePath();
+  public static void notifyAboutMissingConfig(@NotNull Project project, @NotNull String path) {
     final Notification notification =
       new Notification(GROUP_ID, PsalmQualityToolType.INSTANCE.getDisplayName(),
                        PsalmBundle.message("psalm.config.not.found", path), WARNING);
@@ -83,11 +90,9 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
           }
           getToolOutput(project, configuration.getInterpreterId(), configuration.getToolPath(), configuration.getTimeout(),
                         PsalmBundle.message("action.generate.psalm.xml.in.project.root"), null, "--init");
-          if (path != null) {
-            final Path configPath = Paths.get(path, "psalm.xml");
-            markDirtyAndRefresh(true, false, false, new File(configPath.toString()));
-            updateInspectionSettings(configPath);
-          }
+          final Path configPath = Paths.get(project.getBasePath(), "psalm.xml");
+          markDirtyAndRefresh(true, false, false, new File(configPath.toString()));
+          updateInspectionSettings(configPath);
           notification.expire();
         }
         catch (QualityToolValidationException | ExecutionException exception) {
