@@ -107,7 +107,7 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
 
     @Override
     public int getColumn() {
-      return myColumn;
+      return myColumn - 1;
     }
 
     public String getFile() {
