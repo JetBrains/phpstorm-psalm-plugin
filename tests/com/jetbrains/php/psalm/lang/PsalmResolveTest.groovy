@@ -1,15 +1,9 @@
 package com.jetbrains.php.psalm.lang
 
 import com.intellij.psi.PsiPolyVariantReference
-import com.intellij.psi.PsiReference
-import com.intellij.psi.ResolveResult
-import com.intellij.util.containers.ContainerUtil
 import com.jetbrains.php.fixtures.PhpCodeInsightFixtureTestCase
-import com.jetbrains.php.lang.psi.elements.Constant
 import com.jetbrains.php.lang.psi.elements.Field
-import com.jetbrains.php.lang.psi.elements.Variable
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest
-import org.junit.Assert
 
 class PsalmResolveTest extends PhpCodeInsightFixtureTestCase{
   @Override
@@ -46,6 +40,6 @@ function f($a, $b)
     def second = multiResolve[1].getElement()
     assertInstanceOf(first, Field.class)
     assertInstanceOf(second, Field.class)
-    assertEquals(ContainerUtil.set("\\C.A_1", "\\C.A_2"), ContainerUtil.set(first.getFQN(), second.getFQN()))
+    assertEquals(Set.of("\\C.A_1", "\\C.A_2"), Set.of(first.getFQN(), second.getFQN()))
   }
 }
