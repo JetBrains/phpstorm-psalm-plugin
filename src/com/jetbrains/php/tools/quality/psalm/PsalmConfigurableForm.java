@@ -30,7 +30,7 @@ public class PsalmConfigurableForm<C extends PsalmConfiguration> extends Quality
   @NotNull
   @Override
   public Pair<Boolean, String> validateMessage(@NonNls String message) {
-    final Version version = extractVersion(message.replaceFirst("Psalm.* ([\\d.]*).*", "$1").trim());
+    final Version version = extractVersion(message.trim().replaceFirst("Psalm.* ([\\d.]*).*", "$1").trim());
     if ((version == null && !message.contains("dev-master")) || !message.contains(PSALM)) {
       return Pair.create(false, PhpBundle.message("quality.tool.can.not.determine.version", message));
     }
