@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes.*;
@@ -34,10 +35,12 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
     return element instanceof PhpDocType ? parsePsalmType((PhpDocType)element) : null;
   }
 
+  private static final Collection<String> GENERIC_ARRAYS_NAMES = Set.of("array", "list");
+
   private static @Nullable PhpType parsePsalmType(@NotNull PhpDocType docType) {
     String name = StringUtil.notNullize(docType.getName());
     PsiElement attributes = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
-    if (attributes == null || !"array".equalsIgnoreCase(name) && !"list".equalsIgnoreCase(name)) {
+    if (attributes == null || !GENERIC_ARRAYS_NAMES.contains(StringUtil.toLowerCase(name))) {
       return null;
     }
     return valueDocTypes(docType)
