@@ -35,7 +35,7 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
     return element instanceof PhpDocType ? parsePsalmType((PhpDocType)element) : null;
   }
 
-  private static final Collection<String> GENERIC_ARRAYS_NAMES = Set.of("array", "list");
+  private static final Collection<String> GENERIC_ARRAYS_NAMES = Set.of("array", "list", "non-empty-array");
 
   private static @Nullable PhpType parsePsalmType(@NotNull PhpDocType docType) {
     String name = StringUtil.notNullize(docType.getName());

@@ -25,6 +25,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest(PhpType.STRING.pluralise());
   }
 
+  public void testGenericArray$nonEmptyArray() {
+    doTypeTest(PhpType.STRING.pluralise());
+  }
+
   public void testGenericArray$nestedKey() {
     doTypeTest(PhpType.STRING.pluralise(2));
   }
