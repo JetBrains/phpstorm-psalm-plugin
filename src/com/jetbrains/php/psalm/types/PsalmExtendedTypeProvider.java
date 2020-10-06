@@ -41,6 +41,7 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   private static boolean declaredInCustomTypeDocTag(@Nullable PhpDocComment docComment, String name) {
     if (docComment == null) return false;
     if (getTypeNames(docComment, "@template").contains(name) ||
+        getTypeNames(docComment, "@psalm-template").contains(name) ||
         getTypeNames(docComment, "@psalm-type").contains(name) ||
         getImportedTypeNames(docComment).contains(name)) {
       return true;

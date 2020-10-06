@@ -17,6 +17,7 @@ function makeArray($t) {
 
 /**
  * @template T
+ * @psalm-template T1
  */
 class MyContainer {
     /** @var T */
@@ -29,6 +30,11 @@ class MyContainer {
 
     /** @return T */
     public function getValue() {
+        return $this->value;
+    }
+
+    /** @return T1 */
+    public function getValue1() {
         return $this->value;
     }
 }
