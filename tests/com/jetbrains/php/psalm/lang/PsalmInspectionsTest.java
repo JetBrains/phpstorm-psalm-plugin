@@ -28,6 +28,10 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
     doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  public void testUndefinedClassPsalmType() {
+    doInspectionTest(PhpUndefinedClassInspection.class);
+  }
+
   public void testDocRefInsideDocType() {
     doInspectionTest(true);
   }
