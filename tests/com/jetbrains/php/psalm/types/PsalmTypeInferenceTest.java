@@ -104,4 +104,24 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testTypesFromExtendedClassConstantsWildcard() {
     doTypeTest(PhpType.INT, PhpType.STRING);
   }
+
+  public void testFunctionTemplate() {
+    doTypeTest(PhpType.INT, PhpType.MIXED);
+  }
+
+  public void testMethodTemplate() {
+    doTypeTest(PhpType.INT, PhpType.MIXED);
+  }
+
+  public void testClassTemplate() {
+    doTypeTest(PhpType.STRING, PhpType.MIXED);
+  }
+
+  public void testPsalmTagsTemplate() {
+    doTypeTest(PhpType.INT, PhpType.MIXED);
+  }
+
+  public void testWithoutTemplate() {
+    doTypeTest(new PhpType().add("\\T"));
+  }
 }

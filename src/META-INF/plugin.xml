@@ -53,9 +53,11 @@
     <docTagParserExtension tagName="psalm-param" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
     <docTagParserExtension tagName="psalm-return" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocReturnTagParser" />
     <docTagParserExtension tagName="psalm-var" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocVarTagParser" />
+    <metaTableProvider implementation="com.jetbrains.php.psalm.types.PsalmMetaTableProvider"/>
   </extensions>
   <extensions defaultExtensionNs="com.intellij">
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.psalm.completion.PsalmCompletionContributor"/>
     <psi.referenceContributor language="PHP" implementation="com.jetbrains.php.psalm.lang.PsalmReferenceContributor"/>
+    <fileBasedIndex implementation="com.jetbrains.php.psalm.types.PsalmTemplateIndex"/>
   </extensions>
 </idea-plugin>

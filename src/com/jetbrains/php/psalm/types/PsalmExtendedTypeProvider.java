@@ -45,7 +45,7 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
            getImportedTypeNames(docComment).contains(name);
   }
 
-  private static @NotNull Collection<String> getTemplates(@Nullable PhpDocComment docComment) {
+  public static @NotNull Collection<String> getTemplates(@Nullable PhpDocComment docComment) {
     return ContainerUtil.union(getTypeNames(docComment, "@template"), getTypeNames(docComment, "@psalm-template"));
   }
 
