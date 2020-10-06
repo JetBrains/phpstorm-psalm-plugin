@@ -24,6 +24,10 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
     doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  public void testUndefinedClassClosure() {
+    doInspectionTest(PhpUndefinedClassInspection.class);
+  }
+
   public void testUndefinedClassTemplate() {
     doInspectionTest(PhpUndefinedClassInspection.class);
   }
