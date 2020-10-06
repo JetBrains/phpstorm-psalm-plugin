@@ -23,13 +23,16 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
     ,"trait-string"
   );
 
-  private static final String SCALAR = "scalar";
-  private static final String NUMERIC = "numeric";
-  private static final String ARRAY_KEY = "array-key";
-  private static final String EMPTY = "empty";
-
-  public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, Arrays.asList(SCALAR, NUMERIC, ARRAY_KEY, EMPTY));
   private static final @NotNull PhpType NUMERIC_TYPE = PhpType.builder().add(PhpType.STRING).add(PhpType.INT).add(PhpType.FLOAT).build();
+
+  private static final Map<String, PhpType> ALTERNATIVE_SCALAR_TYPES = Map.of(
+    "scalar", PhpType.SCALAR
+    ,"numeric", NUMERIC_TYPE
+    ,"array-key", PhpType.NUMERIC
+    ,"empty", PhpType.MIXED
+  );
+
+  public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, ALTERNATIVE_SCALAR_TYPES.keySet());
 
   @Override
   public char getKey() {
@@ -40,19 +43,10 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType) {
       String name = StringUtil.toLowerCase(((PhpDocType)element).getName());
-      if (SCALAR.equals(name)) {
-        return PhpType.SCALAR;
+      if (ALTERNATIVE_SCALAR_TYPES.containsKey(name)) {
+        return ALTERNATIVE_SCALAR_TYPES.get(name);
       }
-      if (NUMERIC.equals(name)) {
-        return NUMERIC_TYPE;
-      }
-      if (ARRAY_KEY.equals(name)) {
-        return PhpType.NUMERIC;
-      }
-      if (EMPTY.equals(name)) {
-        return PhpType.MIXED;
-      }
-      if (EXTENDED_STRINGS.contains(name)) {
+      else if (EXTENDED_STRINGS.contains(name)) {
         return PhpType.STRING;
       }
     }
