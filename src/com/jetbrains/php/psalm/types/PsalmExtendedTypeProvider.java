@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,28 +40,37 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   }
 
   private static boolean declaredInCustomTypeDocTag(@Nullable PhpDocComment docComment, String name) {
-    if (docComment == null) return false;
-    if (getTypeNames(docComment, "@template").contains(name) ||
-        getTypeNames(docComment, "@psalm-template").contains(name) ||
-        getTypeNames(docComment, "@psalm-type").contains(name) ||
-        getImportedTypeNames(docComment).contains(name)) {
-      return true;
-    }
-    PsiElement owner = docComment.getOwner();
-    if (!(owner instanceof PhpClass)) {
-      PhpClass containingClass = PhpPsiUtil.getParentByCondition(owner, PhpClass.INSTANCEOF);
-      if (containingClass != null) {
-        return declaredInCustomTypeDocTag(containingClass.getDocComment(), name);
-      }
-    }
-    return false;
+    return getTemplates(docComment).contains(name) ||
+           getTypeNames(docComment, "@psalm-type").contains(name) ||
+           getImportedTypeNames(docComment).contains(name);
+  }
+
+  private static @NotNull Collection<String> getTemplates(@Nullable PhpDocComment docComment) {
+    return ContainerUtil.union(getTypeNames(docComment, "@template"), getTypeNames(docComment, "@psalm-template"));
   }
 
   private static Collection<String> getTypeNames(@Nullable PhpDocComment docComment, String tagName) {
-    return tagValues(docComment, tagName)
+    return getNamesInCurrentCommentOrClass(docComment, c -> tagValues(c, tagName)
       .map(value -> PhpPsiUtil.getChildOfType(value, DOC_IDENTIFIER)).filter(Objects::nonNull)
       .map(PsiElement::getText)
-      .collect(Collectors.toSet());
+      .collect(Collectors.toSet()));
+  }
+
+  private static Collection<String> getNamesInCurrentCommentOrClass(PhpDocComment docComment, Function<@Nullable PhpDocComment, Collection<String>> f) {
+    if (docComment == null) {
+      return Collections.emptySet();
+    }
+    Collection<String> names = f.apply(docComment);
+    if (names.isEmpty()) {
+      PsiElement owner = docComment.getOwner();
+      if (!(owner instanceof PhpClass)) {
+        PhpClass containingClass = PhpPsiUtil.getParentByCondition(owner, PhpClass.INSTANCEOF);
+        if (containingClass != null) {
+          return f.apply(containingClass.getDocComment());
+        }
+      }
+    }
+    return names;
   }
 
   @NotNull
@@ -70,10 +80,10 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   }
 
   private static Collection<String> getImportedTypeNames(@Nullable PhpDocComment docComment) {
-    return tagValues(docComment, "@psalm-import-type")
+    return getNamesInCurrentCommentOrClass(docComment, c -> tagValues(c, "@psalm-import-type")
       .map(PsalmExtendedTypeProvider::getImportedName).filter(Objects::nonNull)
       .map(PsiElement::getText)
-      .collect(Collectors.toSet());
+      .collect(Collectors.toSet()));
   }
 
   private static PsiElement getImportedName(PhpPsiElement value) {
