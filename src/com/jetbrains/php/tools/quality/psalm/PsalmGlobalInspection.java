@@ -89,7 +89,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
             return;
           }
           getToolOutput(project, configuration.getInterpreterId(), configuration.getToolPath(), configuration.getTimeout(),
-                        PsalmBundle.message("action.generate.psalm.xml.in.project.root"), null, "--init");
+                        PsalmBundle.message("action.generate.psalm.xml.in.project.root"), null, "--init", ".", "3");
           final Path configPath = Paths.get(project.getBasePath(), "psalm.xml");
           markDirtyAndRefresh(true, false, false, new File(configPath.toString()));
           updateInspectionSettings(configPath);
