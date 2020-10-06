@@ -1,6 +1,5 @@
 package com.jetbrains.php.psalm.types;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.containers.ContainerUtil;
@@ -8,6 +7,7 @@ import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocTag;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
+import com.jetbrains.php.lang.psi.elements.PhpClass;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
@@ -31,14 +31,28 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType) {
       PhpDocComment docComment = PhpPsiUtil.getParentByCondition(element, PhpDocComment.INSTANCEOF);
-      String name = ((PhpDocType)element).getName();
-      if (getTypeNames(docComment, "@template").contains(name) ||
-          getTypeNames(docComment, "@psalm-type").contains(name) ||
-          getImportedTypeNames(docComment).contains(name)) {
+      if (declaredInCustomTypeDocTag(docComment, ((PhpDocType)element).getName())) {
         return PhpType.MIXED;
       }
     }
     return null;
+  }
+
+  private static boolean declaredInCustomTypeDocTag(@Nullable PhpDocComment docComment, String name) {
+    if (docComment == null) return false;
+    if (getTypeNames(docComment, "@template").contains(name) ||
+        getTypeNames(docComment, "@psalm-type").contains(name) ||
+        getImportedTypeNames(docComment).contains(name)) {
+      return true;
+    }
+    PsiElement owner = docComment.getOwner();
+    if (!(owner instanceof PhpClass)) {
+      PhpClass containingClass = PhpPsiUtil.getParentByCondition(owner, PhpClass.INSTANCEOF);
+      if (containingClass != null) {
+        return declaredInCustomTypeDocTag(containingClass.getDocComment(), name);
+      }
+    }
+    return false;
   }
 
   private static Collection<String> getTypeNames(@Nullable PhpDocComment docComment, String tagName) {
