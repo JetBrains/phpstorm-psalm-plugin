@@ -5,6 +5,7 @@ class B {}
  * @param array<<warning descr="Undefined class 'A'">A</warning>>
  * @param B[]
  * @param array<B>
+ * @param array<empty>
  */
 function f()
 {
