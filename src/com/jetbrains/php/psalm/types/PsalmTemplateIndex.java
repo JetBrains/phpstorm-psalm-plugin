@@ -73,7 +73,9 @@ public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaT
       return Collections.emptyMap();
     }
     PhpMetaTypeMappingsTable table = new PhpMetaTypeMappingsTable();
-    table.put(PhpParameterBasedTypeProvider.TYPE_KEY, String.valueOf(parametersIndicesToReturn[0]));
+    for (int parameterIndexToReturn : parametersIndicesToReturn) {
+      table.put(PhpParameterBasedTypeProvider.TYPE_KEY, String.valueOf(parameterIndexToReturn));
+    }
     return Map.of(PhpTypeSignatureKey.getSignature(f), table);
   }
 
@@ -129,7 +131,7 @@ public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaT
 
   @Override
   public int getVersion() {
-    return 1;
+    return 2;
   }
 
   @Override
