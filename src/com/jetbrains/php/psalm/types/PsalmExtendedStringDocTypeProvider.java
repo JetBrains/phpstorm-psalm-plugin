@@ -31,6 +31,9 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
     ,"array-key", PhpType.NUMERIC
     ,"empty", PhpType.MIXED
     ,"closure", PhpType.CLOSURE
+    ,"never-return", PhpType.VOID
+    ,"never-returns", PhpType.VOID
+    ,"no-return", PhpType.VOID
   );
 
   public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, ALTERNATIVE_SCALAR_TYPES.keySet());
