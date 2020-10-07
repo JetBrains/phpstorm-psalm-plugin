@@ -18,6 +18,16 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     return "completion";
   }
 
+  public void testCustomDeclaredTypes() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings()
+      , "MyTemp1"
+      , "MyTemp2"
+      , "MyTemp3"
+    );
+
+  }
+
   public void testCustomDocTypes() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "class-string"
@@ -29,5 +39,7 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
       , "empty"
       , "trait-string"
     );
+
+
   }
 }

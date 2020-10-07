@@ -43,7 +43,7 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
     return getTemplates(docComment).contains(name) || getCustomTypes(docComment).contains(name);
   }
 
-  private static Collection<String> getCustomTypes(PhpDocComment docComment) {
+  public static Collection<String> getCustomTypes(PhpDocComment docComment) {
     return ContainerUtil.union(getTypeNames(docComment, "@psalm-type"), getImportedTypeNames(docComment));
   }
 
