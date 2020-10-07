@@ -40,9 +40,11 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   }
 
   private static boolean declaredInCustomTypeDocTag(@Nullable PhpDocComment docComment, String name) {
-    return getTemplates(docComment).contains(name) ||
-           getTypeNames(docComment, "@psalm-type").contains(name) ||
-           getImportedTypeNames(docComment).contains(name);
+    return getTemplates(docComment).contains(name) || getCustomTypes(docComment).contains(name);
+  }
+
+  private static Collection<String> getCustomTypes(PhpDocComment docComment) {
+    return ContainerUtil.union(getTypeNames(docComment, "@psalm-type"), getImportedTypeNames(docComment));
   }
 
   public static @NotNull Collection<String> getTemplates(@Nullable PhpDocComment docComment) {
