@@ -30,7 +30,7 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
     ,"numeric", NUMERIC_TYPE
     ,"array-key", PhpType.NUMERIC
     ,"empty", PhpType.MIXED
-    ,"closure", PhpType.CALLABLE
+    ,"closure", PhpType.CLOSURE
   );
 
   public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, ALTERNATIVE_SCALAR_TYPES.keySet());

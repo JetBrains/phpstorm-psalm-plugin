@@ -124,4 +124,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testWithoutTemplate() {
     doTypeTest(new PhpType().add("\\T"));
   }
+
+  public void testClosure() {
+    doTypeTest(PhpType.CLOSURE);
+  }
 }
