@@ -3,6 +3,7 @@ package com.jetbrains.php.psalm.types;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.lang.documentation.phpdoc.PhpDocUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocTag;
@@ -48,11 +49,11 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   }
 
   public static @NotNull Collection<String> getTemplates(@Nullable PhpDocComment docComment) {
-    return ContainerUtil.union(getTypeNames(docComment, "@template"), getTypeNames(docComment, "@psalm-template"));
+    return getTypeNames(docComment, "@template", "@psalm-template");
   }
 
-  private static Collection<String> getTypeNames(@Nullable PhpDocComment docComment, String tagName) {
-    return getNamesInCurrentCommentOrClass(docComment, c -> tagValues(c, tagName)
+  private static Collection<String> getTypeNames(@Nullable PhpDocComment docComment, String... tagNames) {
+    return getNamesInCurrentCommentOrClass(docComment, c -> tagValues(c, tagNames)
       .map(value -> PhpPsiUtil.getChildOfType(value, DOC_IDENTIFIER)).filter(Objects::nonNull)
       .map(PsiElement::getText)
       .collect(Collectors.toSet()));
@@ -83,9 +84,16 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   }
 
   @NotNull
-  private static Stream<PhpPsiElement> tagValues(@Nullable PhpDocComment docComment, String tagName) {
-    Stream<PhpDocTag> tagElements = docComment != null ? Arrays.stream(docComment.getTagElementsByName(tagName)) : Stream.empty();
-    return tagElements.map(PhpPsiElement::getFirstPsiChild).filter(Objects::nonNull);
+  private static Stream<PhpPsiElement> tagValues(@Nullable PhpDocComment docComment, String... tagNames) {
+    if (docComment == null) {
+      return Stream.empty();
+    }
+    Collection<PhpDocTag> docTags = new ArrayList<>();
+    PhpDocUtil.processTagElementsByNames(docComment, tag -> {
+      docTags.add(tag);
+      return true;
+    }, tagNames);
+    return docTags.stream().map(PhpPsiElement::getFirstPsiChild).filter(Objects::nonNull);
   }
 
   private static Collection<String> getImportedTypeNames(@Nullable PhpDocComment docComment) {
