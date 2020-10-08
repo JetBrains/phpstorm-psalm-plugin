@@ -18,10 +18,14 @@ function makeArray($t) {
 /**
  * @template T
  * @psalm-template T1
+ * @template-covariant T33
  */
 class MyContainer {
     /** @var T */
     private $value;
+
+    /** @var T33 */
+    private $value1;
 
     /** @param T $value */
     public function __construct($value) {

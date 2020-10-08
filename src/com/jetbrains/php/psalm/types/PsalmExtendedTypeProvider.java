@@ -49,7 +49,7 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   }
 
   public static @NotNull Collection<String> getTemplates(@Nullable PhpDocComment docComment) {
-    return getTypeNames(docComment, "@template", "@psalm-template");
+    return getTypeNames(docComment, "@template", "@psalm-template", "@template-covariant");
   }
 
   private static Collection<String> getTypeNames(@Nullable PhpDocComment docComment, String... tagNames) {
