@@ -65,21 +65,19 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
     }
     Collection<String> names = f.apply(docComment);
     PsiElement owner = docComment.getOwner();
-      if (!(owner instanceof PhpClass)) {
-        if (!(owner instanceof com.jetbrains.php.lang.psi.elements.Function)) {
-          com.jetbrains.php.lang.psi.elements.Function function =
-            PhpPsiUtil.getParentByCondition(owner, com.jetbrains.php.lang.psi.elements.Function.INSTANCEOF);
-          if (function != null) {
-            names = f.apply(function.getDocComment());
-          }
-        }
-        if (names.isEmpty()) {
-          PhpClass containingClass = PhpPsiUtil.getParentByCondition(owner, PhpClass.INSTANCEOF);
-          if (containingClass != null) {
-            return f.apply(containingClass.getDocComment());
-          }
+    if (!(owner instanceof PhpClass)) {
+      if (!(owner instanceof com.jetbrains.php.lang.psi.elements.Function)) {
+        com.jetbrains.php.lang.psi.elements.Function function =
+          PhpPsiUtil.getParentByCondition(owner, com.jetbrains.php.lang.psi.elements.Function.INSTANCEOF);
+        if (function != null) {
+          names = f.apply(function.getDocComment());
         }
       }
+      PhpClass containingClass = PhpPsiUtil.getParentByCondition(owner, PhpClass.INSTANCEOF);
+      if (containingClass != null) {
+        return ContainerUtil.union(f.apply(containingClass.getDocComment()), names);
+      }
+    }
     return names;
   }
 
