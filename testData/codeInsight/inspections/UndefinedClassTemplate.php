@@ -33,8 +33,13 @@ class MyContainer {
         return $this->value;
     }
 
-    /** @return T1 */
+    /**
+     * @template T22
+     * @return T1
+     */
     public function getValue1() {
+        /** @var T22|<warning descr="Undefined class 'T23'">T23</warning> $value */
+        echo $value;
         return $this->value;
     }
 }
