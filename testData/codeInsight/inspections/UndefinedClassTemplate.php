@@ -47,3 +47,34 @@ class MyContainer {
         return $this->value;
     }
 }
+
+
+/**
+ * @template T3
+ */
+class F {
+    /**
+     * @template T
+     */
+    function f($param) {
+        new class {
+            public function ff() {
+                /**
+                 * @template T1
+                 * @psalm-param T $a
+                 * @psalm-param T3 $a
+                 */
+                $a = function ($x) {
+                    /** @psalm-param T1 $x */
+                    $x;
+
+                    /** @psalm-param T $x */
+                    $x;
+
+                    /** @psalm-param T3 $x */
+                    $x;
+                };
+            }
+        };
+    }
+}
