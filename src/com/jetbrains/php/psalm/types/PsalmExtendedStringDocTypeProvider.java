@@ -42,6 +42,8 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
     ,"non-empty-uppercase-string", PhpType.STRING
     ,"lowercase-string", PhpType.STRING
     ,"uppercase-string", PhpType.STRING
+    ,"uppercase-string", PhpType.STRING
+    ,"positive-int", PhpType.INT
   );
 
   public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, ALTERNATIVE_SCALAR_TYPES.keySet());
