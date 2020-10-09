@@ -16,7 +16,3 @@ This plugin adds dedicated functionality for [Psalm](https://psalm.dev/) to [Php
 
 - Existing PhpStorm code analysis features are aware of Psalm-specific annotations
 - New Psalm-related inspections
-  
-# Contributing
-
-If you are introducing a user-visible change, please make sure to create the corresponding issue first, comment about intention to start a work on the fix and cover the change with a test with the implementation.
