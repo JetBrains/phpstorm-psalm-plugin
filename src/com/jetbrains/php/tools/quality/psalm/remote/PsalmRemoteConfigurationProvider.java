@@ -28,7 +28,7 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManage
 
 public class PsalmRemoteConfigurationProvider extends PsalmConfigurationProvider {
 
-  @NonNls private static final String PSALM_BY_INTERPRETER = "psalm_by_interpreter";
+  @NonNls private static final String PSALM_BY_INTERPRETER = "psalm_fixer_by_interpreter";
 
   @Override
   public boolean canLoad(@NotNull String tagName) {
