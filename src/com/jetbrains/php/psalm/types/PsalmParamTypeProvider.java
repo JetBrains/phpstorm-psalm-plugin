@@ -38,30 +38,39 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
   private static final Collection<String> GENERIC_ARRAYS_NAMES = Set.of("array", "list", "non-empty-array");
 
   private static @Nullable PhpType parsePsalmType(@NotNull PhpDocType docType) {
-    String name = StringUtil.notNullize(docType.getName());
-    PsiElement attributes = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
-    if (attributes == null || !GENERIC_ARRAYS_NAMES.contains(StringUtil.toLowerCase(name))) {
-      return null;
-    }
+    if (!isGenericArray(docType)) return null;
     return valueDocTypes(docType)
       .map(PhpTypedElement::getType)
       .reduce(new PhpType(), PhpType::add).pluralise();
   }
 
+  public static boolean isGenericArray(@NotNull PhpDocType docType) {
+    String name = StringUtil.notNullize(docType.getName());
+    PsiElement attributes = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
+    return attributes != null && GENERIC_ARRAYS_NAMES.contains(StringUtil.toLowerCase(name));
+  }
+
   @NotNull
   private static JBIterable<PhpDocType> valueDocTypes(@NotNull PhpDocType docType) {
-    PsiElement attributes = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
-    if (attributes == null) {
+    PsiElement elementToFindCommentsAfter = getTypesSeparatorElement(docType);
+    if (elementToFindCommentsAfter == null) {
       return JBIterable.empty();
     }
-    PsiElement attributesFirstChild = attributes.getFirstChild();
-    if (!(isOfType(attributesFirstChild, DOC_LAB) && isOfType(attributes.getLastChild(), DOC_RAB))) {
-      return JBIterable.empty();
-    }
-    PsiElement elementToFindCommentsAfter = ObjectUtils.notNull(PhpPsiUtil.getChildOfType(attributes, DOC_COMMA), attributesFirstChild);
     return SyntaxTraverser.psiApi()
       .siblings(elementToFindCommentsAfter)
       .filter(PhpDocType.class);
+  }
+
+  public static @Nullable PsiElement getTypesSeparatorElement(@NotNull PhpDocType docType) {
+    PsiElement attributes = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
+    if (attributes == null) {
+      return null;
+    }
+    PsiElement attributesFirstChild = attributes.getFirstChild();
+    if (!(isOfType(attributesFirstChild, DOC_LAB) && isOfType(attributes.getLastChild(), DOC_RAB))) {
+      return null;
+    }
+    return ObjectUtils.notNull(PhpPsiUtil.getChildOfType(attributes, DOC_COMMA), attributesFirstChild);
   }
 
   @Override
