@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.util.ArrayUtil;
 import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.*;
@@ -31,7 +32,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
     if (tool == null) {
       return emptyList();
     }
-    return tool.getCommandLineOptions(filePath);
+    return tool.getCommandLineOptions(filePath, project);
   }
   
   @Override
@@ -42,7 +43,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
     }
     else {
       path = Paths.get(options.get(options.indexOf("-c") + 1));
-      if (options.contains("-c") && !Files.exists(path)) {
+      if (options.contains("-c") && !Files.exists(path) && FileUtil.isAncestor(project.getBasePath(), path.toString(), false)) {
         PsalmGlobalInspection.notifyAboutMissingConfig(project, path.toString());
       }
     }

@@ -35,6 +35,7 @@ import static com.intellij.notification.NotificationType.WARNING;
 import static com.intellij.openapi.util.text.StringUtilRt.isEmpty;
 import static com.intellij.openapi.vfs.VfsUtil.markDirtyAndRefresh;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.GROUP_ID;
+import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemote;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection {
@@ -53,7 +54,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
 
   @Override
   protected void checkCmdOptions(@NotNull Project project) {
-    final List<String> options = getCommandLineOptions(null);
+    final List<String> options = getCommandLineOptions(null, project);
     Path path = Paths.get(project.getBasePath(), "psalm.xml");
     if (!options.contains("-c") && !Files.exists(path)) {
       notifyAboutMissingConfig(project, path.toString());
@@ -131,12 +132,12 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
   }
 
 
-  public List<String> getCommandLineOptions(@Nullable String filePath) {
+  public List<String> getCommandLineOptions(@Nullable String filePath, Project project) {
     @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("--output-format=checkstyle");
     if (!isEmpty(config)) {
       options.add("-c");
-      options.add(config);
+      options.add(updateIfRemote(config, project, PsalmQualityToolType.INSTANCE));
     }
     if (showInfo) {
       options.add("--show-info");
