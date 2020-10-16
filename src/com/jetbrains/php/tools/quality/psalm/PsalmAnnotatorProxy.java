@@ -50,7 +50,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
   }
 
   @Override
-  protected List<AnAction> getAdditionalActions() {
+  protected List<AnAction> getAdditionalTimeoutActions() {
     return Collections.singletonList(new AnAction(PhpBundle.message("init.cache")) {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
