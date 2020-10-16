@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.psalm;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -17,7 +18,7 @@ public class PsalmConfigurationManager extends QualityToolConfigurationManager<P
     if (project != null) {
       myProjectManager = ServiceManager.getService(project, PsalmProjectConfigurationManager.class);
     }
-    myApplicationManager = ServiceManager.getService(PsalmAppConfigurationManager.class);
+    myApplicationManager = ApplicationManager.getApplication().getService(PsalmAppConfigurationManager.class);
   }
 
   public static PsalmConfigurationManager getInstance(@NotNull Project project) {

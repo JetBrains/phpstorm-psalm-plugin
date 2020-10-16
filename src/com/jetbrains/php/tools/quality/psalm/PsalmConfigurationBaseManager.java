@@ -1,6 +1,6 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationBaseManager;
@@ -39,6 +39,6 @@ public class PsalmConfigurationBaseManager extends QualityToolConfigurationBaseM
   }
 
   public static PsalmConfigurationBaseManager getInstance() {
-    return ServiceManager.getService(PsalmConfigurationBaseManager.class);
+    return ApplicationManager.getApplication().getService(PsalmConfigurationBaseManager.class);
   }
 }
