@@ -83,11 +83,6 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
     return PsalmQualityToolType.INSTANCE;
   }
 
-  @Override
-  public boolean processStdErrMessages() {
-    return false;
-  }
-
   private static class PsalmXmlMessageHandler extends XMLMessageHandler {
     String myFile;
     int myColumn = 0;
