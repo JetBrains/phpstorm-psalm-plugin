@@ -11,6 +11,7 @@ import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpClass;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
+import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
 import org.jetbrains.annotations.NotNull;
@@ -24,17 +25,26 @@ import java.util.stream.Stream;
 import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes.DOC_IDENTIFIER;
 
 public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
+  private static final PhpCharBasedTypeKey KEY = new PhpCharBasedTypeKey() {
+    @Override
+    public char getKey() {
+      return '\u1890';
+    }
+  };
+
+
   @Override
   public char getKey() {
-    return '\u1890';
+    return KEY.getKey();
   }
 
   @Override
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType) {
       PhpDocComment docComment = PhpPsiUtil.getParentByCondition(element, PhpDocComment.INSTANCEOF);
-      if (declaredInCustomTypeDocTag(docComment, ((PhpDocType)element).getName())) {
-        return PhpType.MIXED;
+      String name = ((PhpDocType)element).getName();
+      if (declaredInCustomTypeDocTag(docComment, name)) {
+        return new PhpType().add(KEY.sign(name));
       }
     }
     return null;
@@ -118,7 +128,7 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
 
   @Override
   public @Nullable PhpType complete(String expression, Project project) {
-    return null;
+    return PhpType.isPluralType(expression) ? PhpType.ARRAY : PhpType.MIXED;
   }
 
   @Override
