@@ -168,4 +168,24 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testIterableKey() {
     doTypeTest("\\Foo");
   }
+
+  public void testAdvancedCallable() {
+    myFixture.addFileToProject("a.php", "<?php\n" +
+                                        "class Foo {}\n" +
+                                        "/**\n" +
+                                        " * @return Closure(bool, int|string, $a int) : int|Foo\n" +
+                                        " */\n" +
+                                        "function a(): Closure{\n" +
+                                        "\n" +
+                                        "}\n" +
+                                        "\n" +
+                                        "function b(){\n" +
+                                        "    return a();\n" +
+                                        "}");
+    doTypeTest(new PhpType().add("\\Foo").add(PhpType.MIXED).add(PhpType.INT));
+  }
+
+  public void testAdvancedCallableInSameFile() {
+    doTypeTest(new PhpType().add("\\Foo").add(PhpType.MIXED).add(PhpType.INT));
+  }
 }
