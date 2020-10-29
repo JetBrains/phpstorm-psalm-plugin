@@ -148,4 +148,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testPluralClassString() {
     doTypeTest(PhpType.STRING.pluralise());
   }
+
+  public void testPositiveInt() {
+    doTypeTest(PhpType.INT);
+  }
 }
