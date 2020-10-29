@@ -156,4 +156,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testPositiveInt() {
     doTypeTest(PhpType.INT);
   }
+
+  public void testNonEmptyList() {
+    doTypeTest(PhpType.STRING);
+  }
+
+  public void testNonEmptyString() {
+    doTypeTest(PhpType.STRING);
+  }
 }
