@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.SyntaxTraverser;
 import com.intellij.util.ObjectUtils;
 import com.intellij.util.containers.JBIterable;
+import com.jetbrains.php.PhpWorkaroundUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.parser.PhpDocElementTypes;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
@@ -17,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 
 import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes.*;
@@ -35,8 +35,6 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
     return element instanceof PhpDocType ? parsePsalmType((PhpDocType)element) : null;
   }
 
-  private static final Collection<String> GENERIC_ARRAYS_NAMES = Set.of("array", "list", "non-empty-array");
-
   private static @Nullable PhpType parsePsalmType(@NotNull PhpDocType docType) {
     if (!isGenericArray(docType)) return null;
     return valueDocTypes(docType)
@@ -47,7 +45,7 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
   public static boolean isGenericArray(@NotNull PhpDocType docType) {
     String name = StringUtil.notNullize(docType.getName());
     PsiElement attributes = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
-    return attributes != null && GENERIC_ARRAYS_NAMES.contains(StringUtil.toLowerCase(name));
+    return attributes != null && PhpWorkaroundUtil.getGenericArraysNames().contains(StringUtil.toLowerCase(name));
   }
 
   @NotNull
