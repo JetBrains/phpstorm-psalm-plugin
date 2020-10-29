@@ -2,10 +2,9 @@ package com.jetbrains.php.psalm.completion;
 
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.PhpWorkaroundUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
@@ -13,6 +12,7 @@ import com.jetbrains.php.psalm.types.PsalmExtendedStringDocTypeProvider;
 import com.jetbrains.php.psalm.types.PsalmExtendedTypeProvider;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Set;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
@@ -25,11 +25,15 @@ public class PsalmCompletionContributor extends CompletionContributor {
   }
 
   private static class PsalmCustomDocTypeCompletionProvider extends CompletionProvider<CompletionParameters> {
+
+    private static final Collection<String> TYPES = ContainerUtil.union(PsalmExtendedStringDocTypeProvider.EXTENDED_SCALAR_TYPES,
+                                                                        PhpWorkaroundUtil.getGenericArraysNames());
+
     @Override
     protected void addCompletions(@NotNull CompletionParameters parameters,
                                   @NotNull ProcessingContext context,
                                   @NotNull CompletionResultSet result) {
-      for (String tag : PsalmExtendedStringDocTypeProvider.EXTENDED_SCALAR_TYPES) {
+      for (String tag : TYPES) {
         result.addElement(createCustomTypeLookupElement(tag));
       }
     }
