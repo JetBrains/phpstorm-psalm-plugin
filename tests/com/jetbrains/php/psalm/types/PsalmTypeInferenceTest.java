@@ -144,4 +144,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testScalarGeneric() {
     doTypeTest(PhpType.INT, PhpType.MIXED);
   }
+
+  public void testPluralClassStringWithArgument() {
+    doTypeTest(PhpType.STRING.pluralise());
+  }
+
+  public void testPluralClassString() {
+    doTypeTest(PhpType.STRING.pluralise());
+  }
 }
