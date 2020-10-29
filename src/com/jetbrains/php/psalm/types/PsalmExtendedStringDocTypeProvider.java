@@ -81,8 +81,10 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
   @Override
   public @Nullable PhpType complete(String expression, Project project) {
     String expr = expression.substring(2);
+    int dimension = PhpType.getPluralDimension(expression);
+    expr = PhpType.unpluralize(expr, dimension);
     int lastDot = expr.lastIndexOf('.');
-    return new PhpType().add(lastDot > 0 ? expr.substring(0, lastDot) : expr);
+    return new PhpType().add(lastDot > 0 ? expr.substring(0, lastDot) : expr).pluralise(dimension);
   }
 
   @Override

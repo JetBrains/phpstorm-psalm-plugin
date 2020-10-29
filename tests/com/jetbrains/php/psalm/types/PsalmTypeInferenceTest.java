@@ -140,4 +140,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testUnknownArrayKey() {
     doTypeTest(PhpType.NUMERIC);
   }
+
+  public void testPluralClassStringWithArgument() {
+    doTypeTest(PhpType.STRING.pluralise());
+  }
+
+  public void testPluralClassString() {
+    doTypeTest(PhpType.STRING.pluralise());
+  }
 }
