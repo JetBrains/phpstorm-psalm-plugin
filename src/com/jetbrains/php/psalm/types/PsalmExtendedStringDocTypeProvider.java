@@ -24,6 +24,7 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
     "class-string"
     ,"callable-string"
     ,"numeric-string"
+    ,"non-empty-string"
     ,"trait-string"
   );
 
