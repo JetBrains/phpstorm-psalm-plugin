@@ -160,4 +160,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testNonEmptyString() {
     doTypeTest(PhpType.STRING);
   }
+
+  public void testIterableKey() {
+    doTypeTest("\\Foo");
+  }
 }

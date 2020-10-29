@@ -31,9 +31,10 @@ public class PsalmDummyArrayKeyTypeProvider extends PhpCharBasedTypeKey implemen
       PsiElement separatorElement = PsalmParamTypeProvider.getTypesSeparatorElement(((PhpDocType)element));
       if (PhpPsiUtil.isOfType(separatorElement, DOC_COMMA)) {
         PhpType keyType = new PhpType().add(PhpPsiUtil.getPrevSiblingIgnoreWhitespace(separatorElement, true));
-        return keyType
-          .filterOut(t -> !PhpType.NUMERIC.getTypes().contains(t))
-          .map(this::sign);
+        if (!"iterable".equalsIgnoreCase(((PhpDocType)element).getName())) {
+          keyType = keyType.filterOut(t -> !PhpType.NUMERIC.getTypes().contains(t));
+        }
+        return keyType.map(this::sign);
       }
     }
     return null;
