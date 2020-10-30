@@ -2,6 +2,7 @@ package com.jetbrains.php.psalm.lang;
 
 import com.jetbrains.php.PhpInspectionTestCase;
 import com.jetbrains.php.lang.inspections.PhpUndefinedClassInspection;
+import com.jetbrains.php.lang.inspections.controlFlow.PhpUnreachableStatementInspection;
 import com.jetbrains.php.lang.inspections.phpdoc.PhpDocDuplicateTypeInspection;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
 import org.jetbrains.annotations.NotNull;
@@ -47,5 +48,9 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
 
   public void testTypeAlreadyExists() {
     doInspectionTest(PhpDocDuplicateTypeInspection.class);
+  }
+
+  public void testNoReturn() {
+    doInspectionTest(PhpUnreachableStatementInspection.class);
   }
 }
