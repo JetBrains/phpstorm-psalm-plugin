@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class PsalmDocTagTypeProvider implements PhpTypeProvider4 {
   private static final String PARAM = "@psalm-param";
-  private static final String RETURN = "@psalm-return";
+  public static final String RETURN = "@psalm-return";
   private static final String VAR = "@psalm-var";
 
   @Override

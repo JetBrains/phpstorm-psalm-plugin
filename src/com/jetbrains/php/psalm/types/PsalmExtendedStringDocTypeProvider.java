@@ -30,16 +30,22 @@ public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
 
   private static final @NotNull PhpType NUMERIC_TYPE = PhpType.builder().add(PhpType.STRING).add(PhpType.INT).add(PhpType.FLOAT).build();
 
-  private static final Map<String, PhpType> ALTERNATIVE_SCALAR_TYPES = Map.of(
-    "scalar", PhpType.SCALAR
-    ,"numeric", NUMERIC_TYPE
-    ,"array-key", PhpType.NUMERIC
-    ,"empty", PhpType.MIXED
-    ,"closure", PhpType.CLOSURE
-    ,"never-return", PhpType.VOID
+  public static final Map<String, PhpType> NO_RETURN_TYPES = Map.of(
+    "never-return", PhpType.VOID
     ,"never-returns", PhpType.VOID
     ,"no-return", PhpType.VOID
-    ,"positive-int", PhpType.INT
+  );
+
+  private static final Map<String, PhpType> ALTERNATIVE_SCALAR_TYPES = ContainerUtil.union(
+    Map.of(
+      "scalar", PhpType.SCALAR
+      ,"numeric", NUMERIC_TYPE
+      ,"array-key", PhpType.NUMERIC
+      ,"empty", PhpType.MIXED
+      ,"closure", PhpType.CLOSURE
+      ,"positive-int", PhpType.INT
+    ),
+    NO_RETURN_TYPES
   );
 
   public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, ALTERNATIVE_SCALAR_TYPES.keySet());
