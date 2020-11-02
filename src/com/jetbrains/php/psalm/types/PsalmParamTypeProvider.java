@@ -12,6 +12,7 @@ import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.elements.PhpTypedElement;
+import com.jetbrains.php.lang.psi.resolve.types.PhpKeyTypeProvider;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +40,13 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
     if (!isGenericArray(docType)) return null;
     return valueDocTypes(docType)
       .map(PhpTypedElement::getType)
-      .reduce(new PhpType(), PhpType::add).pluralise();
+      .reduce(new PhpType(), PhpType::add)
+      .map(t -> PhpKeyTypeProvider.isArrayKeySignature(t) ? signWithSameKey(t) : PhpType.pluraliseMixedAware(t, 1));
+  }
+
+  @NotNull
+  private static String signWithSameKey(@NotNull String t) {
+    return t.substring(0, 2) + t;
   }
 
   public static boolean isGenericArray(@NotNull PhpDocType docType) {

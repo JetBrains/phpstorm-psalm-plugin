@@ -184,4 +184,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testAdvancedCallableInSameFile() {
     doTypeTest(new PhpType().add("\\Foo").add(PhpType.MIXED).add(PhpType.INT));
   }
+
+  public void testElementTypeOfArrayKey() {
+    doTypeTest(PhpType.STRING);
+  }
+
+  public void testArrayKeyOfMultiDimensionalArray() {
+    doTypeTest(PhpType.INT);
+  }
 }
