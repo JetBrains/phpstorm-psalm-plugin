@@ -11,16 +11,16 @@ import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
-import com.jetbrains.php.lang.psi.resolve.types.PhpTypeSignatureKey;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import static com.intellij.util.containers.ContainerUtil.immutableList;
-
-public class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
-  private static final Collection<String> EXTENDED_STRINGS = immutableList(
+public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
+  private static final Collection<String> EXTENDED_STRINGS = List.of(
     "class-string"
     ,"callable-string"
     ,"numeric-string"
