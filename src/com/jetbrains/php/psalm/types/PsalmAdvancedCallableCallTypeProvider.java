@@ -17,7 +17,6 @@ import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeSignatureKey;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,8 +26,8 @@ public class PsalmAdvancedCallableCallTypeProvider extends PhpCharBasedTypeKey i
 
   private static final @Nullable Function<String, PhpType> SUPPLIER =
     s -> {
-      if (s.charAt(1) == PsalmAdvancedCallableTypeProvider.KEY) {
-        return new PhpType().add(s.substring(2));
+      if (PsalmAdvancedCallableTypeProvider.isSigned(s)) {
+        return new PhpType().add(PsalmAdvancedCallableTypeProvider.getReturnType(s));
       }
       return ContainerUtil.exists(PhpTypeSignatureKey.values(), key -> key.isSigned(s)) ? null : PhpType.EMPTY;
     };
