@@ -12,6 +12,7 @@ import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocParamTag;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
+import com.jetbrains.php.lang.psi.elements.PhpUse;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
@@ -27,15 +28,21 @@ public class PsalmAdvancedCallableTypeProvider extends PhpCharBasedTypeKey imple
   private static final String TYPES_SEPARATOR = String.valueOf(KEY);
   private static final String PARAMETERS_RETURN_SEPARATOR = ".";
   private static final String PARAMETERS_SEPARATOR = ",";
+  private static final String CALLABLE_SEPARATOR = ".";
+  private static final Collection<String> ADVANCED_CALLABLES = Set.of(PhpType._CLOSURE, PhpType._CALLABLE);
 
   @Override
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType && isAdvancedCallable(element)) {
+      String fqn = resolveFQN(((PhpDocType)element));
+      if (!ADVANCED_CALLABLES.contains(fqn)) {
+        return null;
+      }
       String returnType = getSerializedDocTypes(element);
       String parameterTypes = PhpPsiUtil.getChildren(element, PhpDocParamTag.class::isInstance).stream()
         .map(PsalmAdvancedCallableTypeProvider::getSerializedDocTypes)
         .collect(Collectors.joining(PARAMETERS_SEPARATOR));
-      return new PhpType().add(sign(parameterTypes + PARAMETERS_RETURN_SEPARATOR + returnType));
+      return new PhpType().add(sign(fqn + CALLABLE_SEPARATOR + parameterTypes + PARAMETERS_RETURN_SEPARATOR + returnType));
     }
     return null;
   }
@@ -49,7 +56,7 @@ public class PsalmAdvancedCallableTypeProvider extends PhpCharBasedTypeKey imple
 
   @Override
   public @Nullable PhpType complete(String expression, Project project) {
-    return PhpType.CLOSURE;
+    return new PhpType().add(expression.substring(2, expression.indexOf(CALLABLE_SEPARATOR)));
   }
 
   @Override
@@ -66,6 +73,11 @@ public class PsalmAdvancedCallableTypeProvider extends PhpCharBasedTypeKey imple
     return ContainerUtil.exists(element.getNode().getChildren(TokenSet.create(PhpDocTokenTypes.DOC_TEXT)), e -> e.getText().equals(":"));
   }
 
+  private static @NotNull String resolveFQN(@NotNull PhpDocType element) {
+    PhpNamedElement useElement = ContainerUtil.getOnlyItem(element.resolveLocal());
+    return useElement instanceof PhpUse ? useElement.getFQN() : element.getFQN();
+  }
+
   public static boolean isSigned(String s) {
     return s.charAt(1) == KEY;
   }
@@ -77,9 +89,9 @@ public class PsalmAdvancedCallableTypeProvider extends PhpCharBasedTypeKey imple
 
   @NotNull
   public static List<PhpType> getParametersTypes(String incompleteAdvancedCallableType) {
-    return ContainerUtil
-      .map(StringUtil.split(incompleteAdvancedCallableType.substring(2, incompleteAdvancedCallableType.lastIndexOf(
-        PARAMETERS_RETURN_SEPARATOR)), PARAMETERS_SEPARATOR), PsalmAdvancedCallableTypeProvider::getType);
+    String signature = incompleteAdvancedCallableType.substring(incompleteAdvancedCallableType.indexOf(CALLABLE_SEPARATOR) + 1,
+                                                                incompleteAdvancedCallableType.lastIndexOf(PARAMETERS_RETURN_SEPARATOR));
+    return ContainerUtil.map(StringUtil.split(signature, PARAMETERS_SEPARATOR), PsalmAdvancedCallableTypeProvider::getType);
   }
 
   @NotNull
