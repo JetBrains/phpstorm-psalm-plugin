@@ -1,3 +1,3 @@
 <?php
 /** @var non-empty-list<int, string> $a */
-<selection>$a[0]</selection>;
+<type value="string">$a[0]</type>;

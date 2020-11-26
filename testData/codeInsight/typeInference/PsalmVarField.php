@@ -5,6 +5,6 @@ class F {
  */
 private $f;
 public function a() {
-<selection>$this->f</selection>
+<type value="float">$this->f</type>
 }
 }

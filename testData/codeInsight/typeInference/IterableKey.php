@@ -5,6 +5,6 @@ function f(){
     $test = [];
 
     foreach ($test as $key => $e) {
-        <selection>$key</selection>;
+        <type value="Foo">$key</type>;
     }
 }

@@ -14,4 +14,4 @@ function b() {
 }
 
 $b = b();
-<selection>$b()</selection>;
+<type value="Foo|int|mixed">$b()</type>;

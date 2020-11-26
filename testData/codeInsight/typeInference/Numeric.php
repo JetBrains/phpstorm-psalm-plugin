@@ -1,4 +1,4 @@
 <?php
 /** @psalm-var numeric $f */
 $f = ff();
-<selection>$f</selection>
+<type value="float|int|string">$f</type>

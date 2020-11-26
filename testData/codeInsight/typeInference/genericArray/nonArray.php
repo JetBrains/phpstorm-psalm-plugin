@@ -5,5 +5,5 @@
  */
 function a($a)
 {
-    <selection>$a</selection>
+    <type value="nonArray">$a</type>
 }

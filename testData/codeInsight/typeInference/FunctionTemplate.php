@@ -9,4 +9,4 @@ function mirror($t) {
 }
 
 $a = 5;
-<selection>$b</selection> = mirror($a);
+<type value="int|mixed">$b</type> = mirror($a);

@@ -1,3 +1,3 @@
 <?php
 /** @var non-empty-string $a */
-<selection>$a</selection>;
+<type value="string">$a</type>;

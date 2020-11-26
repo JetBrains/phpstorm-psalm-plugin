@@ -7,4 +7,4 @@ function a($a)
 {
   return "a";
 }
-<selection>a(1)</selection>
+<type value="int|string">a(1)</type>

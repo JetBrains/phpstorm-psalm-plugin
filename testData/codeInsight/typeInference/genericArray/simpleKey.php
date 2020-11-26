@@ -5,5 +5,5 @@
  */
 function a($a)
 {
-    <selection>$a</selection>
+    <type value="string[]">$a</type>
 }

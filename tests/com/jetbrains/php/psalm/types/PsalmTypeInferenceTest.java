@@ -1,7 +1,6 @@
 package com.jetbrains.php.psalm.types;
 
 import com.jetbrains.php.codeInsight.PhpTypeInferenceTestCase;
-import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import org.jetbrains.annotations.NotNull;
 
 public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
@@ -18,155 +17,155 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testGenericArray$simpleKey() {
-    doTypeTest(PhpType.STRING.pluralise());
+    doTypeTest();
   }
 
   public void testGenericArray$simpleValue() {
-    doTypeTest(PhpType.STRING.pluralise());
+    doTypeTest();
   }
 
   public void testGenericArray$nonEmptyArray() {
-    doTypeTest(PhpType.STRING.pluralise());
+    doTypeTest();
   }
 
   public void testGenericArray$nestedKey() {
-    doTypeTest(PhpType.STRING.pluralise(2));
+    doTypeTest();
   }
 
   public void testGenericArray$nestedValue() {
-    doTypeTest(PhpType.STRING.pluralise(2));
+    doTypeTest();
   }
 
   public void testGenericArray$nestedValueWithKey() {
-    doTypeTest(PhpType.STRING.pluralise(2));
+    doTypeTest();
   }
 
   public void testGenericArray$union() {
-    doTypeTest(PhpType.or(PhpType.STRING, PhpType.INT).pluralise());
+    doTypeTest();
   }
 
   public void testGenericArray$nonArray() {
-    doTypeTest("\\nonArray"); // no particular guarantees here
+    doTypeTest(); // no particular guarantees here
   }
 
   public void testGenericArray$nestedClassString() {
-    doTypeTest(PhpType.STRING.pluralise(2));
+    doTypeTest();
   }
 
   public void testPsalmParam() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testPsalmReturn() {
-    doTypeTest(PhpType.INT, PhpType.STRING);
+    doTypeTest();
   }
 
   public void testPsalmVarField() {
-    doTypeTest(PhpType.FLOAT);
+    doTypeTest();
   }
 
   public void testPsalmVarVar() {
-    doTypeTest(PhpType.INT.pluralise());
+    doTypeTest();
   }
 
   public void testClassString() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testCallableString() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testNumericString() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testTraitString() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testScalar() {
-    assertEquals(getActualType().getTypes(), PhpType.SCALAR.getTypes());
+    doTypeTest();
   }
 
   public void testNumeric() {
-    doTypeTest(PhpType.STRING, PhpType.INT, PhpType.FLOAT);
+    doTypeTest();
   }
 
   public void testArrayKey() {
-    doTypeTest(PhpType.NUMERIC);
+    doTypeTest();
   }
 
   public void testTypesFromExtendedClassConstants() {
-    doTypeTest(PhpType.INT);
+    doTypeTest();
   }
 
   public void testTypesFromExtendedClassConstantsWildcard() {
-    doTypeTest(PhpType.INT, PhpType.STRING);
+    doTypeTest();
   }
 
   public void testFunctionTemplate() {
-    doTypeTest(PhpType.INT, PhpType.MIXED);
+    doTypeTest();
   }
 
   public void testMethodTemplate() {
-    doTypeTest(PhpType.INT, PhpType.MIXED);
+    doTypeTest();
   }
 
   public void testClassTemplate() {
-    doTypeTest(PhpType.STRING, PhpType.INT, PhpType.MIXED);
+    doTypeTest();
   }
 
   public void testPsalmTagsTemplate() {
-    doTypeTest(PhpType.INT, PhpType.MIXED);
+    doTypeTest();
   }
 
   public void testWithoutTemplate() {
-    doTypeTest(new PhpType().add("\\T"));
+    doTypeTest();
   }
 
   public void testClosure() {
-    doTypeTest(PhpType.CLOSURE);
+    doTypeTest();
   }
 
   public void testIntArrayKey() {
-    doTypeTest(PhpType.INT);
+    doTypeTest();
   }
 
   public void testStringArrayKey() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testUnknownArrayKey() {
-    doTypeTest(PhpType.NUMERIC);
+    doTypeTest();
   }
 
   public void testScalarGeneric() {
-    doTypeTest(PhpType.INT, PhpType.MIXED);
+    doTypeTest();
   }
 
   public void testPluralClassStringWithArgument() {
-    doTypeTest(PhpType.STRING.pluralise());
+    doTypeTest();
   }
 
   public void testPluralClassString() {
-    doTypeTest(PhpType.STRING.pluralise());
+    doTypeTest();
   }
 
   public void testPositiveInt() {
-    doTypeTest(PhpType.INT);
+    doTypeTest();
   }
 
   public void testNonEmptyList() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testNonEmptyString() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testIterableKey() {
-    doTypeTest("\\Foo");
+    doTypeTest();
   }
 
   public void testAdvancedCallable() {
@@ -182,26 +181,26 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
                                         "function b(){\n" +
                                         "    return a();\n" +
                                         "}");
-    doTypeTest(new PhpType().add("\\Foo").add(PhpType.MIXED).add(PhpType.INT));
+    doTypeTest();
   }
 
   public void testAdvancedCallableInSameFile() {
-    doTypeTest(new PhpType().add("\\Foo").add(PhpType.MIXED).add(PhpType.INT));
+    doTypeTest();
   }
 
   public void testAdvancedCallableImported() {
-    doTypeTest(new PhpType().add("\\Foo").add(PhpType.MIXED).add(PhpType.INT));
+    doTypeTest();
   }
 
   public void testAdvancedCallableKeyword() {
-    doTypeTest(new PhpType().add("\\Foo").add(PhpType.MIXED).add(PhpType.INT));
+    doTypeTest();
   }
 
   public void testElementTypeOfArrayKey() {
-    doTypeTest(PhpType.STRING);
+    doTypeTest();
   }
 
   public void testArrayKeyOfMultiDimensionalArray() {
-    doTypeTest(PhpType.INT);
+    doTypeTest();
   }
 }

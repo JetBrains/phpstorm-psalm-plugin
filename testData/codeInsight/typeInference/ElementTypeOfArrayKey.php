@@ -4,7 +4,7 @@
  */
 function f($param){
     foreach ($param as $key=>$value){
-        foreach ($value as <selection>$kk</selection> => $value) {
+        foreach ($value as <type value="string">$kk</type> => $value) {
 
         }
     }

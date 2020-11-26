@@ -10,4 +10,4 @@ function f($param){
 
 }
 
-<selection>$f</selection> = f();
+<type value="int">$f</type> = f();

@@ -3,6 +3,6 @@
  * @psalm-param scalar $p
  */
 function f($p) {
-<selection>$p</selection>
+<type value="bool|int|float|string">$p</type>
 }
 

@@ -9,5 +9,5 @@ class C{
 function f($a, $b)
 {
     /** @psalm-var C::A_* $b*/
-    echo <selection>$b</selection>;
+    echo <type value="int|string">$b</type>;
 }

@@ -1,4 +1,4 @@
 <?php
 /** @psalm-var Closure(bool):int $f */
 $f = ff();
-<selection>$f</selection>
+<type value="Closure">$f</type>

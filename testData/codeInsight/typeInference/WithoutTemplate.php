@@ -8,4 +8,4 @@ function mirror($t) {
 }
 
 $a = 5;
-<selection>$b</selection> = mirror($a);
+<type value="T">$b</type> = mirror($a);
