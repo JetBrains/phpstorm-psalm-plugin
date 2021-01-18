@@ -152,7 +152,7 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
-  public void testPositiveInt() {
+  public void testExtendedTypes() {
     doTypeTest();
   }
 
