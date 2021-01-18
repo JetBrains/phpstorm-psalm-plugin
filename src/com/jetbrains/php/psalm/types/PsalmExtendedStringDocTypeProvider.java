@@ -42,7 +42,6 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
       ,"numeric", NUMERIC_TYPE
       ,"array-key", PhpType.NUMERIC
       ,"empty", PhpType.MIXED
-      ,"closure", PhpType.CLOSURE
       ,"positive-int", PhpType.INT
       ,"closed-resource", PhpType.RESOURCE
     ),

@@ -6,6 +6,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.lang.PhpLangUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes;
 import com.jetbrains.php.lang.documentation.phpdoc.parser.PhpDocElementTypes;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
@@ -74,6 +75,10 @@ public class PsalmAdvancedCallableTypeProvider extends PhpCharBasedTypeKey imple
   }
 
   private static @NotNull String resolveFQN(@NotNull PhpDocType element) {
+    String name = element.getName();
+    if (name != null && ADVANCED_CALLABLES.contains(PhpLangUtil.toFQN(name))) {
+      return PhpLangUtil.toFQN(name);
+    }
     PhpNamedElement useElement = ContainerUtil.getOnlyItem(element.resolveLocal());
     return useElement instanceof PhpUse ? useElement.getFQN() : element.getFQN();
   }
