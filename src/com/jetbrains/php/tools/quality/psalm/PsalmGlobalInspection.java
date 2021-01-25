@@ -34,8 +34,7 @@ import static com.intellij.codeInspection.ex.EditInspectionToolsSettingsAction.e
 import static com.intellij.notification.NotificationType.WARNING;
 import static com.intellij.openapi.util.text.StringUtilRt.isEmpty;
 import static com.intellij.openapi.vfs.VfsUtil.markDirtyAndRefresh;
-import static com.jetbrains.php.tools.quality.QualityToolAnnotator.GROUP_ID;
-import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemote;
+import static com.jetbrains.php.tools.quality.QualityToolAnnotator.*;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection {
@@ -61,6 +60,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
     }
     else {
       path = Paths.get(options.get(options.indexOf("-c") + 1));
+      path = Path.of(updateToLocalIfRemote(path.toString(),project, PsalmQualityToolType.INSTANCE));
       if (options.contains("-c") && !Files.exists(path)) {
         notifyAboutMissingConfig(project, path.toString());
       }

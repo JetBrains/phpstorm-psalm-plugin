@@ -43,6 +43,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
     }
     else {
       path = Paths.get(options.get(options.indexOf("-c") + 1));
+      path = Path.of(updateToLocalIfRemote(path.toString(), project, PsalmQualityToolType.INSTANCE));
       if (options.contains("-c") && !Files.exists(path) && FileUtil.isAncestor(project.getBasePath(), path.toString(), false)) {
         PsalmGlobalInspection.notifyAboutMissingConfig(project, path.toString());
       }
