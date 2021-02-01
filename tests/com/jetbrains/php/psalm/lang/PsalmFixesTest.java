@@ -1,9 +1,9 @@
 package com.jetbrains.php.psalm.lang;
 
-import com.intellij.codeInspection.InspectionProfileEntry;
 import com.jetbrains.php.PhpFixesTestCase;
 import com.jetbrains.php.lang.inspections.PhpFullyQualifiedNameUsageInspection;
 import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
+import com.jetbrains.php.lang.inspections.codeStyle.PhpPluralMixedCanBeReplacedWithArrayInspection;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,5 +24,13 @@ public class PsalmFixesTest extends PhpFixesTestCase {
 
   public void testNestedImportFQN() {
     doTestQuickFix("Remove unnecessary qualifier", new PhpUnnecessaryFullyQualifiedNameInspection());
+  }
+
+  public void testPluralMixed() {
+    doTestQuickFix("Replace with 'array'", new PhpPluralMixedCanBeReplacedWithArrayInspection());
+  }
+
+  public void testPluralMixedWithKeys() {
+    doCheckNoQuickFix("Replace with 'array'", new PhpPluralMixedCanBeReplacedWithArrayInspection());
   }
 }

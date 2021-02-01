@@ -41,7 +41,7 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
     return valueDocTypes(docType)
       .map(PhpTypedElement::getType)
       .reduce(new PhpType(), PhpType::add)
-      .map(t -> PhpKeyTypeProvider.isArrayKeySignature(t) ? signWithSameKey(t) : PhpType.pluraliseMixedAware(t, 1));
+      .map(t -> PhpKeyTypeProvider.isArrayKeySignature(t) ? signWithSameKey(t) : PhpType.pluralise(t, 1));
   }
 
   @NotNull
