@@ -132,6 +132,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testListArrayKey() {
+    doTypeTest();
+  }
+
   public void testStringArrayKey() {
     doTypeTest();
   }

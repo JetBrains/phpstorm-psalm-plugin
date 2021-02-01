@@ -50,9 +50,15 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
   }
 
   public static boolean isGenericArray(@NotNull PhpDocType docType) {
+    String res = getGenericArrayName(docType);
+    return res != null && PhpWorkaroundUtil.getGenericArraysNames().contains(res);
+  }
+
+  @Nullable
+  public static String getGenericArrayName(@NotNull PhpDocType docType) {
     String name = StringUtil.notNullize(docType.getName());
     PsiElement attributes = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
-    return attributes != null && PhpWorkaroundUtil.getGenericArraysNames().contains(StringUtil.toLowerCase(name));
+    return attributes != null ? StringUtil.toLowerCase(name) : null;
   }
 
   @NotNull

@@ -9,6 +9,7 @@ import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -19,6 +20,7 @@ import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes
 public class PsalmDummyArrayKeyTypeProvider extends PhpCharBasedTypeKey implements PhpTypeProvider4 {
 
   public static final char KEY = '\u1891';
+  private final @NotNull PhpType myIntIndices = PhpType.INT.map(this::sign);
 
   @Override
   public char getKey() {
@@ -27,14 +29,20 @@ public class PsalmDummyArrayKeyTypeProvider extends PhpCharBasedTypeKey implemen
 
   @Override
   public @Nullable PhpType getType(PsiElement element) {
-    if (element instanceof PhpDocType && PsalmParamTypeProvider.isGenericArray(((PhpDocType)element))) {
-      PsiElement separatorElement = PsalmParamTypeProvider.getTypesSeparatorElement(((PhpDocType)element));
-      if (PhpPsiUtil.isOfType(separatorElement, DOC_COMMA)) {
-        PhpType keyType = new PhpType().add(PhpPsiUtil.getPrevSiblingIgnoreWhitespace(separatorElement, true));
-        if (!"iterable".equalsIgnoreCase(((PhpDocType)element).getName())) {
-          keyType = keyType.filterOut(t -> !PhpType.NUMERIC.getTypes().contains(t));
+    if (element instanceof PhpDocType) {
+      String name = PsalmParamTypeProvider.getGenericArrayName(((PhpDocType)element));
+      if (name != null && name.equals("list")) {
+        return myIntIndices;
+      }
+      if (PsalmParamTypeProvider.isGenericArray(((PhpDocType)element))) {
+        PsiElement separatorElement = PsalmParamTypeProvider.getTypesSeparatorElement(((PhpDocType)element));
+        if (PhpPsiUtil.isOfType(separatorElement, DOC_COMMA)) {
+          PhpType keyType = new PhpType().add(PhpPsiUtil.getPrevSiblingIgnoreWhitespace(separatorElement, true));
+          if (!"iterable".equalsIgnoreCase(((PhpDocType)element).getName())) {
+            keyType = keyType.filterOut(t -> !PhpType.NUMERIC.getTypes().contains(t));
+          }
+          return keyType.map(this::sign);
         }
-        return keyType.map(this::sign);
       }
     }
     return null;
