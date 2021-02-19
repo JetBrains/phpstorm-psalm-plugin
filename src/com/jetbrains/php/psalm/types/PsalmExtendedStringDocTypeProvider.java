@@ -44,6 +44,8 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
       ,"empty", PhpType.MIXED
       ,"positive-int", PhpType.INT
       ,"closed-resource", PhpType.RESOURCE
+      ,"int-mask-of", PhpType.INT
+      ,"int-mask", PhpType.INT
     ),
     NO_RETURN_TYPES
   );
