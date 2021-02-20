@@ -92,6 +92,14 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testIntMask() {
+    doTypeTest();
+  }
+
+  public void testIntMaskOf() {
+    doTypeTest();
+  }
+
   public void testArrayKey() {
     doTypeTest();
   }
