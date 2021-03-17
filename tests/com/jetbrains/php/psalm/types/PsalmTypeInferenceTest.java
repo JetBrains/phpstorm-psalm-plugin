@@ -1,6 +1,12 @@
 package com.jetbrains.php.psalm.types;
 
+import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.codeInsight.PhpTypeInferenceTestCase;
+import com.jetbrains.php.lang.psi.elements.Field;
+import com.jetbrains.php.lang.psi.elements.Function;
+import com.jetbrains.php.lang.psi.elements.Parameter;
+import com.jetbrains.php.lang.psi.elements.Variable;
+import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import org.jetbrains.annotations.NotNull;
 
 public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
@@ -213,6 +219,60 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testArrayKeyOfMultiDimensionalArray() {
+    doTypeTest();
+  }
+
+  public void testStubsConsistencyFunction() {
+    myFixture.addFileToProject("a.php", "<?php\n" +
+                                        "\n" +
+                                        "/**\n" +
+                                        " * @psalm-return int\n" +
+                                        " */\n" +
+                                        "function f(): string\n" +
+                                        "{\n" +
+                                        "}");
+    Function function = PhpIndex.getInstance(getProject()).getFunctionsByFQN("\\f").iterator().next();
+    assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), function.getGlobalType());
+    doTypeTest();
+  }
+
+  public void testStubsConsistencyParameter() {
+    myFixture.addFileToProject("a.php", "<?php\n" +
+                                        "\n" +
+                                        "/**\n" +
+                                        " * @psalm-param int $a\n" +
+                                        " */\n" +
+                                        "function f(string $a)\n" +
+                                        "{\n" +
+                                        "}");
+    Parameter param = PhpIndex.getInstance(getProject()).getFunctionsByFQN("\\f").iterator().next().getParameter(0);
+    assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), param.getGlobalType());
+    doTypeTest();
+  }
+
+  public void testStubsConsistencyField() {
+    myFixture.addFileToProject("a.php", "<?php\n" +
+                                        "\n" +
+                                        "class A {\n" +
+                                        "    /**\n" +
+                                        "     * @psalm-var int $f\n" +
+                                        "     */\n" +
+                                        "    public string $f;\n" +
+                                        "}");
+    Field field = PhpIndex.getInstance(getProject()).getClassesByFQN("\\A").iterator().next().getOwnFields()[0];
+    assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), field.getGlobalType());
+    doTypeTest();
+  }
+
+  public void testStubsConsistencyVariable() {
+    myFixture.addFileToProject("a.php", "<?php\n" +
+                                        "\n" +
+                                        "/**\n" +
+                                        " * @psalm-var int $vvv\n" +
+                                        " */\n" +
+                                        "$vvv ='a';");
+    Variable variable = PhpIndex.getInstance(getProject()).getVariablesByName("vvv").iterator().next();
+    assertEquals(new PhpType().add(PhpType.INT), variable.getGlobalType());
     doTypeTest();
   }
 }
