@@ -275,4 +275,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     assertEquals(new PhpType().add(PhpType.INT), variable.getGlobalType());
     doTypeTest();
   }
+
+  public void testPsalmVarOnCorrectVariable() {
+    doTypeTest(true);
+  }
 }
