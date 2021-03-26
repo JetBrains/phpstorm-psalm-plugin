@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.components.StoragePathMacros;
@@ -11,6 +10,6 @@ import com.jetbrains.php.tools.quality.QualityToolBlackList;
 public class PsalmBlackList extends QualityToolBlackList {
 
   public static PsalmBlackList getInstance(Project project) {
-    return ServiceManager.getService(project, PsalmBlackList.class);
+    return project.getService(PsalmBlackList.class);
   }
 }

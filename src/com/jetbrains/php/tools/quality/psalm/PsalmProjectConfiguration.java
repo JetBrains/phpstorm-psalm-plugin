@@ -1,6 +1,9 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.openapi.components.*;
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.jetbrains.php.tools.quality.QualityToolProjectConfiguration;
@@ -29,6 +32,6 @@ public class PsalmProjectConfiguration extends QualityToolProjectConfiguration<P
   }
 
   public static PsalmProjectConfiguration getInstance(Project project) {
-    return ServiceManager.getService(project, PsalmProjectConfiguration.class);
+    return project.getService(PsalmProjectConfiguration.class);
   }
 }
