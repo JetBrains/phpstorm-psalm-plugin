@@ -76,6 +76,11 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
   }
 
   @Override
+  public String getPairedBatchInspectionShortName() {
+    return getQualityToolType().getInspectionId();
+  }
+
+  @Override
   protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo collectedInfo) {
     return new PsalmMessageProcessor(collectedInfo);
   }

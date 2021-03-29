@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.execution.ExecutionException;
 import com.intellij.notification.Notification;
 import com.intellij.notification.Notifications;
@@ -37,7 +38,7 @@ import static com.intellij.openapi.vfs.VfsUtil.markDirtyAndRefresh;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.*;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
-public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection {
+public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
   public @NlsSafe String config = "";
   public boolean showInfo = false;
   public boolean findUnusedCode = false;
