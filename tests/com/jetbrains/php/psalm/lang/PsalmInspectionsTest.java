@@ -57,6 +57,7 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
   }
 
   public void testAdvancedCallableParams() {
+    addPhpFileToProject("a.php", "<?php\nfunction ff(): int {}");
     doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
   }
 

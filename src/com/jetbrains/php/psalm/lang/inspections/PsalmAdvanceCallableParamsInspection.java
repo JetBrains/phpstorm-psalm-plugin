@@ -32,11 +32,11 @@ public class PsalmAdvanceCallableParamsInspection extends PhpInspection {
           List<PhpType> parameterTypes = getAdvancedCallableParametersTypes(reference);
           if (parameterTypes != null) {
             for (int i = 0; i < Math.min(parameters.length, parameterTypes.size()); i++) {
-              PhpType callType = new PhpType().add(parameters[i]);
-              if (PhpParamsInspection.isCallTypeConvertibleFromDeclaredType(callType, parameterTypes.get(i), PhpIndex.getInstance(
-                holder.getProject()))) continue;
+              PhpType callType = new PhpType().add(parameters[i]).global(holder.getProject());
+              PhpType parameterType = parameterTypes.get(i).global(holder.getProject());
+              if (PhpParamsInspection.isCallTypeConvertibleFromDeclaredType(callType, parameterType, PhpIndex.getInstance(holder.getProject()))) continue;
               String message = PsalmBundle
-                .message("parameter.type.is.not.compatible.with.declaration", callType.toStringResolved(), parameterTypes.get(i).toStringResolved());
+                .message("parameter.type.is.not.compatible.with.declaration", callType.toStringResolved(), parameterType.toStringResolved());
               holder.registerProblem(parameters[i], message);
             }
           }
