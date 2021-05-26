@@ -66,6 +66,7 @@
     <docTagParserExtension tagName="psalm-var" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocVarTagParser" />
     <metaTableProvider implementation="com.jetbrains.php.psalm.types.PsalmMetaTableProvider"/>
     <noReturnProvider implementation="com.jetbrains.php.psalm.PsalmNoReturnProvider" />
+    <arrayShapesProvider implementation="com.jetbrains.php.psalm.types.shapes.PsalmDocArrayShapeProvider"/>
   </extensions>
   <extensions defaultExtensionNs="com.intellij">
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.psalm.completion.PsalmCompletionContributor"/>

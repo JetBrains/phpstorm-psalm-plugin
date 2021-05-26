@@ -1,0 +1,229 @@
+<?php
+
+/**
+ * @psalm-param $a array{int, string}
+ * @param $b array{"name": int, string}
+ * @param $c array{"name": int, 1?: string, 2? : int}
+ * @psalm-return array{age?: int}
+ * @psalm-return array{age? : int}
+ * @psalm-return list{age? : int}
+ */
+function f($a, $b, $c){
+    /** @var array{name?: Exception, age: int} $test */
+    $test = [];
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @psalm-param
+        PsiElement(DOC_TAG_NAME)('@psalm-param')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: a
+          PsiElement(DOC_VARIABLE)('$a')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: b
+          PsiElement(DOC_VARIABLE)('$b')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_STRING)('"name"')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: c
+          PsiElement(DOC_VARIABLE)('$c')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_STRING)('"name"')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('1?:')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('2?')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocReturnTagImpl: @psalm-return
+        PsiElement(DOC_TAG_NAME)('@psalm-return')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('age')
+            PsiElement(DOC_TEXT)('?:')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocReturnTagImpl: @psalm-return
+        PsiElement(DOC_TAG_NAME)('@psalm-return')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('age')
+            PsiElement(DOC_TEXT)('?')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocReturnTagImpl: @psalm-return
+        PsiElement(DOC_TAG_NAME)('@psalm-return')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: list
+          PsiElement(DOC_IDENTIFIER)('list')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('age')
+            PsiElement(DOC_TEXT)('?')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: f
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('f')
+      PsiElement(()('(')
+      Parameter list
+        ParameterImpl: a
+          PsiElement(variable)('$a')
+        PsiElement(comma)(',')
+        PsiWhiteSpace(' ')
+        ParameterImpl: b
+          PsiElement(variable)('$b')
+        PsiElement(comma)(',')
+        PsiWhiteSpace(' ')
+        ParameterImpl: c
+          PsiElement(variable)('$c')
+      PsiElement())(')')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiWhiteSpace('\n    ')
+        PhpDocCommentImpl
+          PsiElement(DOC_COMMENT_START)('/**')
+          PsiWhiteSpace(' ')
+          PhpDocParamTagImpl: @var
+            PsiElement(DOC_TAG_NAME)('@var')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: array
+              PsiElement(DOC_IDENTIFIER)('array')
+              PhpPsiElementImpl
+                PsiElement(DOC_LBRACE)('{')
+                PsiElement(DOC_IDENTIFIER)('name')
+                PsiElement(DOC_TEXT)('?:')
+                PsiWhiteSpace(' ')
+                PhpDocTypeImpl: Exception
+                  PsiElement(DOC_IDENTIFIER)('Exception')
+                PsiElement(DOC_COMMA)(',')
+                PsiWhiteSpace(' ')
+                PsiElement(DOC_IDENTIFIER)('age')
+                PsiElement(DOC_TEXT)(':')
+                PsiWhiteSpace(' ')
+                PhpDocTypeImpl: int
+                  PsiElement(DOC_IDENTIFIER)('int')
+                PsiElement(DOC_RBRACE)('}')
+            PsiWhiteSpace(' ')
+            PhpDocVarImpl: test
+              PsiElement(DOC_VARIABLE)('$test')
+            PhpPsiElementImpl
+              <empty list>
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_COMMENT_END)('*/')
+        PsiWhiteSpace('\n    ')
+        Statement
+          AssignmentExpressionImpl: $test = []
+            VariableImpl: test
+              PsiElement(variable)('$test')
+            PsiWhiteSpace(' ')
+            PsiElement(assign)('=')
+            PsiWhiteSpace(' ')
+            ArrayCreationExpressionImpl: []
+              PsiElement([)('[')
+              PsiElement(])(']')
+          PsiElement(semicolon)(';')
+        PsiWhiteSpace('\n')
+        PsiElement(})('}')

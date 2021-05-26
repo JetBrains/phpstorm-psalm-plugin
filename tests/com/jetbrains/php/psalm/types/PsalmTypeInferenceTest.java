@@ -279,4 +279,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testPsalmVarOnCorrectVariable() {
     doTypeTest(true);
   }
+
+  public void testPsalmArrayShape() {
+    doTypeTest(true);
+  }
 }
