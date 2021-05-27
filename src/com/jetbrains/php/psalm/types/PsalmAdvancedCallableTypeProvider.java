@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class PsalmAdvancedCallableTypeProvider extends PhpCharBasedTypeKey implements PhpTypeProvider4 {
 
-  static final char KEY = '\u1913';
+  public static final char KEY = '\u1913';
   private static final String TYPES_SEPARATOR = String.valueOf(KEY);
   private static final String PARAMETERS_RETURN_SEPARATOR = ".";
   private static final String PARAMETERS_SEPARATOR = ",";

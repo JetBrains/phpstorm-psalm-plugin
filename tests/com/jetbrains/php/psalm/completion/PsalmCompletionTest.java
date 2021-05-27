@@ -41,7 +41,25 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
       , "non-empty-list"
       , "non-empty-array"
     );
+  }
 
+  public void testArrayShape() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
+  }
 
+  public void testArrayShapeMultipleFiles() {
+    myFixture.addFileToProject("aa.php", "<?php\n" +
+                                         "/**\n" +
+                                         " * @psalm-return array{age?: Exception, \"name\": string}\n" +
+                                         " */\n" +
+                                         "function f(){}");
+    myFixture.addFileToProject("b.php", "<?php\n" +
+                                        "\n" +
+                                        "function ff() {\n" +
+                                        "    return f();\n" +
+                                        "}");
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
 }
