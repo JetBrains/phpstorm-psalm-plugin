@@ -18,3 +18,20 @@ function f($a, $b, $c){
 
 $f = f();
 <type value="int|mixed">$f["age"]</type>;
+
+
+class C{
+
+}
+
+function f($param){
+    /** @var array<string, C> $ctxA */
+    $ctxA = $param->f();
+    <type value="C">$ctxA[0]</type>;
+    <type value="C">$ctxA[1]</type>;
+
+    /** @var array{string, C} $ctxB */
+    $ctxB = $param->f();
+    <type value="string|mixed">$ctxB[0]</type>;
+    <type value="C|mixed">$ctxB[1]</type>;
+}
