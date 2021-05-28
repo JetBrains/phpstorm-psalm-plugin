@@ -287,7 +287,7 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testPsalmArrayShapeMultipleFiles() {
     myFixture.addFileToProject("aa.php", "<?php\n" +
                                         "/**\n" +
-                                        " * @psalm-return array{age?: Exception}\n" +
+                                        " * @psalm-return array{age?: Exception, f: int}\n" +
                                         " */\n" +
                                         "function f(){}");
     myFixture.addFileToProject("b.php", "<?php\n" +

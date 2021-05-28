@@ -34,4 +34,6 @@ function f($param){
     $ctxB = $param->f();
     <type value="string|mixed">$ctxB[0]</type>;
     <type value="C|mixed">$ctxB[1]</type>;
+
+    <type value="string|C|mixed">$ctxB[$f]</type>;
 }
