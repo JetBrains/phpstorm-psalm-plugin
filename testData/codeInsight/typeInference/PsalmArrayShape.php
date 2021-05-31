@@ -24,7 +24,7 @@ class C{
 
 }
 
-function f($param){
+function f1($param){
     /** @var array<string, C> $ctxA */
     $ctxA = $param->f();
     <type value="C">$ctxA[0]</type>;
