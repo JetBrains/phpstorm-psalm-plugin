@@ -20,5 +20,5 @@ function f1($param){
 
 }
 
-<type value="int">$f</type> = f();
-<type value="string|int">$f1</type> = f1();
+<type value="void|int">$f</type> = f();
+<type value="void|string|int">$f1</type> = f1();
