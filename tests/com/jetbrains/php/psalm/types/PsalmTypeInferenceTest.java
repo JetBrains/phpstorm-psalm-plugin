@@ -297,4 +297,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
                                         "}");
     doTypeTest(true);
   }
+
+  public void testTemplateClassString() {
+    doTypeTest();
+  }
 }

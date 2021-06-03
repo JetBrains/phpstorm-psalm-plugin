@@ -55,8 +55,15 @@ public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaT
   private static Map<String, PhpMetaTypeMappingsTable> getMap(Function f) {
     PhpMetaTypeMappingsTable table = new PhpMetaTypeMappingsTable();
     parameterIndicesWithDocTypeBySupplier(f, identity()).forEach(i -> table.put(PhpParameterBasedTypeProvider.TYPE_KEY, String.valueOf(i)));
+    parameterIndicesWithDocTypeBySupplier(f, PsalmTemplateIndex::createTemplateText).forEach(
+      i -> table.put(PhpParameterBasedTypeProvider.PATTERN_KEY, PhpParameterBasedTypeProvider.ARG_PATTERN + i));
     if (table.getKeys().isEmpty()) return Collections.emptyMap();
     return Map.of(PhpTypeSignatureKey.getSignature(f), table);
+  }
+
+  @NotNull
+  private static String createTemplateText(String f) {
+    return "class-string<" + f + ">";
   }
 
   private static IntStream parameterIndicesWithDocTypeBySupplier(Function f,
@@ -132,7 +139,7 @@ public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaT
 
   @Override
   public int getVersion() {
-    return 2;
+    return 3;
   }
 
   @Override
