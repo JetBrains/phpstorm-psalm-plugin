@@ -26,7 +26,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import static java.util.function.Function.identity;
 
 public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaTypeMappingsTable> {
   @NonNls public static final ID<String, PhpMetaTypeMappingsTable> KEY = ID.create("php.psalm.template.index");
@@ -50,33 +53,31 @@ public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaT
   }
 
   private static Map<String, PhpMetaTypeMappingsTable> getMap(Function f) {
+    PhpMetaTypeMappingsTable table = new PhpMetaTypeMappingsTable();
+    parameterIndicesWithDocTypeBySupplier(f, identity()).forEach(i -> table.put(PhpParameterBasedTypeProvider.TYPE_KEY, String.valueOf(i)));
+    if (table.getKeys().isEmpty()) return Collections.emptyMap();
+    return Map.of(PhpTypeSignatureKey.getSignature(f), table);
+  }
+
+  private static IntStream parameterIndicesWithDocTypeBySupplier(Function f,
+                                                                 java.util.function.Function<String, String> docTypeBasedOnReturnTemplateSupplier) {
     PhpDocComment comment = f.getDocComment();
     if (comment == null) {
-      return Collections.emptyMap();
+      return IntStream.empty();
     }
     Collection<String> templates = PsalmExtendedTypeProvider.getTemplates(comment);
     if (templates.isEmpty()) {
-      return Collections.emptyMap();
+      return IntStream.empty();
     }
     Collection<PhpDocTag> returnTags = getReturnTags(comment);
-    if (returnTags.isEmpty()) return Collections.emptyMap();
     List<PhpDocParamTag> paramTags = getParamTags(comment);
     List<Parameter> parameters = Arrays.asList(f.getParameters());
-    int[] parametersIndicesToReturn = returnTags.stream()
+    return returnTags.stream()
       .flatMap(returnTag -> getDocTypesWithText(returnTag, templates).stream())
       .map(PsiElement::getText).distinct()
-      .flatMap(returnTemplate -> paramNamesWithSameReturnTemplate(paramTags, returnTemplate)).distinct()
+      .flatMap(returnTemplate -> paramNamesWithSameReturnTemplate(paramTags, docTypeBasedOnReturnTemplateSupplier.apply(returnTemplate))).distinct()
       .mapToInt(name -> ContainerUtil.indexOf(parameters, p -> PhpLangUtil.equalsParameterNames(name, p.getName())))
-      .filter(i -> i >= 0)
-      .toArray();
-    if (parametersIndicesToReturn.length == 0) {
-      return Collections.emptyMap();
-    }
-    PhpMetaTypeMappingsTable table = new PhpMetaTypeMappingsTable();
-    for (int parameterIndexToReturn : parametersIndicesToReturn) {
-      table.put(PhpParameterBasedTypeProvider.TYPE_KEY, String.valueOf(parameterIndexToReturn));
-    }
-    return Map.of(PhpTypeSignatureKey.getSignature(f), table);
+      .filter(i -> i >= 0);
   }
 
   private static Collection<PhpDocTag> getReturnTags(PhpDocComment comment) {
