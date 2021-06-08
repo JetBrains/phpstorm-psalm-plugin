@@ -62,7 +62,7 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
   }
 
   @NotNull
-  private static JBIterable<PhpDocType> valueDocTypes(@NotNull PhpDocType docType) {
+  public static JBIterable<PhpDocType> valueDocTypes(@NotNull PhpDocType docType) {
     PsiElement elementToFindCommentsAfter = getTypesSeparatorElement(docType);
     if (elementToFindCommentsAfter == null) {
       return JBIterable.empty();

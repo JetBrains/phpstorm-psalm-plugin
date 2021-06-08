@@ -62,4 +62,26 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
+
+  public void testNoMaterializationForTemplateExtends() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "\n" +
+                                 "/**\n" +
+                                 " * @template T\n" +
+                                 " */\n" +
+                                 "abstract class Base\n" +
+                                 "{\n" +
+                                 "    /**\n" +
+                                 "     * @return T\n" +
+                                 "     */\n" +
+                                 "    public function item() {}\n" +
+                                 "}\n" +
+                                 "\n" +
+                                 "/**\n" +
+                                 " * @extends Base<P1>\n" +
+                                 " */\n" +
+                                 "class C extends Base {} ");
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "f");
+  }
 }

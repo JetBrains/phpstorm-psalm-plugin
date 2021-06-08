@@ -31,6 +31,7 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
       return '\u1890';
     }
   };
+  public static final String[] TEMPLATES_NAMES = {"@template", "@psalm-template", "@template-covariant"};
 
 
   @Override
@@ -59,7 +60,7 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   }
 
   public static @NotNull Collection<String> getTemplates(@Nullable PhpDocComment docComment) {
-    return getTypeNames(docComment, "@template", "@psalm-template", "@template-covariant");
+    return getTypeNames(docComment, TEMPLATES_NAMES);
   }
 
   private static Collection<String> getTypeNames(@Nullable PhpDocComment docComment, String... tagNames) {
