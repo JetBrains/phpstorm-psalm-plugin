@@ -51,7 +51,7 @@ class P1
 }
 
 /**
- * @extends Base<P1>
+ * @template-extends Base<P1>
  */
 class Child1 extends Base
 {

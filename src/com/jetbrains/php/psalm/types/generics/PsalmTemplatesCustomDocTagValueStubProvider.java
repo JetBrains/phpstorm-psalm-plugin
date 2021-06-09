@@ -23,7 +23,7 @@ import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes
 import static com.jetbrains.php.psalm.types.PsalmParamTypeProvider.valueDocTypes;
 
 public class PsalmTemplatesCustomDocTagValueStubProvider implements PhpCustomDocTagValuesStubProvider {
-  public static final String[] EXTENDED_NAMES = {"@extends", "@template-extends"};
+  public static final String[] EXTENDED_NAMES = {"@extends", "@template-extends", "@implements", "@template-implements"};
 
   @Override
   public @Nullable String getCustomValueToSaveIntoStubs(@NotNull PhpDocTag tagElement) {
