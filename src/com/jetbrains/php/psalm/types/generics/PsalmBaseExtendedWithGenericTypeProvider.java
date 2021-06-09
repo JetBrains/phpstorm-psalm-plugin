@@ -34,17 +34,21 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
     int dot = expression.lastIndexOf('.');
     if (dot < 0) return null;
     String classRef = expression.substring(2, dot);
-    Map<String, List<String>> extendedClassesToSubstitutedTemplates = StreamEx.of(index.getBySignature(classRef))
-      .select(PhpClass.class)
-      .map(PsalmBaseExtendedWithGenericTypeProvider::getExtendedClassAndSubstitutedTemplates).nonNull()
-      .mapToEntry(c -> c.getFirst(), c -> c.getSecond())
-      .toMap((s, s1) -> s);
+    Map<String, List<String>> extendedClassesToSubstitutedTemplates = getExtendedClassesToSubstitutedTemplates(index, classRef);
     if (extendedClassesToSubstitutedTemplates.isEmpty()) return null;
     return StreamEx.of(index.getBySignature(expression))
       .select(PhpClassMember.class)
       .map(PsalmBaseExtendedWithGenericTypeProvider::getSubstitutedTemplateInfo)
       .map(info -> substituteTemplateType(extendedClassesToSubstitutedTemplates, info)).nonNull()
       .reduce(new PhpType(), PhpType::add, PhpType::or);
+  }
+
+  public static Map<String, List<String>> getExtendedClassesToSubstitutedTemplates(PhpIndex index, String classRef) {
+    return StreamEx.of(index.getBySignature(classRef))
+      .select(PhpClass.class)
+      .map(PsalmBaseExtendedWithGenericTypeProvider::getExtendedClassAndSubstitutedTemplates).nonNull()
+      .mapToEntry(c -> c.getFirst(), c -> c.getSecond())
+      .toMap((s, s1) -> s);
   }
 
   @Nullable

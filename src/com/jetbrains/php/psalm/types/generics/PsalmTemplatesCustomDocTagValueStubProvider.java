@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes.DOC_IDENTIFIER;
 import static com.jetbrains.php.psalm.types.PsalmParamTypeProvider.valueDocTypes;
@@ -35,19 +36,22 @@ public class PsalmTemplatesCustomDocTagValueStubProvider implements PhpCustomDoc
       }
     }
     else if (ArrayUtil.contains(name, EXTENDED_NAMES)) {
-      PhpDocType docType = PhpPsiUtil.getChildByCondition(tagElement, PhpDocType.class::isInstance);
-      if (docType != null) {
-        String extendedClassFQN = docType.getFQN();
-        PsiElement attributeList = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
-        List<String> templateFQN = ContainerUtil.map(PhpPsiUtil.getChildren(attributeList, PhpDocType.class::isInstance), PhpDocType::getFQN);
-        if (!templateFQN.isEmpty()) {
-          return StreamEx.of(extendedClassFQN)
-            .append(templateFQN)
-            .collect(Collectors.joining("|"));
-        }
-      }
+      return StringUtil.nullize(templatesParts(tagElement).collect(Collectors.joining("|")));
     }
     return null;
+  }
+
+  public static Stream<String> templatesParts(PhpDocTag tagElement) {
+    PhpDocType docType = PhpPsiUtil.getChildByCondition(tagElement, PhpDocType.class::isInstance);
+    if (docType != null) {
+      String extendedClassFQN = docType.getFQN();
+      PsiElement attributeList = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
+      List<String> templateFQN = ContainerUtil.map(PhpPsiUtil.getChildren(attributeList, PhpDocType.class::isInstance), PhpDocType::getFQN);
+      if (!templateFQN.isEmpty()) {
+        return StreamEx.of(extendedClassFQN).append(templateFQN);
+      }
+    }
+    return Stream.empty();
   }
 
   @NotNull

@@ -59,33 +59,33 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
     return ContainerUtil.union(getTypeNames(docComment, "@psalm-type"), getImportedTypeNames(docComment));
   }
 
-  public static @NotNull Collection<String> getTemplates(@Nullable PhpDocComment docComment) {
+  public static @NotNull List<String> getTemplates(@Nullable PhpDocComment docComment) {
     return getTypeNames(docComment, TEMPLATES_NAMES);
   }
 
-  private static Collection<String> getTypeNames(@Nullable PhpDocComment docComment, String... tagNames) {
+  private static List<String> getTypeNames(@Nullable PhpDocComment docComment, String... tagNames) {
     return getNamesInCurrentCommentOrClass(docComment, c -> tagValues(c, tagNames)
       .map(value -> PhpPsiUtil.getChildOfType(value, DOC_IDENTIFIER)).filter(Objects::nonNull)
       .map(PsiElement::getText)
-      .collect(Collectors.toSet()));
+      .collect(Collectors.toList()));
   }
 
-  private static Collection<String> getNamesInCurrentCommentOrClass(PhpDocComment docComment, Function<@Nullable PhpDocComment, Collection<String>> f) {
+  private static List<String> getNamesInCurrentCommentOrClass(PhpDocComment docComment, Function<@Nullable PhpDocComment, List<String>> f) {
     if (docComment == null) {
-      return Collections.emptySet();
+      return Collections.emptyList();
     }
-    Collection<String> names = Collections.emptySet();
+    List<String> names = Collections.emptyList();
     PsiElement owner = docComment.getOwner();
     while (owner != null) {
       if (owner instanceof PhpPsiElement) {
         PhpDocComment comment =
           owner instanceof PhpNamedElement ? ((PhpNamedElement)owner).getDocComment() : PhpPsiUtil.getDocCommentFor((PhpPsiElement)owner);
-        names = ContainerUtil.union(f.apply(comment), names);
+        names = ContainerUtil.concat(f.apply(comment), names);
         if (owner instanceof PhpClass && !((PhpClass)owner).isAnonymous()) break;
       }
       owner = owner.getParent();
     }
-    return names;
+    return names.stream().distinct().collect(Collectors.toList());
   }
 
   @NotNull
@@ -105,7 +105,8 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
     return getNamesInCurrentCommentOrClass(docComment, c -> tagValues(c, "@psalm-import-type")
       .map(PsalmExtendedTypeProvider::getImportedName).filter(Objects::nonNull)
       .map(PsiElement::getText)
-      .collect(Collectors.toSet()));
+      .distinct()
+      .collect(Collectors.toList()));
   }
 
   private static PsiElement getImportedName(PhpPsiElement value) {
