@@ -305,4 +305,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testTemplateExtends() {
     doTypeTest();
   }
+
+  public void testTemplateExtendsMultipleTemplates() {
+    doTypeTest();
+  }
 }

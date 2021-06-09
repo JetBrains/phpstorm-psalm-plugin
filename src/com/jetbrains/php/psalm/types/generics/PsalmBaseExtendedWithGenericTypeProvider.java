@@ -2,7 +2,6 @@ package com.jetbrains.php.psalm.types.generics;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.PhpIndex;
@@ -35,9 +34,9 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
     int dot = expression.lastIndexOf('.');
     if (dot < 0) return null;
     String classRef = expression.substring(2, dot);
-    Map<String, String> extendedClassesToSubstitutedTemplates = StreamEx.of(index.getBySignature(classRef))
+    Map<String, List<String>> extendedClassesToSubstitutedTemplates = StreamEx.of(index.getBySignature(classRef))
       .select(PhpClass.class)
-      .map(PsalmBaseExtendedWithGenericTypeProvider::getExtendedClassAndSubstitutedTemplate).nonNull()
+      .map(PsalmBaseExtendedWithGenericTypeProvider::getExtendedClassAndSubstitutedTemplates).nonNull()
       .mapToEntry(c -> c.getFirst(), c -> c.getSecond())
       .toMap((s, s1) -> s);
     if (extendedClassesToSubstitutedTemplates.isEmpty()) return null;
@@ -49,19 +48,25 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
   }
 
   @Nullable
-  private static String substituteTemplateType(Map<String, String> extendedTemplates, @Nullable TemplateInfo info) {
-    return info != null && extendedTemplates.containsKey(info.myContainingClassFQN) ? PhpType.pluralise(
-      extendedTemplates.get(info.myContainingClassFQN), info.myDimension) : null;
+  private static String substituteTemplateType(Map<String, List<String>> classesToExtendedTemplates, @Nullable TemplateInfo info) {
+    if (info != null && classesToExtendedTemplates.containsKey(info.myContainingClassFQN)) {
+      List<String> extendedTemplates = classesToExtendedTemplates.get(info.myContainingClassFQN);
+      if (info.myTemplateIndex < extendedTemplates.size() && !extendedTemplates.isEmpty()) {
+        return PhpType.pluralise(extendedTemplates.get(info.myTemplateIndex), info.myDimension);
+      }
+    }
+    return null;
   }
 
   private static @Nullable TemplateInfo getSubstitutedTemplateInfo(PhpClassMember m) {
     PhpClass containingClass = m.getContainingClass();
     if (containingClass == null) return null;
-    Collection<String> templates = getTemplates(containingClass.getDocComment());
+    List<String> templates = getTemplates(containingClass.getDocComment());
     for (String type : m.getDocType().getTypes()) {
       String normalizedType = normalize(type);
-      if (templates.contains(normalizedType)) {
-        return new TemplateInfo(containingClass.getFQN(), PhpType.getPluralDimension(type));
+      int templateIndex = templates.indexOf(normalizedType);
+      if (templateIndex >= 0) {
+        return new TemplateInfo(containingClass.getFQN(), templateIndex, PhpType.getPluralDimension(type));
       }
     }
 
@@ -70,17 +75,19 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
 
   private static class TemplateInfo {
     private final String myContainingClassFQN;
+    private final int myTemplateIndex;
     private final int myDimension;
 
-    private TemplateInfo(String fqn, int dimension) {
+    private TemplateInfo(String fqn, int templateIndex, int dimension) {
       myContainingClassFQN = fqn;
+      myTemplateIndex = templateIndex;
       myDimension = dimension;
     }
   }
 
-  private static Collection<String> getTemplates(@Nullable PhpDocComment comment) {
+  private static List<String> getTemplates(@Nullable PhpDocComment comment) {
     if (comment == null) return Collections.emptyList();
-    Collection<String> res = new HashSet<>();
+    List<String> res = new ArrayList<>();
     PhpDocUtil.processTagElementsByNames(comment, tag -> {
       ContainerUtil.addIfNotNull(res, ((PhpDocTagImpl)tag).getCustomTagValue());
       return true;
@@ -95,7 +102,7 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
     return PhpType.unpluralize(PhpLangUtil.toPresentableFQN(s), PhpType.getPluralDimension(s));
   }
 
-  private static @Nullable Pair<String, String> getExtendedClassAndSubstitutedTemplate(PhpClass e) {
+  private static @Nullable Pair<String, List<String>> getExtendedClassAndSubstitutedTemplates(PhpClass e) {
     PhpDocComment docComment = e.getDocComment();
     if (docComment == null) return null;
     return Arrays.stream(PsalmTemplatesCustomDocTagValueStubProvider.EXTENDED_NAMES)
