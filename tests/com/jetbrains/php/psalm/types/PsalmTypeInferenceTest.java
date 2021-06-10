@@ -317,4 +317,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testReturnTemplatedClass() {
     doTypeTest();
   }
+
+  public void testLocalClassString() {
+    doTypeTest();
+  }
 }

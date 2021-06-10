@@ -62,6 +62,7 @@
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableCallTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmMethodExtendedWithGenericTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmFieldExtendedWithGenericTypeProvider"/>
+    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmLocalClassStringInitializationTypeProvider"/>
     <metaSignatureResolver implementation="com.jetbrains.php.psalm.types.generics.PsalmGenericMetaSignatureResolver"/>
     <keyTypeProvider implementation="com.jetbrains.php.psalm.types.PsalmArrayKeyTypeProvider"/>
     <docTagParserExtension tagName="psalm-param" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
