@@ -4,6 +4,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ObjectUtils;
 import com.intellij.util.containers.ContainerUtil;
+import com.intellij.util.containers.UtilKt;
 import com.intellij.util.indexing.*;
 import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.io.EnumeratorStringDescriptor;
@@ -15,6 +16,7 @@ import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocParamTag;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocTag;
 import com.jetbrains.php.lang.inspections.parameterCountMismatch.PhpFuncGetArgUsageProvider;
 import com.jetbrains.php.lang.psi.PhpFile;
+import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.Function;
 import com.jetbrains.php.lang.psi.elements.Parameter;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
@@ -29,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -123,8 +126,12 @@ public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaT
     }
     Collection<PhpDocTag> returnTags = getReturnTags(comment);
     return returnTags.stream()
-      .flatMap(returnTag -> getDocTypesWithText(returnTag, templates).stream())
+      .flatMap(returnTag -> getDocTypesWithText(returnTag, t -> hasTemplate(t, templates)).stream())
       .map(PsiElement::getText).distinct();
+  }
+
+  private static boolean hasTemplate(PhpDocType t, Collection<String> templates) {
+    return ContainerUtil.exists(PhpPsiUtil.findChildrenNonStrict(t, PhpDocType.class), tt -> templates.contains(tt.getText()));
   }
 
   private static Collection<PhpDocTag> getReturnTags(PhpDocComment comment) {
@@ -147,11 +154,11 @@ public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaT
   @NotNull
   private static Stream<String> paramNamesWithSameReturnTemplate(List<PhpDocParamTag> paramTags, String returnTemplate) {
     return paramTags.stream()
-      .filter(tag -> !getDocTypesWithText(tag, Collections.singleton(returnTemplate)).isEmpty())
+      .filter(tag -> !getDocTypesWithText(tag, t -> returnTemplate.equals(t.getText())).isEmpty())
       .map(PhpDocParamTag::getVarName).filter(Objects::nonNull);
   }
 
-  private static Collection<PhpDocType> getDocTypesWithText(@Nullable PhpDocTag tag, Collection<String> texts) {
+  private static Collection<PhpDocType> getDocTypesWithText(@Nullable PhpDocTag tag, Predicate<PhpDocType> predicate) {
     if (tag == null) {
       return Collections.emptyList();
     }
@@ -159,7 +166,7 @@ public class PsalmTemplateIndex extends FileBasedIndexExtension<String, PhpMetaT
     PhpPsiElement child = tag.getFirstPsiChild();
     while (child != null) {
       if (child instanceof PhpDocType) {
-        if (texts.contains(child.getText())) {
+        if (predicate.test((PhpDocType)child)) {
           res.add((PhpDocType)child);
         }
       }

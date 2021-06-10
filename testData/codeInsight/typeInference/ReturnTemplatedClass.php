@@ -41,6 +41,22 @@ function f1(I $q) {}
  */
 function f2(I $q) {}
 
+/**
+ * @template R
+ * @template D
+ * @psalm-param I<I<R>, I<D>> $q
+ * @return I<R>
+ */
+function f3(I $q) {}
+
+/**
+ * @template R
+ * @template D
+ * @psalm-param I<I<R>, D> $q
+ * @return I<I<R>>
+ */
+function f4(I $q) {}
+
 class AA {
     /**
      * @template R
@@ -59,6 +75,13 @@ class AA {
 
 <type value="B|mixed">f2(new C1())</type>;
 <type value="A|mixed">f2(new C2())</type>;
+
+<type value="A|I">f3(new C1())</type>;
+<type value="I|B">f3(new C2())</type>;
+
+// unknown yet
+<type value="I">f4(new C1())</type>;
+<type value="I">f4(new C2())</type>;
 
 <type value="A|mixed">(new AA())->m(new C1())</type>;
 <type value="B|mixed">(new AA())->m(new C2())</type>;

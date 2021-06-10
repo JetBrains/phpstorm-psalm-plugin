@@ -5,6 +5,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.lang.PhpLangUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.PhpCustomDocTagValuesStubProvider;
 import com.jetbrains.php.lang.documentation.phpdoc.parser.PhpDocElementTypes;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
@@ -46,12 +47,19 @@ public class PsalmTemplatesCustomDocTagValueStubProvider implements PhpCustomDoc
     if (docType != null) {
       String extendedClassFQN = docType.getFQN();
       PsiElement attributeList = PhpPsiUtil.getChildOfType(docType, PhpDocElementTypes.phpDocAttributeList);
-      List<String> templateFQN = ContainerUtil.map(PhpPsiUtil.getChildren(attributeList, PhpDocType.class::isInstance), PhpDocType::getFQN);
+      List<String> templateFQN = ContainerUtil.map(PhpPsiUtil.getChildren(attributeList, PhpDocType.class::isInstance),
+                                                   PsalmTemplatesCustomDocTagValueStubProvider::getNamespacedText);
       if (!templateFQN.isEmpty()) {
         return StreamEx.of(extendedClassFQN).append(templateFQN);
       }
     }
     return Stream.empty();
+  }
+
+  @NotNull
+  private static String getNamespacedText(PhpDocType type) {
+    String text = type.getText();
+    return PhpLangUtil.isFqn(text) ? text : type.getNamespaceName() + text;
   }
 
   @NotNull
