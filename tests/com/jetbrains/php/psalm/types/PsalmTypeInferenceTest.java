@@ -321,4 +321,30 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testLocalClassString() {
     doTypeTest();
   }
+
+  public void testLocalTypeUnwrappingSameFile() {
+    doTypeTest();
+  }
+
+  public void testLocalTypeUnwrappingDifferentFile() {
+    addPhpFileToProject("a.php", "<?php" +
+                                 "\n" +
+                                 "class C\n" +
+                                 "{\n" +
+                                 "}\n" +
+                                 "\n" +
+                                 "/**\n" +
+                                 " * @template T\n" +
+                                 " */\n" +
+                                 "class Bar\n" +
+                                 "{\n" +
+                                 "    /**\n" +
+                                 "     * @psalm-return T\n" +
+                                 "     */\n" +
+                                 "    public function doBaz()\n" +
+                                 "    {\n" +
+                                 "    }\n" +
+                                 "}\n");
+    doTypeTest();
+  }
 }

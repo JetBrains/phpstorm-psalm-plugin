@@ -9,11 +9,11 @@ import com.jetbrains.php.lang.PhpLangUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.PhpDocUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.impl.tags.PhpDocTagImpl;
-import com.jetbrains.php.lang.psi.elements.PhpClass;
-import com.jetbrains.php.lang.psi.elements.PhpClassMember;
-import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
+import com.jetbrains.php.lang.psi.elements.*;
+import com.jetbrains.php.lang.psi.resolve.types.PhpParameterBasedTypeProvider;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
+import com.jetbrains.php.lang.psi.resolve.types.PhpTypeSignatureKey;
 import one.util.streamex.StreamEx;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +25,35 @@ import static com.jetbrains.php.psalm.types.PsalmExtendedTypeProvider.TEMPLATES_
 public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTypeProvider4 {
   @Override
   public @Nullable PhpType getType(PsiElement element) {
+    if (element instanceof MemberReference) {
+      for (PhpNamedElement member : ((MemberReference)element).resolveLocal()) {
+        if (member instanceof PhpClassMember && getSubstitutedTemplateInfo(((PhpClassMember)member)) != null) {
+          // In case of successful local resolve no signature will be added
+          // so add these signatures again in case this TypeProvider possibly can infer generic templates
+          return getSignatureType((MemberReference)element);
+        }
+      }
+    }
     return null;
+  }
+
+  @NotNull
+  private PhpType getSignatureType(MemberReference element) {
+    PhpType type = new PhpType();
+    for (String part : element.getSignatureParts()) {
+      if (getSignatureKey().isSigned(part)) {
+        type.add(part);
+      }
+    }
+    return type;
+  }
+
+  @NotNull
+  protected abstract PhpTypeSignatureKey getSignatureKey();
+
+  @Override
+  public char getKey() {
+    return getSignatureKey().getKey();
   }
 
   @Override
@@ -44,11 +72,22 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
   }
 
   public static Map<String, List<String>> getExtendedClassesToSubstitutedTemplates(PhpIndex index, String classRef) {
-    return StreamEx.of(index.getBySignature(classRef))
-      .select(PhpClass.class)
-      .map(PsalmBaseExtendedWithGenericTypeProvider::getExtendedClassAndSubstitutedTemplates).nonNull()
+    return decodeExtendedClassesAndSubstitutedTemplates(index, classRef).nonNull()
       .mapToEntry(c -> c.getFirst(), c -> c.getSecond())
       .toMap((s, s1) -> s);
+  }
+
+  @NotNull
+  private static StreamEx<Pair<String, List<String>>> decodeExtendedClassesAndSubstitutedTemplates(PhpIndex index, String classRef) {
+    if (PsalmGenericTypeProvider.KEY.signed(classRef)) {
+      String encodedSubstitutionInfo = ContainerUtil.getLastItem(PhpParameterBasedTypeProvider.extractSignatures(classRef, 2));
+      return encodedSubstitutionInfo != null ? StreamEx.of(
+        PsalmTemplatesCustomDocTagValueStubProvider.decodeExtendedClassAndTemplate(encodedSubstitutionInfo)) : StreamEx.empty();
+    } else {
+      return StreamEx.of(index.getBySignature(classRef))
+        .select(PhpClass.class)
+        .map(PsalmBaseExtendedWithGenericTypeProvider::getExtendedClassAndSubstitutedTemplates);
+    }
   }
 
   @Nullable
