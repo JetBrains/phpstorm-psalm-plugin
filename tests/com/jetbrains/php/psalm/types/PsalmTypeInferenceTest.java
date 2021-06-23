@@ -2,6 +2,7 @@ package com.jetbrains.php.psalm.types;
 
 import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.codeInsight.PhpTypeInferenceTestCase;
+import com.jetbrains.php.config.PhpLanguageLevel;
 import com.jetbrains.php.lang.psi.elements.Field;
 import com.jetbrains.php.lang.psi.elements.Function;
 import com.jetbrains.php.lang.psi.elements.Parameter;
@@ -306,6 +307,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testTemplateExtendsNamespace() {
+    doTypeTest();
+  }
+
   public void testTemplateExtendsMultipleTemplates() {
     doTypeTest();
   }
@@ -318,8 +323,16 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testReturnTemplatedClassNamespace() {
+    doTypeTest();
+  }
+
   public void testLocalClassString() {
     doTypeTest();
+  }
+
+  public void testLocalClassStringNamespace() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP800, () -> doTypeTest());
   }
 
   public void testLocalTypeUnwrappingSameFile() {
