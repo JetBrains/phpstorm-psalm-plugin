@@ -2,6 +2,9 @@ package com.jetbrains.php.psalm.types;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
+import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.PhpDocUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
@@ -60,7 +63,8 @@ public class PsalmExtendedTypeProvider implements PhpTypeProvider4 {
   }
 
   public static @NotNull List<String> getTemplates(@Nullable PhpDocComment docComment) {
-    return getTypeNames(docComment, TEMPLATES_NAMES);
+    return docComment != null ? CachedValuesManager.getCachedValue(docComment, () -> CachedValueProvider.Result.create(
+      getTypeNames(docComment, TEMPLATES_NAMES), PsiModificationTracker.MODIFICATION_COUNT)) : Collections.emptyList();
   }
 
   private static List<String> getTypeNames(@Nullable PhpDocComment docComment, String... tagNames) {

@@ -7,6 +7,7 @@ import com.jetbrains.php.lang.documentation.phpdoc.parser.PhpDocElementTypes;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.*;
+import com.jetbrains.php.lang.psi.elements.impl.ClassReferenceImpl;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
 import one.util.streamex.StreamEx;
@@ -34,7 +35,7 @@ public class PsalmLocalClassStringInitializationTypeProvider implements PhpTypeP
           .map(Parameter::getDocTag)
           .flatMap(PsalmLocalClassStringInitializationTypeProvider::docTypes)
           .filter(docType -> "class-string".equals(docType.getName()))
-          .flatMap(tag -> docTypes(PhpPsiUtil.getChildOfType(tag, PhpDocElementTypes.phpDocAttributeList))).map(PhpDocType::getFQN)
+          .flatMap(tag -> docTypes(PhpPsiUtil.getChildOfType(tag, PhpDocElementTypes.phpDocAttributeList))).map(ClassReferenceImpl::getLocalFQN)
           .forEach(classStringArgument -> res.add(classStringArgument));
         return res;
       }
