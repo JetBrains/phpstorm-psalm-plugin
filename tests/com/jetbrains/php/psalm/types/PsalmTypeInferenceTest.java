@@ -323,6 +323,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testTemplatedClassVariableDocType() {
+    doTypeTest();
+  }
+
   public void testReturnTemplatedClassNamespace() {
     doTypeTest();
   }
