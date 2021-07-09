@@ -61,6 +61,7 @@
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableCallTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmMethodExtendedWithGenericTypeProvider"/>
+    <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmArrayAccessExtendedWithGenericTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmFieldExtendedWithGenericTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmLocalClassStringInitializationTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmGenericTypeProvider"/>

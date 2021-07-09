@@ -364,4 +364,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
                                  "}\n");
     doTypeTest();
   }
+
+  public void testTemplatedIteratorInForeach() {
+    doTypeTest();
+  }
 }
