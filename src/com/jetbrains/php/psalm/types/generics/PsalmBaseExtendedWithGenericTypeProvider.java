@@ -10,10 +10,7 @@ import com.jetbrains.php.lang.documentation.phpdoc.PhpDocUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.impl.tags.PhpDocTagImpl;
 import com.jetbrains.php.lang.psi.elements.*;
-import com.jetbrains.php.lang.psi.resolve.types.PhpParameterBasedTypeProvider;
-import com.jetbrains.php.lang.psi.resolve.types.PhpType;
-import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
-import com.jetbrains.php.lang.psi.resolve.types.PhpTypeSignatureKey;
+import com.jetbrains.php.lang.psi.resolve.types.*;
 import one.util.streamex.StreamEx;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -41,15 +38,14 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
   private PhpType getSignatureType(MemberReference element) {
     PhpType type = new PhpType();
     for (String part : element.getSignatureParts()) {
-      if (getSignatureKey().isSigned(part)) {
+      if (getSignatureKey().signed(part)) {
         type.add(part);
       }
     }
     return type;
   }
 
-  @NotNull
-  protected abstract PhpTypeSignatureKey getSignatureKey();
+  protected abstract @NotNull PhpCharBasedTypeKey getSignatureKey();
 
   @Override
   public char getKey() {
@@ -59,16 +55,27 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
   @Override
   public @Nullable PhpType complete(String expression, Project project) {
     PhpIndex index = PhpIndex.getInstance(project);
-    int dot = expression.lastIndexOf('.');
-    if (dot < 0) return null;
-    String classRef = expression.substring(2, dot);
+    String classRef = getClassRef(expression);
+    if (classRef == null) return null;
     Map<String, List<String>> extendedClassesToSubstitutedTemplates = getExtendedClassesToSubstitutedTemplates(index, classRef);
     if (extendedClassesToSubstitutedTemplates.isEmpty()) return null;
-    return StreamEx.of(index.getBySignature(expression))
-      .select(PhpClassMember.class)
+    return resolveTargetMembers(expression, index, extendedClassesToSubstitutedTemplates)
       .map(PsalmBaseExtendedWithGenericTypeProvider::getSubstitutedTemplateInfo)
       .map(info -> substituteTemplateType(extendedClassesToSubstitutedTemplates, info)).nonNull()
       .reduce(new PhpType(), PhpType::add, PhpType::or);
+  }
+
+  protected StreamEx<? extends PhpClassMember> resolveTargetMembers(String expression,
+                                                          PhpIndex index,
+                                                          Map<String, List<String>> extendedClassesToSubstitutedTemplates) {
+    return StreamEx.of(index.getBySignature(expression)).select(PhpClassMember.class);
+  }
+
+  @Nullable
+  protected String getClassRef(String expression) {
+    int dot = expression.lastIndexOf('.');
+    if (dot < 0) return null;
+    return expression.substring(2, dot);
   }
 
   public static Map<String, List<String>> getExtendedClassesToSubstitutedTemplates(PhpIndex index, String classRef) {
