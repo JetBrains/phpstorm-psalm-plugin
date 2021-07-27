@@ -119,8 +119,13 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
   private static String substituteTemplateType(Map<String, List<String>> classesToExtendedTemplates, @Nullable TemplateInfo info) {
     if (info != null && classesToExtendedTemplates.containsKey(info.myContainingClassFQN)) {
       List<String> extendedTemplates = classesToExtendedTemplates.get(info.myContainingClassFQN);
-      if (info.myTemplateIndex < extendedTemplates.size() && !extendedTemplates.isEmpty()) {
-        return PhpType.pluralise(extendedTemplates.get(info.myTemplateIndex), info.myDimension);
+      int templateIndex = info.myTemplateIndex;
+      // hardcode IteratorAggregate usage with single templates since both variants are present in the userland
+      if (extendedTemplates.size() == 1 && info.myContainingClassFQN.equals("\\IteratorAggregate")) {
+        templateIndex = 0;
+      }
+      if (templateIndex < extendedTemplates.size() && !extendedTemplates.isEmpty()) {
+        return PhpType.pluralise(extendedTemplates.get(templateIndex), info.myDimension);
       }
     }
     return null;
