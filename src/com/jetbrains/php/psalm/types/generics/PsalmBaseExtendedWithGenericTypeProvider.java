@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static com.jetbrains.php.psalm.types.PsalmExtendedTypeProvider.TEMPLATES_NAMES;
 
@@ -88,13 +89,30 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
   private static StreamEx<Pair<String, List<String>>> decodeExtendedClassesAndSubstitutedTemplates(PhpIndex index, String classRef) {
     if (PsalmGenericTypeProvider.KEY.signed(classRef)) {
       String encodedSubstitutionInfo = ContainerUtil.getLastItem(PhpParameterBasedTypeProvider.extractSignatures(classRef, 2));
-      return encodedSubstitutionInfo != null ? StreamEx.of(
-        PsalmTemplatesCustomDocTagValueStubProvider.decodeExtendedClassAndTemplate(encodedSubstitutionInfo)) : StreamEx.empty();
+      if (encodedSubstitutionInfo != null) {
+        return StreamEx.of(PsalmTemplatesCustomDocTagValueStubProvider.decodeExtendedClassAndTemplate(encodedSubstitutionInfo))
+          .flatMap(decoded -> StreamEx.of(decoded).append(expandExtendedTemplates(index, decoded)));
+      }
+      return StreamEx.empty();
     } else {
       return StreamEx.of(index.getBySignature(classRef))
         .select(PhpClass.class)
-        .map(PsalmBaseExtendedWithGenericTypeProvider::getExtendedClassAndSubstitutedTemplates);
+        .flatMap(PsalmBaseExtendedWithGenericTypeProvider::extendedClassesAndSubstitutedTemplates);
     }
+  }
+
+  private static Stream<Pair<String, List<String>>> expandExtendedTemplates(PhpIndex index, Pair<String, List<String>> decoded) {
+    return index.getAnyByFQN(decoded.first).stream()
+      .flatMap(PsalmBaseExtendedWithGenericTypeProvider::extendedClassesWithFallthroughTemplates)
+      .map(extended -> Pair.create(extended, decoded.second));
+  }
+
+  private static Stream<String> extendedClassesWithFallthroughTemplates(PhpClass c) {
+    List<String> templates = ContainerUtil.map(getTemplates(c.getDocComment()), PhpLangUtil::toFQN);
+    if (templates.isEmpty()) return Stream.empty();
+    return extendedClassesAndSubstitutedTemplates(c)
+      .filter(decoded -> decoded.second.equals(templates))
+      .map(decoded -> decoded.getFirst());
   }
 
   @Nullable
@@ -152,14 +170,14 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
     return PhpType.unpluralize(PhpLangUtil.toPresentableFQN(s), PhpType.getPluralDimension(s));
   }
 
-  private static @Nullable Pair<String, List<String>> getExtendedClassAndSubstitutedTemplates(PhpClass e) {
+  @NotNull
+  private static Stream<Pair<String, List<String>>> extendedClassesAndSubstitutedTemplates(PhpClass e) {
     PhpDocComment docComment = e.getDocComment();
-    if (docComment == null) return null;
+    if (docComment == null) return Stream.empty();
     return Arrays.stream(PsalmTemplatesCustomDocTagValueStubProvider.EXTENDED_NAMES)
       .flatMap(name -> Arrays.stream(docComment.getTagElementsByName(name)))
       .map(t -> ((PhpDocTagImpl)t).getCustomTagValue()).filter(Objects::nonNull)
-      .map(PsalmTemplatesCustomDocTagValueStubProvider::decodeExtendedClassAndTemplate)
-      .findFirst().orElse(null);
+      .map(PsalmTemplatesCustomDocTagValueStubProvider::decodeExtendedClassAndTemplate);
   }
 
   @Override
