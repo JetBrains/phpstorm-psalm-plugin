@@ -48,4 +48,9 @@ public class PsalmArrayAccessExtendedWithGenericTypeProvider extends PsalmBaseEx
   protected @Nullable String getClassRef(String expression) {
     return expression.substring(2);
   }
+
+  @Override
+  public boolean interceptsNativeSignature() {
+    return true;
+  }
 }

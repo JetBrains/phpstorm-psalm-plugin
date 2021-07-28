@@ -41,7 +41,7 @@ class ChildPartial extends Base
 {
 }
 
-<type value="P">(new Child())->first</type>;
-<type value="P1">(new Child())->second</type>;
-<type value="P">(new ChildPartial())->first</type>;
+<type value="mixed|P">(new Child())->first</type>;
+<type value="mixed|P1">(new Child())->second</type>;
+<type value="mixed|P">(new ChildPartial())->first</type>;
 <type value="mixed">(new ChildPartial())->second</type>;
