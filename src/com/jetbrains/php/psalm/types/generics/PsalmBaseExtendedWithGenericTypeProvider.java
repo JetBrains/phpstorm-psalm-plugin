@@ -192,4 +192,9 @@ public abstract class PsalmBaseExtendedWithGenericTypeProvider implements PhpTyp
                                                               Project project) {
     return null;
   }
+
+  @Override
+  public boolean interceptsNativeSignature() {
+    return true;
+  }
 }
