@@ -8,8 +8,9 @@ import com.jetbrains.php.PhpWorkaroundUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
+import com.jetbrains.php.lang.psi.resolve.types.generics.PhpGenericsTemplatesCustomDocTagValueStubProvider;
 import com.jetbrains.php.psalm.types.PsalmExtendedStringDocTypeProvider;
-import com.jetbrains.php.psalm.types.PsalmExtendedTypeProvider;
+import com.jetbrains.php.lang.psi.resolve.types.generics.PhpGenericsExtendedTypeProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -48,7 +49,7 @@ public class PsalmCompletionContributor extends CompletionContributor {
       PhpDocComment docComment = PhpPsiUtil.getParentByCondition(parameters.getPosition(), PhpDocComment.INSTANCEOF);
       if (docComment != null) {
         Set<String> customTypes =
-          ContainerUtil.union(PsalmExtendedTypeProvider.getTemplates(docComment), PsalmExtendedTypeProvider.getCustomTypes(docComment));
+          ContainerUtil.union(PhpGenericsTemplatesCustomDocTagValueStubProvider.getTemplates(docComment), PhpGenericsExtendedTypeProvider.getCustomTypes(docComment));
         for (String customType : customTypes) {
           result.addElement(createCustomTypeLookupElement(customType));
         }
