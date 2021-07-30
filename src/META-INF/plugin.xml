@@ -56,34 +56,28 @@
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmDocTagTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedStringDocTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedClassConstantReferenceTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmDummyArrayKeyTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableCallTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmMethodExtendedWithGenericTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmArrayAccessExtendedWithGenericTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmFieldExtendedWithGenericTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmLocalClassStringInitializationTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.generics.PsalmGenericTypeProvider"/>
-    <metaSignatureResolver implementation="com.jetbrains.php.psalm.types.generics.PsalmGenericMetaSignatureResolver"/>
     <keyTypeProvider implementation="com.jetbrains.php.psalm.types.PsalmArrayKeyTypeProvider"/>
     <docTagParserExtension tagName="psalm-param" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
     <docTagParserExtension tagName="psalm-return" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocReturnTagParser" />
     <docTagParserExtension tagName="psalm-var" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocVarTagParser" />
     <docTagParserExtension tagName="template-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
+    <docTagParserExtension tagName="psalm-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="template-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <metaTableProvider implementation="com.jetbrains.php.psalm.types.PsalmMetaTableProvider"/>
+    <docTagParserExtension tagName="psalm-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <noReturnProvider implementation="com.jetbrains.php.psalm.PsalmNoReturnProvider" />
     <arrayShapesProvider implementation="com.jetbrains.php.psalm.types.shapes.PsalmDocArrayShapeProvider"/>
 
-    <docTagValuesStubProvider implementation="com.jetbrains.php.psalm.types.generics.PsalmTemplatesCustomDocTagValueStubProvider" />
+    <docPrefixProvider implementation="com.jetbrains.php.psalm.types.PsalmDocPrefixProvider" />
   </extensions>
   <extensions defaultExtensionNs="com.intellij">
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.psalm.completion.PsalmCompletionContributor"/>
     <psi.referenceContributor language="PHP" implementation="com.jetbrains.php.psalm.lang.PsalmReferenceContributor"/>
-    <fileBasedIndex implementation="com.jetbrains.php.psalm.types.PsalmTemplateIndex"/>
     <fileBasedIndex implementation="com.jetbrains.php.psalm.PsalmNoReturnFunctionsIndex"/>
   </extensions>
 </idea-plugin>
