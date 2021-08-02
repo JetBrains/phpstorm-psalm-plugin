@@ -30,6 +30,11 @@
                      enabledByDefault="true" level="WARNING"
                      implementationClass="com.jetbrains.php.psalm.lang.inspections.PsalmAdvanceCallableParamsInspection"
                      key="function.call.is.not.compatible.with.advance.callable.declaration" bundle="messages.PsalmBundle"/>
+    <localInspection language="PHP" groupPath="PHP" shortName="PsalmIncompatibleTypeOfArrayKeyInspection"
+                     groupKey="inspection.php.psalm"
+                     enabledByDefault="true" level="WARNING"
+                     implementationClass="com.jetbrains.php.psalm.lang.inspections.PsalmIncompatibleTypeOfArrayKeyInspection"
+                     key="incompatible.type.of.array.key" bundle="messages.PsalmBundle"/>
 
   </extensions>
 
