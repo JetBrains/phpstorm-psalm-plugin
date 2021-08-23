@@ -29,7 +29,7 @@ function get(string $a, string $a1) {}
  */
 function get1(string $a, string $a1) {}
 
-<type value="A|B|mixed">get1("A", "B")</type>;
+<type value="void|A|B">get1("A", "B")</type>;
 
 
 /**
