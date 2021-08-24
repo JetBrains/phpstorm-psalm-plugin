@@ -323,6 +323,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testTemplatedClassVariableDocType() {
+    doTypeTest();
+  }
+
   public void testReturnTemplatedClassNamespace() {
     doTypeTest();
   }
@@ -358,6 +362,22 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
                                  "    {\n" +
                                  "    }\n" +
                                  "}\n");
+    doTypeTest();
+  }
+
+  public void testTemplatedIteratorInForeach() {
+    doTypeTest();
+  }
+
+  public void testExtendedClassesWithFallthroughTemplates() {
+    doTypeTest();
+  }
+
+  public void testExtendedClassesWithFallthroughTemplatesNamespaced() {
+    doTypeTest();
+  }
+
+  public void testGenericsConstructorInference() {
     doTypeTest();
   }
 }
