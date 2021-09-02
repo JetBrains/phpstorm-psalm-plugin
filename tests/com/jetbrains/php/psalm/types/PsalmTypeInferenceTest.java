@@ -388,4 +388,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testSuperMember() {
     doTypeTest();
   }
+
+  public void testSubstituteExtendedClasses() {
+    doTypeTest();
+  }
 }
