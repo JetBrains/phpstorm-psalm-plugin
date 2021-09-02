@@ -380,4 +380,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericsConstructorInference() {
     doTypeTest();
   }
+
+  public void testMultipleTags() {
+    doTypeTest();
+  }
 }
