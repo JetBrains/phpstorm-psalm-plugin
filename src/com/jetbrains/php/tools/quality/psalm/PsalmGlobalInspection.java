@@ -141,7 +141,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
       options.add(updateIfRemote(config, project, PsalmQualityToolType.INSTANCE));
     }
     if (showInfo) {
-      options.add("--show-info");
+      options.add("--show-info=true");
     }
     if (findUnusedCode) {
       options.add("--find-unused-code");
