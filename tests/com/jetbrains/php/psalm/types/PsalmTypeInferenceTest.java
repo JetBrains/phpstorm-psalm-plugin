@@ -384,4 +384,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testMultipleTags() {
     doTypeTest();
   }
+
+  public void testSuperMember() {
+    doTypeTest();
+  }
 }
