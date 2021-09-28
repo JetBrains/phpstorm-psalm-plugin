@@ -72,10 +72,12 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   }
   
   @Override
-  public QualityToolValidationGlobalInspection getGlobalTool(@NotNull Project project) {
-    final InspectionToolWrapper inspectionTool = ((InspectionProfile)InspectionProjectProfileManager.getInstance(project)
-      .getCurrentProfile())
-      .getInspectionTool(getInspectionId(), project);
+  public QualityToolValidationGlobalInspection getGlobalTool(@NotNull Project project,
+                                                             @Nullable InspectionProfile profile) {
+    if (profile == null) {
+      profile = InspectionProjectProfileManager.getInstance(project).getCurrentProfile();
+    }
+    final InspectionToolWrapper inspectionTool = profile.getInspectionTool(getInspectionId(), project);
     if (inspectionTool == null) {
       return null;
     }
@@ -89,7 +91,7 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
 
   @Override
   public String getInspectionShortName(@NotNull Project project) {
-    final QualityToolValidationGlobalInspection tool = getGlobalTool(project);
+    final QualityToolValidationGlobalInspection tool = getGlobalTool(project, null);
     if (tool != null) {
       return tool.getShortName();
     }

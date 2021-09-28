@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.psalm;
 
+import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.execution.ExecutionException;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -27,8 +28,11 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
 
   @Override
   @Nullable
-  protected List<String> getOptions(@Nullable String filePath, @NotNull PsalmValidationInspection inspection, @NotNull Project project) {
-    final PsalmGlobalInspection tool = (PsalmGlobalInspection)getQualityToolType().getGlobalTool((project));
+  protected List<String> getOptions(@Nullable String filePath,
+                                    @NotNull PsalmValidationInspection inspection,
+                                    @Nullable InspectionProfile profile,
+                                    @NotNull Project project) {
+    final PsalmGlobalInspection tool = (PsalmGlobalInspection)getQualityToolType().getGlobalTool(project, profile);
     if (tool == null) {
       return emptyList();
     }
@@ -63,8 +67,8 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
           try {
             if (configuration != null) {
               getToolOutput(project, configuration.getInterpreterId(), configuration.getToolPath(),
-                                                         configuration.getTimeout(), PhpBundle.message("cache.creating"), null,
-                                                         ArrayUtil.toStringArray(getOptions(null, inspection, project)));
+                            configuration.getTimeout(), PhpBundle.message("cache.creating"), null,
+                            ArrayUtil.toStringArray(getOptions(null, inspection, null, project)));
             }
           }
           catch (ExecutionException exception) {
@@ -83,10 +87,6 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
   @Override
   protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo collectedInfo) {
     return new PsalmMessageProcessor(collectedInfo);
-  }
-
-  @Override
-  protected void addAdditionalAnnotatorInfo(QualityToolAnnotatorInfo collectedInfo, QualityToolValidationInspection tool) {
   }
 
   @Override
