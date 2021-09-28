@@ -1,6 +1,6 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.execution.ExecutionException;
 import com.intellij.notification.Notification;
@@ -14,11 +14,9 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.profile.codeInspection.InspectionProfileManager;
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.jetbrains.php.tools.quality.QualityToolAnnotator;
-import com.jetbrains.php.tools.quality.QualityToolValidationException;
-import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
-import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
+import com.jetbrains.php.tools.quality.*;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -66,6 +64,27 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
         notifyAboutMissingConfig(project, path.toString());
       }
     }
+  }
+
+  @Override
+  public void inspectionStarted(@NotNull InspectionManager manager,
+                                @NotNull GlobalInspectionContext globalContext,
+                                @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
+    super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
+    final QualityToolAnnotator annotator = getAnnotator();
+    final QualityToolAnnotatorInfo info = annotator.collectAnnotatorInfo(null, null, globalContext.getProject(), false);
+    if (info != null) {
+      manager.getProject().putUserData(ANNOTATOR_INFO, annotator.doAnnotate(info));
+    }
+  }
+
+  @Override
+  public ProblemDescriptor @NotNull [] checkFile(@NotNull PsiFile file,
+                                                 @NotNull GlobalInspectionContext context,
+                                                 @NotNull InspectionManager manager) {
+    ProblemsHolder holder = new ProblemsHolder(manager, file, false);
+    super.checkFile(file, manager, holder, context, null);
+    return holder.getResultsArray();
   }
 
   public static void notifyAboutMissingConfig(@NotNull Project project, @NotNull String path) {
