@@ -171,7 +171,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
     }
     options.add("--monochrome");
     if (filePath != null) {
-      options.add(filePath);
+      options.add(updateIfRemote(filePath, project, PsalmQualityToolType.INSTANCE));
     }
     return options;
   }
