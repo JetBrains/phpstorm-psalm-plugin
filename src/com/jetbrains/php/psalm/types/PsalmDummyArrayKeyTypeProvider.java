@@ -3,6 +3,7 @@ package com.jetbrains.php.psalm.types;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
+import com.jetbrains.php.PhpWorkaroundUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
@@ -30,12 +31,12 @@ public class PsalmDummyArrayKeyTypeProvider extends PhpCharBasedTypeKey implemen
   @Override
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType) {
-      String name = PsalmParamTypeProvider.getGenericArrayName(((PhpDocType)element));
+      String name = PhpWorkaroundUtil.getGenericArrayName(((PhpDocType)element));
       if (name != null && name.equals("list")) {
         return myIntIndices;
       }
-      if (PsalmParamTypeProvider.isGenericArray(((PhpDocType)element))) {
-        PsiElement separatorElement = PsalmParamTypeProvider.getTypesSeparatorElement(((PhpDocType)element));
+      if (PhpWorkaroundUtil.isGenericArray(((PhpDocType)element))) {
+        PsiElement separatorElement = PhpWorkaroundUtil.getTypesSeparatorElement(((PhpDocType)element));
         if (PhpPsiUtil.isOfType(separatorElement, DOC_COMMA)) {
           PhpType keyType = new PhpType().add(PhpPsiUtil.getPrevSiblingIgnoreWhitespace(separatorElement, true));
           if (!"iterable".equalsIgnoreCase(((PhpDocType)element).getName())) {
