@@ -84,4 +84,9 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "f");
   }
+
+  public void testStaticMemberReferenceDynamicClassFQN() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "sayHello", "$sProperty");
+  }
 }
