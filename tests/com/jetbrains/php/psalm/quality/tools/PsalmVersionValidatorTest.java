@@ -23,4 +23,12 @@ public class PsalmVersionValidatorTest extends CodeInsightFixtureTestCase {
     assertTrue(result.first);
     assertEquals("OK, " + message, result.second);
   }
+
+  public void testVPrefix(){
+    final String message = "Psalm v4.15.0@a1b5e489e6fcebe40cb804793d964e99fc347820";
+    final Pair<Boolean, String> result = new PsalmConfigurableForm<>(myFixture.getProject(), new PsalmConfiguration())
+      .validateMessage(message);
+    assertTrue(result.first);
+    assertEquals("OK, " + message, result.second);
+  }
 }
