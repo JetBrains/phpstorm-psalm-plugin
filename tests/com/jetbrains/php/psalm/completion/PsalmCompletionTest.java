@@ -104,4 +104,9 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "sayHello", "$sProperty");
   }
+
+  public void testArrayShapeQuotedKeys() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "a", "b","c","d","f","g");
+  }
 }
