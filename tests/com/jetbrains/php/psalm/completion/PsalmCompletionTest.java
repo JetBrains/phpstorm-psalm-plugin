@@ -53,6 +53,11 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
 
+  public void testNestedMultilineArrayShape() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
+  }
+
   public void testArrayShapeMultipleFiles() {
     myFixture.addFileToProject("aa.php", "<?php\n" +
                                          "/**\n" +

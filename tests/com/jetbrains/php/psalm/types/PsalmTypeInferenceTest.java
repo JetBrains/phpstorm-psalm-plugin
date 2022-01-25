@@ -285,6 +285,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest(true);
   }
 
+  public void testPsalmMultilineArrayShape() {
+    doTypeTest(true);
+  }
+
   public void testPsalmArrayShapeMultipleFiles() {
     myFixture.addFileToProject("aa.php", "<?php\n" +
                                         "/**\n" +
