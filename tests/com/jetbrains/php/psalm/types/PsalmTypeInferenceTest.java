@@ -420,4 +420,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testArrayShapePlural() {
     doTypeTest();
   }
+
+  public void testArrayShapeNumeric() {
+    doTypeTest();
+  }
 }
