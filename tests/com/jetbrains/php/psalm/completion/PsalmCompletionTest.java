@@ -53,6 +53,11 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
 
+  public void testNestedListArrayShape() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
+  }
+
   public void testNestedArrayShapeDifferentQuotes() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");

@@ -40,4 +40,9 @@ function f1($param){
     <type value="C|mixed">$ctxB[1]</type>;
 
     <type value="string|C|mixed">$ctxB[$f]</type>;
+
+    /** @var array<array{a: C}> $ctxC */
+    $ctxC = $param->f();
+    <type value="C|mixed">$ctxC[$f]['a']</type>;
+    <type value="mixed">$ctxC[$f]['b']</type>;
 }
