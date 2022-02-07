@@ -6,6 +6,6 @@
  */
 function <info descr="PHP_FUNCTION">f</info>(<info descr="PHP_PARAMETER">$a</info>, <info descr="PHP_PARAMETER">$b</info>)
 {
-    /** @psalm-var <info descr="PHP_DOC_IDENTIFIER">C::A_*</info> $c */
+    /** @psalm-var <info descr="PHP_DOC_IDENTIFIER">C::A_*</info> <info descr="PHP_DOC_VAR">$c</info> */
     $c;
 }

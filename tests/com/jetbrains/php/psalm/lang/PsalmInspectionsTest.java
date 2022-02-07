@@ -69,4 +69,8 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
   public void testArrayShape() {
     doInspectionTest(PhpRedundantVariableDocTypeInspection.class);
   }
+
+  public void testPsalmTraceVar() {
+    doInspectionTest(true);
+  }
 }
