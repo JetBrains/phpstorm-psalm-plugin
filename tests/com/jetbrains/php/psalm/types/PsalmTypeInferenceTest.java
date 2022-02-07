@@ -430,4 +430,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testArrayShapeNumeric() {
     doTypeTest();
   }
+
+  public void testGenericDocMethod() {
+    doTypeTest();
+  }
 }
