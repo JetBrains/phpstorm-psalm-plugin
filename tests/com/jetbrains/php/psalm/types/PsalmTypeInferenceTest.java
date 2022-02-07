@@ -434,4 +434,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericDocMethod() {
     doTypeTest();
   }
+
+  public void testArrayDocMethod() {
+    doTypeTest();
+  }
 }
