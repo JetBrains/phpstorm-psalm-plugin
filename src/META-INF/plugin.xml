@@ -55,6 +55,7 @@
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmParamTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmDocTagTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedStringDocTypeProvider"/>
+    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAliasTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedClassConstantReferenceTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmDummyArrayKeyTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableTypeProvider"/>
@@ -64,6 +65,7 @@
     <docTagParserExtension tagName="psalm-param" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
     <docTagParserExtension tagName="psalm-return" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocReturnTagParser" />
     <docTagParserExtension tagName="psalm-trace" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTraceTagParser" />
+    <docTagParserExtension tagName="psalm-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTypeTagParser" />
     <docTagParserExtension tagName="psalm-var" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocVarTagParser" />
     <docTagParserExtension tagName="template-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
@@ -80,5 +82,8 @@
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.psalm.completion.PsalmCompletionContributor"/>
     <psi.referenceContributor language="PHP" implementation="com.jetbrains.php.psalm.lang.PsalmReferenceContributor"/>
     <fileBasedIndex implementation="com.jetbrains.php.psalm.PsalmNoReturnFunctionsIndex"/>
+    <lang.elementManipulator forClass="com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType"
+                             implementationClass="com.jetbrains.php.psalm.lang.PhpDocTypeManipulator"/>
+    <annotator language="PHP" implementationClass="com.jetbrains.php.psalm.lang.PsalmAnnotator"/>
   </extensions>
 </idea-plugin>

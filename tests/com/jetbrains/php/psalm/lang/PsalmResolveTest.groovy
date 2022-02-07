@@ -42,4 +42,22 @@ function f($a, $b)
     assertInstanceOf(second, Field.class)
     assertEquals(Set.of("\\C.A_1", "\\C.A_2"), Set.of(first.getFQN(), second.getFQN()))
   }
+
+  void testResolveAliasReferenceToType() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-type A_OR_B = A|B
+ * @psalm-type CoolType = <caret>A_OR_B|null
+ * @return CoolType
+ */
+function foo($a) {
+  
+}
+''')
+    def resolved = resolve()
+    assertEquals("A_OR_B", resolved.getText())
+    assertEquals("@psalm-type A_OR_B = A|B", resolved.getParent().getText())
+  }
+
 }
