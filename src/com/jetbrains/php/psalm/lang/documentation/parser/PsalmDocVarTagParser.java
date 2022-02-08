@@ -1,6 +1,7 @@
 package com.jetbrains.php.psalm.lang.documentation.parser;
 
 import com.intellij.lang.PsiBuilder;
+import com.jetbrains.php.lang.documentation.phpdoc.parser.tags.PhpDocTypeTagParser;
 import com.jetbrains.php.lang.documentation.phpdoc.parser.tags.PhpDocVarTagParser;
 import com.jetbrains.php.lang.parser.ParserPart;
 import com.jetbrains.php.lang.parser.PhpElementTypes;
@@ -29,16 +30,8 @@ public class PsalmDocVarTagParser extends PhpDocVarTagParser {
     if (!builder.compareAndEat(DOC_IDENTIFIER) || !builder.compareAndEat(DOC_STATIC) || !builder.compareAndEat(DOC_IDENTIFIER)) {
       return false;
     }
-    compareAndEatText(builder, "*");
+    PhpDocTypeTagParser.compareAndEatText(builder, "*");
     return true;
-  }
-
-  public static boolean compareAndEatText(@NotNull PhpPsiBuilder builder, String text) {
-    if (builder.getTokenType() == DOC_TEXT && text.equals(builder.getTokenText())) {
-      builder.advanceLexer();
-      return true;
-    }
-    return false;
   }
 
   @Override

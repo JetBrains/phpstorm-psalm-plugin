@@ -47,7 +47,9 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
   }
 
   private static PhpType parsePsalmTypeFromDocMethod(PsiElement docMethodType) {
-    return parsePsalmType(docMethodType, docMethodType.getFirstChild().getText(), PhpTokenTypes.opLESS, PhpTokenTypes.opGREATER,
+    PsiElement firstChild = docMethodType.getFirstChild();
+    if (firstChild == null) return PhpType.EMPTY;
+    return parsePsalmType(docMethodType, firstChild.getText(), PhpTokenTypes.opLESS, PhpTokenTypes.opGREATER,
                           PhpTokenTypes.opCOMMA, PhpGenericTypeProvider::getReferenceFromDocMethodType);
   }
   private static @Nullable PhpType parsePsalmType(@NotNull PsiElement docElement,
