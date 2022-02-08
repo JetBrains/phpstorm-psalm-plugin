@@ -3,7 +3,9 @@ package com.jetbrains.php.psalm.types;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.lang.PhpLangUtil;
+import com.jetbrains.php.lang.documentation.phpdoc.PhpDocUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
@@ -16,14 +18,14 @@ import com.jetbrains.php.lang.psi.elements.PhpTypedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
+import com.jetbrains.php.lang.psi.resolve.types.generics.PhpGenericsExtendedTypeProvider;
+import com.jetbrains.php.lang.psi.stubs.indexes.PhpDocTypeAliasesIndex;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
+
+import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes.DOC_IDENTIFIER;
 
 public class PsalmAliasTypeProvider implements PhpTypeProvider4 {
   private static final PhpCharBasedTypeKey KEY = new PhpCharBasedTypeKey() {
@@ -43,10 +45,20 @@ public class PsalmAliasTypeProvider implements PhpTypeProvider4 {
   @Override
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType) {
-      return resolveTypeAliases((PhpDocType)element).stream()
-        .flatMap(e -> PhpPsiUtil.<PhpDocType>getChildren(e, PhpDocType.class::isInstance).stream())
-        .map(PhpTypedElement::getType)
-        .reduce(new PhpType(), PhpType::add);
+      PhpType type = new PhpType();
+      for (PhpDocTag tag : resolveTypeAliases((PhpDocType)element)) {
+        List<PhpDocType> docType = PhpPsiUtil.getChildren(tag, PhpDocType.class::isInstance);
+        if (tag.getName().endsWith("-import-type")) {
+          PsiElement aliasName = PhpPsiUtil.getChildOfType(tag, DOC_IDENTIFIER);
+          PhpDocType fromType = ContainerUtil.getOnlyItem(docType);
+          if (aliasName != null && fromType != null) {
+            type.add(KEY.sign(fromType.getFQN() + "." + aliasName.getText()));
+          }
+        } else {
+          docType.forEach(type::add);
+        }
+      }
+      return type;
     }
     return null;
   }
@@ -77,18 +89,33 @@ public class PsalmAliasTypeProvider implements PhpTypeProvider4 {
   @NotNull
   private static Collection<PhpDocTag> resolveLocalTypeFromTypeAlias(String name, @Nullable PhpDocComment docComment) {
     if (docComment == null) return Collections.emptyList();
-    return ContainerUtil.filter(docComment.getTagElementsByName(PSALM_TYPE_TAG_NAME),
-                                t -> name.equals(getTypeName(t)));
+    Collection<PhpDocTag> res = new HashSet<>();
+    PhpDocUtil.processTagElementsByNames(docComment, tag -> {
+      PsiElement identifier = getAliasIdentifier(tag);
+      if (identifier != null && identifier.textMatches(name)) {
+        res.add(tag);
+      }
+      return true;
+    }, PSALM_TYPE_TAG_NAME, PSALM_IMPORT_TYPE_TAG_NAME);
+    return res;
   }
 
-  private static @Nullable String getTypeName(PhpDocTag tag) {
+  @Nullable
+  public static PsiElement getAliasIdentifier(PhpDocTag tag) {
     PsiElement identifier = PhpPsiUtil.getChildOfType(tag, PhpDocTokenTypes.DOC_IDENTIFIER);
-    return identifier != null ? identifier.getText() : null;
+    if (tag.getName().equals(PSALM_IMPORT_TYPE_TAG_NAME)) {
+      return PhpGenericsExtendedTypeProvider.getAliasIdentifierFromImportedType(tag);
+    }
+    return identifier;
   }
 
   @Override
   public @Nullable PhpType complete(String expression, Project project) {
-    return null;
+    int separator = expression.lastIndexOf('.');
+    if (separator < 0) return null;
+    String fromClassFQN = expression.substring(2, separator);
+    String typeName = expression.substring(separator + 1);
+    return PhpDocTypeAliasesIndex.getTypeByAliasName(project, fromClassFQN, typeName);
   }
 
   @Override

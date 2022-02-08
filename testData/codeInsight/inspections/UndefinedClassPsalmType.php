@@ -1,4 +1,7 @@
 <?php
+/**
+ * @psalm-type T1 = array{name: string, age: int}
+ * */
 class A {}
 /**
  * @psalm-type T = A
@@ -18,15 +21,15 @@ function makeArray($t) {
 }
 
 /**
- * @psalm-import-type T1 from T2 as T3
- * @return array<<warning descr="Undefined class 'T1'">T1</warning>, <warning descr="Undefined class 'T2'">T2</warning>, T3>
+ * @psalm-import-type T1 from A as T3
+ * @return array<T3, A>
  */
 function makeArray1($t) {
     return [$t];
 }
 
 /**
- * @psalm-import-type T1 from T2
+ * @psalm-import-type T1 from <warning descr="Undefined class 'B'">B</warning>
  * @return array<T1, <warning descr="Undefined class 'T2'">T2</warning>, <warning descr="Undefined class 'T3'">T3</warning>>
  */
 function makeArray2($t) {

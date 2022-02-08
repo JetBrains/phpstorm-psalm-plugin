@@ -442,4 +442,19 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testTypeAlias() {
     doTypeTest();
   }
+
+  public void testTypeAliasGlobal() {
+    myFixture.addFileToProject("aa.php", "<?php\n" +
+                                         "\n" +
+                                         "class Foo {}\n" +
+                                         "class Bar {}\n" +
+                                         "/**\n" +
+                                         " * @psalm-type FooAlias = Foo\n" +
+                                         " * @psalm-type BarAlias = Bar\n" +
+                                         " */\n" +
+                                         "class Phone {\n" +
+                                         "\n" +
+                                         "}");
+    doTypeTest();
+  }
 }

@@ -89,7 +89,7 @@ public class PsalmReferenceContributor extends PsiReferenceContributor {
       @Override
       public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
         return StreamEx.of(PsalmAliasTypeProvider.resolveTypeAliases(((PhpDocType)myElement)))
-          .map(e -> PhpPsiUtil.getChildOfType(e, DOC_IDENTIFIER)).filter(Objects::nonNull)
+          .map(tag -> PsalmAliasTypeProvider.getAliasIdentifier(tag)).filter(Objects::nonNull)
           .distinct()
           .map(PsiElementResolveResult::new)
           .toArray(PsiElementResolveResult.class);

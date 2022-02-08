@@ -60,4 +60,20 @@ function foo($a) {
     assertEquals("@psalm-type A_OR_B = A|B", resolved.getParent().getText())
   }
 
+  void testResolveImportedAliasReferenceToType() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-import-type FooAlias from Phone as MyFooAlias
+ * @psalm-type CoolType = <caret>MyFooAlias|null
+ */
+function foo($a) {
+  
+}
+''')
+    def resolved = resolve()
+    assertEquals("MyFooAlias", resolved.getText())
+    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
+  }
+
 }
