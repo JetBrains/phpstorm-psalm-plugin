@@ -76,4 +76,58 @@ function foo($a) {
     assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
   }
 
+  void testResolveImportedFromStatement() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-import-type FooAlias from Phone as MyFooAlias
+ */
+function foo($a) {
+    /** @var <caret>MyFooAlias $alias */
+    $phone = $param->toArray();
+}
+''')
+    def resolved = resolve()
+    assertEquals("MyFooAlias", resolved.getText())
+    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
+  }
+
+  void testResolveImportedFromStatementToContainingClass() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-import-type FooAlias from Phone as MyFooAlias
+ */
+class a {
+function foo($a) {
+    /** @var <caret>MyFooAlias $alias */
+    $phone = $param->toArray();
+}
+}
+''')
+    def resolved = resolve()
+    assertEquals("MyFooAlias", resolved.getText())
+    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
+  }
+
+  void testResolveImportedFromMemberToContainingClass() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-import-type FooAlias from Phone as MyFooAlias
+ */
+class a {
+/**
+ * @param $param
+ * @return <caret>MyFooAlias
+ */
+function foo($a) {}
+}
+''')
+    def resolved = resolve()
+    assertEquals("MyFooAlias", resolved.getText())
+    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
+  }
+
+
 }
