@@ -461,4 +461,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testTypeAliasPlural() {
     doTypeTest();
   }
+
+  public void testInferredVarParameter() {
+    doTypeTest();
+  }
 }
