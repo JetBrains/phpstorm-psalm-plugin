@@ -465,4 +465,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testInferredVarParameter() {
     doTypeTest();
   }
+
+  public void testNestedListInMultilineDoc() {
+    doTypeTest();
+  }
 }
