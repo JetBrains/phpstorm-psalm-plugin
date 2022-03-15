@@ -158,7 +158,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
     options.add("--output-format=checkstyle");
     if (!isEmpty(config)) {
       options.add("-c");
-      options.add(updateIfRemote(config, project, PsalmQualityToolType.INSTANCE));
+      options.add(updateIfRemoteMappingExists(config, project, PsalmQualityToolType.INSTANCE));
     }
     if (showInfo) {
       options.add("--show-info=true");
@@ -171,7 +171,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
     }
     options.add("--monochrome");
     if (filePath != null) {
-      options.add(updateIfRemote(filePath, project, PsalmQualityToolType.INSTANCE));
+      options.add(updateIfRemoteMappingExists(filePath, project, PsalmQualityToolType.INSTANCE));
     }
     return options;
   }
