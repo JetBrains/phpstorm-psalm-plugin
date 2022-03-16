@@ -63,6 +63,7 @@
     <keyTypeProvider implementation="com.jetbrains.php.psalm.types.PsalmArrayKeyTypeProvider"/>
     <docTagParserExtension tagName="psalm-param" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
     <docTagParserExtension tagName="psalm-return" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocReturnTagParser" />
+    <docTagParserExtension tagName="psalm-throws" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocThrowsParser" />
     <docTagParserExtension tagName="psalm-trace" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTraceTagParser" />
     <docTagParserExtension tagName="psalm-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTypeTagParser" />
     <docTagParserExtension tagName="psalm-import-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocImportTypeTagParser" />
