@@ -4,6 +4,7 @@ import com.jetbrains.php.PhpFixesTestCase;
 import com.jetbrains.php.lang.inspections.PhpFullyQualifiedNameUsageInspection;
 import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
 import com.jetbrains.php.lang.inspections.codeStyle.PhpPluralMixedCanBeReplacedWithArrayInspection;
+import com.jetbrains.php.lang.inspections.phpdoc.PhpVarTagWithoutVariableNameInspection;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,5 +33,9 @@ public class PsalmFixesTest extends PhpFixesTestCase {
 
   public void testPluralMixedWithKeys() {
     doCheckNoQuickFix("Replace with 'array'", new PhpPluralMixedCanBeReplacedWithArrayInspection());
+  }
+
+  public void testVarTagWithoutVariableName() {
+    doTestQuickFix("Add '$a'", new PhpVarTagWithoutVariableNameInspection());
   }
 }

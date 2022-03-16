@@ -33,7 +33,7 @@ PHP file
         PsiWhiteSpace('\n     ')
         PsiElement(DOC_LEADING_ASTERISK)('*')
         PsiWhiteSpace(' ')
-        PhpDocTagImpl: @psalm-var
+        PhpDocParamTagImpl: @psalm-var
           PsiElement(DOC_TAG_NAME)('@psalm-var')
           PsiWhiteSpace(' ')
           PhpDocVarImpl: f
