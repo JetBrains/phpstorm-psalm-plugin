@@ -31,4 +31,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$ArrayShape() throws Throwable {
     doTest();
   }
+
+  public void test$IntRanges() throws Throwable {
+    doTest();
+  }
 }

@@ -8,6 +8,7 @@ import com.jetbrains.php.lang.documentation.phpdoc.parser.PhpDocElementTypes;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
+import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
@@ -70,7 +71,8 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
       PhpType type = getScalarType((PhpDocType)element);
       if (!type.isEmpty()) {
         PsiElement attributes = PhpPsiUtil.getChildOfType(element, PhpDocElementTypes.phpDocAttributeList);
-        String attributesText = attributes != null ? attributes.getText() : null;
+        PhpPsiElement attributeContent = attributes instanceof PhpPsiElement ? ((PhpPsiElement)attributes).getFirstPsiChild() : null;
+        String attributesText = attributeContent != null ? attributeContent.getText() : null;
         return type.map(name -> KEY.sign(attributesText != null ? name + "." + attributesText : name));
       }
     }
