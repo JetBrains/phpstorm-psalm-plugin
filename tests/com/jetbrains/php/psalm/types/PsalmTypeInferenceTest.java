@@ -305,6 +305,13 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
                                          " * @psalm-return array<array{age?: Exception, f: int}>\n" +
                                          " */\n" +
                                          "function ff1(){}");
+    myFixture.addFileToProject("d.php", "<?php\n" +
+                                        "class AA {\n" +
+                                        "/**\n" +
+                                        " * @psalm-return array{age?: Exception, f: int}\n" +
+                                        " */\n" +
+                                        "function ff1(){}\n" +
+                                        "}");
 
     doTypeTest(true);
   }
