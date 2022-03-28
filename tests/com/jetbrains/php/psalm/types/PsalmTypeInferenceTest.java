@@ -421,8 +421,11 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testTemplateWrappedArray() {
     doTypeTest();
   }
-
   public void testTemplateUnwrappedArray() {
+    doTypeTest();
+  }
+
+  public void testTemplateUnwrappedArrayConstructorCall() {
     doTypeTest();
   }
   public void testTemplateWrappedClass() {
