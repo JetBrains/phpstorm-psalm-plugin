@@ -1,0 +1,69 @@
+<?php
+class Cart {
+    /**
+     * @psalm-use A<B>
+     * @use C<D>
+     */
+    use F;
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n')
+    PhpClass: Cart
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('Cart')
+      PsiWhiteSpace(' ')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiWhiteSpace('\n    ')
+      PhpDocCommentImpl
+        PsiElement(DOC_COMMENT_START)('/**')
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-use
+          PsiElement(DOC_TAG_NAME)('@psalm-use')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: A
+            PsiElement(DOC_IDENTIFIER)('A')
+            PhpPsiElementImpl
+              PsiElement(DOC_LAB)('<')
+              PhpDocTypeImpl: B
+                PsiElement(DOC_IDENTIFIER)('B')
+              PsiElement(DOC_RAB)('>')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @use
+          PsiElement(DOC_TAG_NAME)('@use')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: C
+            PsiElement(DOC_IDENTIFIER)('C')
+            PhpPsiElementImpl
+              PsiElement(DOC_LAB)('<')
+              PhpDocTypeImpl: D
+                PsiElement(DOC_IDENTIFIER)('D')
+              PsiElement(DOC_RAB)('>')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_COMMENT_END)('*/')
+      PsiWhiteSpace('\n    ')
+      PhpUseListImpl
+        PsiElement(use)('use')
+        PsiWhiteSpace(' ')
+        PhpUseImpl: F
+          ClassReferenceImpl: F
+            PsiElement(identifier)('F')
+        PsiElement(semicolon)(';')
+      PsiWhiteSpace('\n')
+      PsiElement(})('}')

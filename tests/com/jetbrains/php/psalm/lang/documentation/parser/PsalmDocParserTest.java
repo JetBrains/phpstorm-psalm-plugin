@@ -16,6 +16,10 @@ public class PsalmDocParserTest extends PhpParserTestCase {
     doTest();
   }
 
+  public void test$Use() throws Throwable {
+    doTest();
+  }
+
   public void test$Return() throws Throwable {
     doTest();
   }
