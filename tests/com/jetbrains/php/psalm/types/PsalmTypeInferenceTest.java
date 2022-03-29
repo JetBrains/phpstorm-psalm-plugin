@@ -482,4 +482,46 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testNestedListInMultilineDoc() {
     doTypeTest();
   }
+
+  public void testGenericYield() {
+    doTypeTest();
+  }
+
+  public void testGenericYieldDifferentFile() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "/**\n" +
+                                 " * @template-covariant TValue\n" +
+                                 " * @psalm-yield TValue\n" +
+                                 " */\n" +
+                                 "interface Promise\n" +
+                                 "{\n" +
+                                 "    /**\n" +
+                                 "     * @return TValue\n" +
+                                 "     */\n" +
+                                 "    function f();\n" +
+                                 "}\n" +
+                                 "\n" +
+                                 "class Foo{}\n" +
+                                 "\n" +
+                                 "/**\n" +
+                                 " * @return Promise<Foo>\n" +
+                                 " */\n" +
+                                 "function f(){}\n" +
+                                 "class Bar{}\n" +
+                                 "\n" +
+                                 "/**\n" +
+                                 " * @template TKey\n" +
+                                 " * @template TValue\n" +
+                                 " * @psalm-yield TValue\n" +
+                                 " */\n" +
+                                 "class Holder {\n" +
+                                 "}\n" +
+                                 "class Base {\n" +
+                                 "     /**\n" +
+                                 "     * @var Holder<Foo, Bar>\n" +
+                                 "     */\n" +
+                                 "    private $a;\n" +
+                                 "}");
+    doTypeTest();
+  }
 }
