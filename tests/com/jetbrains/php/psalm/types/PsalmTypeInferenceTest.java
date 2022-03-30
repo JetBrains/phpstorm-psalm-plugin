@@ -528,4 +528,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericIteratorBases() {
     doTypeTest();
   }
+
+  public void testGenericIteratorSubstitutionByImplementedMethod() {
+    doTypeTest();
+  }
 }

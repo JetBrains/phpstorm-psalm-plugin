@@ -36,7 +36,7 @@ function getDates(): Collection
 <type value="mixed|DateTime">getDates()->get(0)</type>;
 
 foreach (getDates()->map() as $user) {
-    <type value="T|mixed|DateTime">$user</type>;
+    <type value="TValue|T|mixed|DateTime">$user</type>;
 }
 
 <type value="T|mixed|DateTime">getDates()->map()->get(0)</type>;

@@ -24,5 +24,5 @@ function getDates(): Collection
 }
 
 foreach (getDates() as $date) {
-    <type value="T|DateTime">$date</type>
+    <type value="TValue|T|DateTime">$date</type>
 }
