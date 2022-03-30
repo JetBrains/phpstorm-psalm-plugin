@@ -1,7 +1,6 @@
 package com.jetbrains.php.psalm.types;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpKeyTypeProvider;
@@ -14,7 +13,7 @@ import java.util.Set;
 public class PsalmArrayKeyTypeProvider implements PhpKeyTypeProvider {
   @Override
   public char getKey() {
-    return PsalmDummyArrayKeyTypeProvider.KEY;
+    return PsalmDummyArrayKeyTypeProvider.KEY.getKey();
   }
 
   @Override
@@ -24,11 +23,19 @@ public class PsalmArrayKeyTypeProvider implements PhpKeyTypeProvider {
 
   @Override
   public @NotNull PhpType getType(PsiElement array) {
-    return new PhpType().add(array).filterOut(s -> !PsalmDummyArrayKeyTypeProvider.isSigned(s));
+    return new PhpType().add(array).filterOut(s -> !PsalmDummyArrayKeyTypeProvider.KEY.signed(s));
   }
 
   @Override
   public @NotNull PhpType complete(String expression, Project project) {
+    int dot = expression.lastIndexOf('.');
+    if (dot >= 0) {
+      String classReferenceType = expression.substring(dot + 1, expression.length());
+      if (!PhpType.ITERABLE.isConvertibleFrom(project, PhpType.from(classReferenceType))) {
+        return PhpType.EMPTY;
+      }
+      expression = expression.substring(0, dot);
+    }
     return new PhpType().add(expression.substring(2));
   }
 }

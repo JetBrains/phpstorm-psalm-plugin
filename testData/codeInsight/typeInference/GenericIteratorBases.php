@@ -17,18 +17,23 @@ interface I1 {
  */
 function foo(iterable $iterable, \Iterator $iterator, \IteratorAggregate $ia, \Traversable $traversable, \Iterator $itPseudo) {
     foreach ($iterable as $k => $v) {
+        <type value="I0">$k</type>;
         <type value="I1|mixed">$v</type>;
     }
     foreach ($iterator as $k => $v) {
+        <type value="I0">$k</type>;
         <type value="I1|mixed|TValue">$v</type>;
     }
     foreach ($ia as $k => $v) {
+        <type value="I0">$k</type>;
         <type value="TValue|I1">$v</type>;
     }
     foreach ($traversable as $k => $v) {
+        <type value="I0">$k</type>;
         <type value="I1">$v</type>;
     }
     foreach ($itPseudo as $k => $v) {
+        <type value="null[]|array">$k</type>; // expected
         <type value="I1|mixed|TValue">$v</type>;
     }
 }

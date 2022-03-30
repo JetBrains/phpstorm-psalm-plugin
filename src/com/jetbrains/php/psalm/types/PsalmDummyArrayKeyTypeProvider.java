@@ -1,10 +1,10 @@
 package com.jetbrains.php.psalm.types;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.jetbrains.php.PhpWorkaroundUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
+import com.jetbrains.php.lang.documentation.phpdoc.psi.impl.PhpDocTypeImpl;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
@@ -18,31 +18,40 @@ import java.util.Set;
 
 import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes.DOC_COMMA;
 
-public class PsalmDummyArrayKeyTypeProvider extends PhpCharBasedTypeKey implements PhpTypeProvider4 {
+public class PsalmDummyArrayKeyTypeProvider implements PhpTypeProvider4 {
+  public static final PhpCharBasedTypeKey KEY = new PhpCharBasedTypeKey() {
+    @Override
+    public char getKey() {
+      return '\u1891';
+    }
+  };
 
-  public static final char KEY = '\u1891';
-  private final @NotNull PhpType myIntIndices = PhpType.INT.map(this::sign);
+  private final @NotNull PhpType myIntIndices = PhpType.INT.map(KEY::sign);
 
   @Override
   public char getKey() {
-    return KEY;
+    return KEY.getKey();
   }
 
   @Override
   public @Nullable PhpType getType(PsiElement element) {
-    if (element instanceof PhpDocType) {
+    if (element instanceof PhpDocTypeImpl) {
       String name = PhpWorkaroundUtil.getGenericArrayName(((PhpDocType)element));
       if (name != null && name.equals("list")) {
         return myIntIndices;
       }
-      if (PhpWorkaroundUtil.isGenericArray(((PhpDocType)element))) {
-        PsiElement separatorElement = PhpWorkaroundUtil.getTypesSeparatorElement(element);
-        if (PhpPsiUtil.isOfType(separatorElement, DOC_COMMA)) {
-          PhpType keyType = new PhpType().add(PhpPsiUtil.getPrevSiblingIgnoreWhitespace(separatorElement, true));
+      boolean isGenericArray = PhpWorkaroundUtil.isGenericArray(((PhpDocType)element));
+      PsiElement separatorElement = PhpWorkaroundUtil.getTypesSeparatorElement(element);
+      if (PhpPsiUtil.isOfType(separatorElement, DOC_COMMA)) {
+        PhpType keyType = new PhpType().add(PhpPsiUtil.getPrevSiblingIgnoreWhitespace(separatorElement, true));
+        if (isGenericArray) {
           if (!"iterable".equalsIgnoreCase(((PhpDocType)element).getName())) {
             keyType = keyType.filterOut(t -> !PhpType.NUMERIC.getTypes().contains(t));
           }
-          return keyType.map(this::sign);
+          return keyType.map(KEY::sign);
+        } else {
+          String fqn = PhpDocTypeImpl.getClassReferenceFQN(((PhpDocType)element), ((PhpDocType)element).getName());
+          return keyType.map(s -> s + "." + fqn).map(KEY::sign).add(((PhpDocTypeImpl)element).inferNativeType());
         }
       }
     }
@@ -57,9 +66,5 @@ public class PsalmDummyArrayKeyTypeProvider extends PhpCharBasedTypeKey implemen
   @Override
   public Collection<? extends PhpNamedElement> getBySignature(String expression, Set<String> visited, int depth, Project project) {
     return null;
-  }
-
-  public static boolean isSigned(String s) {
-    return StringUtil.startsWithChar(s, '#') && s.charAt(1) == KEY;
   }
 }
