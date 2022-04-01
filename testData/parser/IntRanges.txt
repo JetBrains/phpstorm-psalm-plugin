@@ -3,6 +3,9 @@
 /**
  * @psalm-param int<0, max> $a
  * @psalm-param int<-123, 123> $b
+ * @psalm-param int<-123, 123>|int $b
+ * @psalm-param int<-123, 123>[] $b
+ * @psalm-param int|int<-123, 123> $b
  */
 function f($a, $b){}
 
@@ -39,6 +42,74 @@ PHP file
       PhpDocParamTagImpl: @psalm-param
         PsiElement(DOC_TAG_NAME)('@psalm-param')
         PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+          PhpPsiElementImpl
+            PsiElement(DOC_LAB)('<')
+            PsiElement(DOC_TEXT)('-123')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('123')
+            PsiElement(DOC_RAB)('>')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: b
+          PsiElement(DOC_VARIABLE)('$b')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @psalm-param
+        PsiElement(DOC_TAG_NAME)('@psalm-param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+          PhpPsiElementImpl
+            PsiElement(DOC_LAB)('<')
+            PsiElement(DOC_TEXT)('-123')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('123')
+            PsiElement(DOC_RAB)('>')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: b
+          PsiElement(DOC_VARIABLE)('$b')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @psalm-param
+        PsiElement(DOC_TAG_NAME)('@psalm-param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+          PhpPsiElementImpl
+            PsiElement(DOC_LAB)('<')
+            PsiElement(DOC_TEXT)('-123')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('123')
+            PsiElement(DOC_RAB)('>')
+          PsiElement(DOC_LBRACKET)('[')
+          PsiElement(DOC_RBRACKET)(']')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: b
+          PsiElement(DOC_VARIABLE)('$b')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @psalm-param
+        PsiElement(DOC_TAG_NAME)('@psalm-param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiElement(DOC_PIPE)('|')
         PhpDocTypeImpl: int
           PsiElement(DOC_IDENTIFIER)('int')
           PhpPsiElementImpl
