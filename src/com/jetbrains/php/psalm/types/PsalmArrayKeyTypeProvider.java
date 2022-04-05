@@ -30,7 +30,7 @@ public class PsalmArrayKeyTypeProvider implements PhpKeyTypeProvider {
   public @NotNull PhpType complete(String expression, Project project) {
     int dot = expression.lastIndexOf('.');
     if (dot >= 0) {
-      String classReferenceType = expression.substring(dot + 1, expression.length());
+      String classReferenceType = expression.substring(dot + 1);
       if (!PhpType.ITERABLE.isConvertibleFrom(project, PhpType.from(classReferenceType))) {
         return PhpType.EMPTY;
       }
