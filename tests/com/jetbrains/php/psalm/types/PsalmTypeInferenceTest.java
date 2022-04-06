@@ -67,6 +67,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testPsalmReturnGeneric() {
+    doTypeTest();
+  }
+
   public void testPsalmVarField() {
     doTypeTest();
   }
