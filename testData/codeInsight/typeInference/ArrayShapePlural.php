@@ -4,6 +4,6 @@
  */
 function ff(){}
 
-<type value="string|mixed">ff()['one']</type>;
+<type value="mixed|string">ff()['one']</type>;
 <type value="mixed|string[]">ff()['two']</type>;
-<type value="string|mixed">ff()['two'][0]</type>;
+<type value="mixed|string">ff()['two'][0]</type>;

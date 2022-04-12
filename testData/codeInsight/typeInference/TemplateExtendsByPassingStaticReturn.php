@@ -39,4 +39,4 @@ foreach (getDates()->map() as $user) {
     <type value="T|mixed|DateTime">$user</type>;
 }
 
-<type value="T|mixed|DateTime">getDates()->map()->get(0)</type>;
+<type value="mixed|DateTime">getDates()->map()->get(0)</type>;

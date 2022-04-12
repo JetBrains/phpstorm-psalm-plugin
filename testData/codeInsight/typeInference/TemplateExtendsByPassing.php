@@ -18,11 +18,11 @@ class ArrayCollection implements Collection{
 /**
  * @return ArrayCollection<int, \DateTime>
  */
-function getDates(): Collection
+function getDates(): ArrayCollection
 {
     return new ArrayCollection([new \DateTime()]);
 }
 
 foreach (getDates() as $date) {
-    <type value="T|DateTime">$date</type>
+    <type value="DateTime">$date</type>
 }

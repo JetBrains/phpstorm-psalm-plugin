@@ -536,4 +536,112 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericIteratorSubstitutionByImplementedMethod() {
     doTypeTest();
   }
+
+  public void testGenericPassingParameter() {
+    doTypeTest();
+  }
+
+  public void testGenericPassingParameterDifferentFile() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "/**\n" +
+                                 " * @template T\n" +
+                                 " */\n" +
+                                 "class C1{\n" +
+                                 "    /**\n" +
+                                 "     * @return C2<T>\n" +
+                                 "     */\n" +
+                                 "    public function f(){}\n" +
+                                 "}\n" +
+                                 "/**\n" +
+                                 " * @template T\n" +
+                                 " */\n" +
+                                 "class C2{\n" +
+                                 "    /**\n" +
+                                 "     * @return T\n" +
+                                 "     */\n" +
+                                 "    public function f(){}\n" +
+                                 "\n" +
+                                 "}");
+    doTypeTest();
+  }
+
+  public void testGenericPassingParameterStaticDifferentFile() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "/**\n" +
+                                 " * @template TValue\n" +
+                                 " */\n" +
+                                 "class C {\n" +
+                                 "    /**\n" +
+                                 "     * @return static<array<TValue>>\n" +
+                                 "     */\n" +
+                                 "    public function crossJoin($lists) { }\n" +
+                                 "    /**\n" +
+                                 "     * @return TValue\n" +
+                                 "     */\n" +
+                                 "    public function first() { }\n" +
+                                 "}");
+    doTypeTest();
+  }
+
+  public void testGenericPassingParameterStatic() {
+    doTypeTest();
+  }
+
+  public void testGenericIterableUnwrap() {
+    doTypeTest();
+  }
+
+  public void testGenericIterableUnwrapDifferentFile() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "/**\n" +
+                                 " * @template T\n" +
+                                 " */\n" +
+                                 "class C {\n" +
+                                 "    /**\n" +
+                                 "     * @template TValue\n" +
+                                 "     * @param  iterable<TValue>  $param\n" +
+                                 "     * @return TValue\n" +
+                                 "     */\n" +
+                                 "    public function f($param) {\n" +
+                                 "    }\n" +
+                                 "}");
+    doTypeTest();
+  }
+
+  public void testElementTypeOfGenericClassDifferentFile() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "\n" +
+                                 "/**\n" +
+                                 " * @template TKey of array-key\n" +
+                                 " * @template TValue\n" +
+                                 " */\n" +
+                                 "class B {\n" +
+                                 "    /**\n" +
+                                 "     * @return array<TKey, TValue>\n" +
+                                 "     */\n" +
+                                 "    public function all()\n" +
+                                 "    {\n" +
+                                 "\n" +
+                                 "    }\n" +
+                                 "}\n" +
+                                 "\n" +
+                                 "/**\n" +
+                                 " * @template TKey of array-key\n" +
+                                 " * @template TValue\n" +
+                                 " */\n" +
+                                 "class A {\n" +
+                                 "    /**\n" +
+                                 "     * @return B<TKey, TValue>\n" +
+                                 "     */\n" +
+                                 "    public function lazy()\n" +
+                                 "    {\n" +
+                                 "\n" +
+                                 "    }\n" +
+                                 "}");
+    doTypeTest();
+  }
+
+  public void testElementTypeOfGenericClass() {
+    doTypeTest();
+  }
 }

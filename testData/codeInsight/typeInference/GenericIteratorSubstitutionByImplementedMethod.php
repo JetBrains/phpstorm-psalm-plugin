@@ -11,7 +11,7 @@ class C implements I {
 
 interface ISeq extends \IteratorAggregate {
   /**
-   * @return Iterator<I>
+   * @return \Iterator<I>
    */
   public function getIterator(): \Iterator;
 }
@@ -36,7 +36,7 @@ class C implements I {
 */
 interface ISeq extends \IteratorAggregate {
   /**
-   * @return Iterator<T>
+   * @return \Iterator<T>
    */
   public function getIterator(): \Iterator;
 }

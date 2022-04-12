@@ -5,6 +5,7 @@ import com.intellij.psi.PsiElement;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpKeyTypeProvider;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
+import com.jetbrains.php.lang.psi.resolve.types.generics.PhpGenericDocTypeProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -13,7 +14,7 @@ import java.util.Set;
 public class PsalmArrayKeyTypeProvider implements PhpKeyTypeProvider {
   @Override
   public char getKey() {
-    return PsalmDummyArrayKeyTypeProvider.KEY.getKey();
+    return PhpGenericDocTypeProvider.KEY.getKey();
   }
 
   @Override
@@ -23,7 +24,7 @@ public class PsalmArrayKeyTypeProvider implements PhpKeyTypeProvider {
 
   @Override
   public @NotNull PhpType getType(PsiElement array) {
-    return new PhpType().add(array).filterOut(s -> !PsalmDummyArrayKeyTypeProvider.KEY.signed(s));
+    return new PhpType().add(array).filterOut(s -> !PhpGenericDocTypeProvider.KEY.signed(s));
   }
 
   @Override

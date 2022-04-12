@@ -27,4 +27,4 @@ class B extends A {
  * @return B<User>
  */
 function f1() {}
-<type value="mixed|T|User">f1()->get()</type>;
+<type value="mixed|User">f1()->get()</type>;

@@ -56,7 +56,6 @@
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmDocTagTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedStringDocTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedClassConstantReferenceTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmDummyArrayKeyTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableTypeProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableCallTypeProvider"/>
     <expressionClassNamesProvider implementation="com.jetbrains.php.psalm.types.PsalmDocTypeClassNamesExpressionProvider"/>
