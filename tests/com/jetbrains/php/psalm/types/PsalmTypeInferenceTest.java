@@ -648,4 +648,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericFlipClassParameters() {
     doTypeTest();
   }
+
+  public void testGenericPassingParameterMultipleSubstitutions() {
+    doTypeTest();
+  }
 }
