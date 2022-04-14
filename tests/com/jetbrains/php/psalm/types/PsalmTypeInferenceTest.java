@@ -644,4 +644,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testElementTypeOfGenericClass() {
     doTypeTest();
   }
+
+  public void testGenericFlipClassParameters() {
+    doTypeTest();
+  }
 }
