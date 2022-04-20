@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @psalm-param list<0|1|positive-int> $j
+ * @psalm-param int|1 $i
+ */
+function f(): void {
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @psalm-param
+        PsiElement(DOC_TAG_NAME)('@psalm-param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: list
+          PsiElement(DOC_IDENTIFIER)('list')
+          PhpPsiElementImpl
+            PsiElement(DOC_LAB)('<')
+            PhpDocTypeImpl: %EMPTY%
+              PsiElement(DOC_TEXT)('0')
+            PsiElement(DOC_PIPE)('|')
+            PhpDocTypeImpl: %EMPTY%
+              PsiElement(DOC_TEXT)('1')
+            PsiElement(DOC_PIPE)('|')
+            PhpDocTypeImpl: positive-int
+              PsiElement(DOC_IDENTIFIER)('positive-int')
+            PsiElement(DOC_RAB)('>')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: j
+          PsiElement(DOC_VARIABLE)('$j')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @psalm-param
+        PsiElement(DOC_TAG_NAME)('@psalm-param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiElement(DOC_PIPE)('|')
+        PhpPsiElementImpl
+          PsiElement(DOC_TEXT)('1')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_VARIABLE)('$i')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: f
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('f')
+      PsiElement(()('(')
+      Parameter list
+        <empty list>
+      PsiElement())(')')
+      PsiElement(colon)(':')
+      PsiWhiteSpace(' ')
+      Return type
+        ClassReferenceImpl: void
+          PsiElement(identifier)('void')
+      PsiWhiteSpace(' ')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiWhiteSpace('\n')
+        PsiElement(})('}')

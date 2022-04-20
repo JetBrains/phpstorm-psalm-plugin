@@ -39,4 +39,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$IntRanges() throws Throwable {
     doTest();
   }
+
+  public void test$IntInGenericArray() throws Throwable {
+    doTest();
+  }
 }
