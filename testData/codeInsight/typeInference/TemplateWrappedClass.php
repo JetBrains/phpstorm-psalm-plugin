@@ -25,7 +25,7 @@ final class Identifiers
     }
 
     /**
-     * @param T $class
+     * @param T $clazz
      *
      * @return Identifiers<T>
      */

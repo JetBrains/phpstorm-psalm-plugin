@@ -436,6 +436,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testParameterUnwrap() {
+    doTypeTest();
+  }
+
   public void testClassNamesFromClassStringDocVar() {
     doTypeTest();
   }
