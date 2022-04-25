@@ -13,8 +13,10 @@ class C {
 }
 /**
  * @param  C  $c
+ * @param  C<stdClass>  $c1
  * @param  iterable<Exception>  $param
  */
-function f($c, array $param) {
+function f($c, $c1, array $param) {
     <type value="Exception|mixed">$c->f($param)</type>
+    <type value="Exception|mixed">$c1->f($param)</type>
 }
