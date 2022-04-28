@@ -660,4 +660,9 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericPassingParameterMultipleSubstitutions() {
     doTypeTest();
   }
+
+  public void testInnerParametrizedParts() {
+    // no exception
+    doTypeTest();
+  }
 }
