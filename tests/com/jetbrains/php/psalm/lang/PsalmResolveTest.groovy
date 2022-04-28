@@ -129,5 +129,22 @@ function foo($a) {}
     assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
   }
 
+  void testResolveImportedFromClass() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-import-type FooAlias from Phone as MyFooAlias
+ * @psalm-type TestType = array{base: <caret>MyFooAlias, description: string}  
+ */
+class a {
+function foo($a) {
+}
+''')
+    def resolved = resolve()
+    assertEquals("MyFooAlias", resolved.getText())
+    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
+  }
+
+
 
 }
