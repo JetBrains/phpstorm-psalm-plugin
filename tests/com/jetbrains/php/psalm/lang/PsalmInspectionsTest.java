@@ -78,4 +78,8 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
   public void testPsalmTraceVar() {
     doInspectionTest(true);
   }
+
+  public void testReturnGenericTemplate() {
+    doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
+  }
 }
