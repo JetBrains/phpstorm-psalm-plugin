@@ -1,0 +1,151 @@
+<?php
+
+/**
+ * @param string|(callable(int):int)|int $param
+ * @param (callable(int):int) $param
+ * @param callable(int):int $param
+ * @param ?(callable(int):int)[] $param
+ * @param ( $param
+ */
+function f(): void {
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: string
+          PsiElement(DOC_IDENTIFIER)('string')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: callable
+          PsiElement(DOC_LPAREN)('(')
+          PsiElement(DOC_IDENTIFIER)('callable')
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocParamTagImpl: %EMPTY%
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+          PsiElement(DOC_TEXT)(':')
+          PhpDocTypeImpl: int
+            PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: param
+          PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: callable
+          PsiElement(DOC_LPAREN)('(')
+          PsiElement(DOC_IDENTIFIER)('callable')
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocParamTagImpl: %EMPTY%
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+          PsiElement(DOC_TEXT)(':')
+          PhpDocTypeImpl: int
+            PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: param
+          PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: callable
+          PsiElement(DOC_IDENTIFIER)('callable')
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocParamTagImpl: %EMPTY%
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+          PsiElement(DOC_TEXT)(':')
+          PhpDocTypeImpl: int
+            PsiElement(DOC_IDENTIFIER)('int')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: param
+          PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PsiElement(DOC_QUESTION_MARK)('?')
+        PhpDocTypeImpl: callable
+          PsiElement(DOC_LPAREN)('(')
+          PsiElement(DOC_IDENTIFIER)('callable')
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocParamTagImpl: %EMPTY%
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+          PsiElement(DOC_TEXT)(':')
+          PhpDocTypeImpl: int
+            PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+          PsiElement(DOC_LBRACKET)('[')
+          PsiElement(DOC_RBRACKET)(']')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: param
+          PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: %EMPTY%
+          <empty list>
+        PhpPsiElementImpl
+          PsiElement(DOC_LPAREN)('(')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_VARIABLE)('$param')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: f
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('f')
+      PsiElement(()('(')
+      Parameter list
+        <empty list>
+      PsiElement())(')')
+      PsiElement(colon)(':')
+      PsiWhiteSpace(' ')
+      Return type
+        ClassReferenceImpl: void
+          PsiElement(identifier)('void')
+      PsiWhiteSpace(' ')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiWhiteSpace('\n')
+        PsiElement(})('}')

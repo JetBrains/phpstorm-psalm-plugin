@@ -215,6 +215,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testAdvancedCallableUnionType() {
+    doTypeTest();
+  }
+
   public void testAdvancedCallableKeyword() {
     doTypeTest();
   }
