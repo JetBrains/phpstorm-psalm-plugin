@@ -4,7 +4,7 @@ class Foo {
 }
 
 /**
- * @return Closure(bool, int|string, $a int) : int|Foo
+ * @return Closure(bool, int|string, $a int) : (int|Foo)
  */
 function a(): Closure {
 

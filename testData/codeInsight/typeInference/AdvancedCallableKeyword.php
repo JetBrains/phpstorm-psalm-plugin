@@ -3,7 +3,7 @@ class Foo {
 }
 
 /**
- * @return callable(bool, int|string, $a int) : int|Foo
+ * @return callable(bool, int|string, $a int) : (int|Foo)
  */
 function a(): Closure {
 

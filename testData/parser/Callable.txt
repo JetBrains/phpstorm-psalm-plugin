@@ -6,6 +6,8 @@
  * @param callable(int):int $param
  * @param ?(callable(int):int)[] $param
  * @param ( $param
+ * @param callable(int):int|void $param
+ * @param callable(int):(int|void) $param
  */
 function f(): void {
 }
@@ -128,6 +130,56 @@ PHP file
           PsiElement(DOC_LPAREN)('(')
           PsiWhiteSpace(' ')
           PsiElement(DOC_VARIABLE)('$param')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: callable
+          PsiElement(DOC_IDENTIFIER)('callable')
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocParamTagImpl: %EMPTY%
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+          PsiElement(DOC_TEXT)(':')
+          PhpDocTypeImpl: int
+            PsiElement(DOC_IDENTIFIER)('int')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: void
+          PsiElement(DOC_IDENTIFIER)('void')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: param
+          PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: callable
+          PsiElement(DOC_IDENTIFIER)('callable')
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocParamTagImpl: %EMPTY%
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+          PsiElement(DOC_TEXT)(':')
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocTypeImpl: int
+            PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_PIPE)('|')
+          PhpDocTypeImpl: void
+            PsiElement(DOC_IDENTIFIER)('void')
+          PsiElement(DOC_RPAREN)(')')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: param
+          PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
       PsiWhiteSpace('\n ')
       PsiElement(DOC_COMMENT_END)('*/')
     PsiWhiteSpace('\n')
