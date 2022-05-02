@@ -5,10 +5,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ObjectUtils;
 import com.intellij.util.containers.ContainerUtil;
-import com.jetbrains.php.lang.psi.elements.FunctionReference;
-import com.jetbrains.php.lang.psi.elements.MethodReference;
-import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
-import com.jetbrains.php.lang.psi.elements.Variable;
+import com.jetbrains.php.lang.psi.elements.*;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
@@ -27,12 +24,9 @@ public class PsalmAdvancedCallableCallTypeProvider extends PhpCharBasedTypeKey i
       if (element instanceof MethodReference) {
         return null;
       }
-      Variable variable = ObjectUtils.tryCast(((FunctionReference)element).getFirstPsiChild(), Variable.class);
-      if (variable != null) {
-        return variable.getType()
-          .filterOut(t -> !(PhpType.isUnresolved(t) || PsalmAdvanceCallableParamsInspection.isParametrizedAdvancedCallable(t)), true)
-          .map(this::sign);
-      }
+      return PhpType.from(((FunctionReference)element).getFirstPsiChild())
+        .filterOut(t -> !(PhpType.isUnresolved(t) || PsalmAdvanceCallableParamsInspection.isParametrizedAdvancedCallable(t)), true)
+        .map(this::sign);
     }
     return null;
   }

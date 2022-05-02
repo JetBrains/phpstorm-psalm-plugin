@@ -195,7 +195,7 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     myFixture.addFileToProject("a.php", "<?php\n" +
                                         "class Foo {}\n" +
                                         "/**\n" +
-                                        " * @return Closure(bool, int|string, $a int) : int|Foo\n" +
+                                        " * @return Closure(bool, int|string, $a int) : (int|Foo)\n" +
                                         " */\n" +
                                         "function a(): Closure{\n" +
                                         "\n" +
