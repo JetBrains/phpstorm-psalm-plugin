@@ -8,7 +8,7 @@
  * @param ( $param
  * @param callable(int):int|void $param
  * @param callable(int):(int|void) $param
- * @param callable(int=, string=, C): int $param
+ * @param callable(int=, string=, C...): int $param
  */
 function f(): void {
 }
@@ -205,6 +205,7 @@ PHP file
           PhpDocParamTagImpl: %EMPTY%
             PhpDocTypeImpl: C
               PsiElement(DOC_IDENTIFIER)('C')
+            PsiElement(DOC_TEXT)('...')
           PsiElement(DOC_RPAREN)(')')
           PsiElement(DOC_TEXT)(':')
           PsiWhiteSpace(' ')
