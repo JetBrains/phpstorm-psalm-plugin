@@ -673,4 +673,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     // no exception
     doTypeTest();
   }
+
+  public void testAdvancedCallableInferred() {
+    doTypeTest();
+  }
+
+  public void testAdvancedCallableDoc() {
+    doTypeTest();
+  }
 }
