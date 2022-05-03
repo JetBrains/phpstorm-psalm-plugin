@@ -46,8 +46,8 @@ public class PsalmRemoteConfiguration extends PsalmConfiguration implements PhpS
   }
 
   @NotNull
-  public static @NlsContexts.Label String getDefaultName(@Nullable String interpreterName) {
-    return isEmpty(interpreterName) ? PhpBundle.message("undefined.interpreter") : PsalmBundle.message("label.interpreter", interpreterName);
+  public static @NlsContexts.Label String getDefaultName(@NlsContexts.Label @Nullable String interpreterName) {
+    return isEmpty(interpreterName) ? PhpBundle.message("undefined.interpreter") : interpreterName;
   }
 
   @Override
