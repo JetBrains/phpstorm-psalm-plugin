@@ -681,4 +681,18 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testAdvancedCallableDoc() {
     doTypeTest();
   }
+
+  public void testAdvancedCallableMethodRef() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "namespace X;\n" +
+                                 "/**\n" +
+                                 " * @template T\n" +
+                                 " * @template T1\n" +
+                                 " * @param T $a\n" +
+                                 " * @param T1 $a1\n" +
+                                 " * @return AA<T, T1>\n" +
+                                 " */\n" +
+                                 "function collect($a, $a1) {}");
+    doTypeTest();
+  }
 }
