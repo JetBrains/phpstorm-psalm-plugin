@@ -10,6 +10,7 @@ import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
+import com.jetbrains.php.lang.psi.resolve.types.PhpCharTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
 import org.jetbrains.annotations.NotNull;
@@ -53,12 +54,7 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
 
   public static final Collection<String> EXTENDED_SCALAR_TYPES = ContainerUtil.union(EXTENDED_STRINGS, ALTERNATIVE_SCALAR_TYPES.keySet());
 
-  private static final PhpCharBasedTypeKey KEY = new PhpCharBasedTypeKey() {
-    @Override
-    public char getKey() {
-      return 'ᢔ';
-    }
-  };
+  private static final PhpCharBasedTypeKey KEY = new PhpCharTypeKey('ᢔ');
 
   @Override
   public char getKey() {
