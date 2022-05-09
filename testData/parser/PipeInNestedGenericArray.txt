@@ -1,0 +1,64 @@
+<?php
+/**
+ * @return array{array<int,int|string|null>}
+ */
+function getDefaultConf(): array {
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocReturnTagImpl: @return
+        PsiElement(DOC_TAG_NAME)('@return')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PhpDocTypeImpl: array
+              PsiElement(DOC_IDENTIFIER)('array')
+              PhpPsiElementImpl
+                PsiElement(DOC_LAB)('<')
+                PhpDocTypeImpl: int
+                  PsiElement(DOC_IDENTIFIER)('int')
+                PsiElement(DOC_COMMA)(',')
+                PhpDocTypeImpl: int
+                  PsiElement(DOC_IDENTIFIER)('int')
+                PsiElement(DOC_PIPE)('|')
+                PhpDocTypeImpl: string
+                  PsiElement(DOC_IDENTIFIER)('string')
+                PsiElement(DOC_PIPE)('|')
+                PhpDocTypeImpl: null
+                  PsiElement(DOC_IDENTIFIER)('null')
+                PsiElement(DOC_RAB)('>')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: getDefaultConf
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('getDefaultConf')
+      PsiElement(()('(')
+      Parameter list
+        <empty list>
+      PsiElement())(')')
+      PsiElement(colon)(':')
+      PsiWhiteSpace(' ')
+      Return type
+        ClassReferenceImpl: array
+          PsiElement(array)('array')
+      PsiWhiteSpace(' ')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiWhiteSpace('\n')
+        PsiElement(})('}')
