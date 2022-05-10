@@ -695,4 +695,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
                                  "function collect($a, $a1) {}");
     doTypeTest();
   }
+
+  public void testTemplatedArrayKey() {
+    doTypeTest();
+  }
 }

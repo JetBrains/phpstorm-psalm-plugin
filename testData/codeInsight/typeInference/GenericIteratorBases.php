@@ -22,11 +22,11 @@ function foo(iterable $iterable, \Iterator $iterator, \IteratorAggregate $ia, \T
     }
     foreach ($iterator as $k => $v) {
         <type value="I0">$k</type>;
-        <type value="I1|mixed|TValue">$v</type>;
+        <type value="I1|mixed">$v</type>;
     }
     foreach ($ia as $k => $v) {
         <type value="I0">$k</type>;
-        <type value="TValue|I1">$v</type>;
+        <type value="mixed|I1">$v</type>;
     }
     foreach ($traversable as $k => $v) {
         <type value="I0">$k</type>;
@@ -34,6 +34,6 @@ function foo(iterable $iterable, \Iterator $iterator, \IteratorAggregate $ia, \T
     }
     foreach ($itPseudo as $k => $v) {
         <type value="null[]|array">$k</type>; // expected
-        <type value="I1|mixed|TValue">$v</type>;
+        <type value="I1|mixed">$v</type>;
     }
 }

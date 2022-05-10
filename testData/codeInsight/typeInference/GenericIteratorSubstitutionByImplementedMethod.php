@@ -46,6 +46,6 @@ interface ISeq extends \IteratorAggregate {
 */
 function walkISeq(ISeq $seq) {
   foreach ($seq as $value) {
-    <type value="\B\I|mixed|T">$value</type>;
+    <type value="\B\I|mixed">$value</type>;
   }
 }
