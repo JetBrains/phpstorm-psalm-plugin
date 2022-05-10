@@ -34,5 +34,5 @@ class Child implements I
     }
 }
 
-<type value="void|B|mixed">(new Child())->m()</type>;
+<type value="null|B|mixed">(new Child())->m()</type>;
 <type value="A">(new Child())->m1()</type>;

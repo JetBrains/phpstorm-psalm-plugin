@@ -10,4 +10,4 @@ function f($param){
 
 }
 
-<type value="void|int|string">$f</type> = f();
+<type value="null|int|string">$f</type> = f();

@@ -29,7 +29,7 @@ function get(string $a, string $a1) {}
  */
 function get1(string $a, string $a1) {}
 
-<type value="void|A|B">get1("A", "B")</type>;
+<type value="null|A|B">get1("A", "B")</type>;
 
 
 /**
@@ -52,5 +52,5 @@ function get2(string $a, string $a1) {}
  */
 function get3(string $a, string $a1) {}
 
-<type value="void">get3( "A", "B")</type>;
+<type value="null">get3( "A", "B")</type>;
 

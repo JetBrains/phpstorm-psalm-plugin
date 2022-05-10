@@ -37,5 +37,5 @@ class TemplatedClass implements TemplatedInterface
     }
 }
 $example = new TemplatedClass(new A, new B);
-<type value="B|mixed|void">$example->getFirst()</type>;
-<type value="A|mixed|void">$example->getSecond()</type>;
+<type value="null|B|mixed">$example->getFirst()</type>;
+<type value="null|A|mixed">$example->getSecond()</type>;
