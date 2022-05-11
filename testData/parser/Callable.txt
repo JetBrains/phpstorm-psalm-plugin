@@ -31,17 +31,18 @@ PHP file
         PhpDocTypeImpl: string
           PsiElement(DOC_IDENTIFIER)('string')
         PsiElement(DOC_PIPE)('|')
-        PhpDocTypeImpl: callable
+        PhpDocTypeImpl: %EMPTY%
           PsiElement(DOC_LPAREN)('(')
-          PsiElement(DOC_IDENTIFIER)('callable')
-          PsiElement(DOC_LPAREN)('(')
-          PhpDocParamTagImpl: %EMPTY%
+          PhpDocTypeImpl: callable
+            PsiElement(DOC_IDENTIFIER)('callable')
+            PsiElement(DOC_LPAREN)('(')
+            PhpDocParamTagImpl: %EMPTY%
+              PhpDocTypeImpl: int
+                PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_RPAREN)(')')
+            PsiElement(DOC_TEXT)(':')
             PhpDocTypeImpl: int
               PsiElement(DOC_IDENTIFIER)('int')
-          PsiElement(DOC_RPAREN)(')')
-          PsiElement(DOC_TEXT)(':')
-          PhpDocTypeImpl: int
-            PsiElement(DOC_IDENTIFIER)('int')
           PsiElement(DOC_RPAREN)(')')
         PsiElement(DOC_PIPE)('|')
         PhpDocTypeImpl: int
@@ -57,17 +58,18 @@ PHP file
       PhpDocParamTagImpl: @param
         PsiElement(DOC_TAG_NAME)('@param')
         PsiWhiteSpace(' ')
-        PhpDocTypeImpl: callable
+        PhpDocTypeImpl: %EMPTY%
           PsiElement(DOC_LPAREN)('(')
-          PsiElement(DOC_IDENTIFIER)('callable')
-          PsiElement(DOC_LPAREN)('(')
-          PhpDocParamTagImpl: %EMPTY%
+          PhpDocTypeImpl: callable
+            PsiElement(DOC_IDENTIFIER)('callable')
+            PsiElement(DOC_LPAREN)('(')
+            PhpDocParamTagImpl: %EMPTY%
+              PhpDocTypeImpl: int
+                PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_RPAREN)(')')
+            PsiElement(DOC_TEXT)(':')
             PhpDocTypeImpl: int
               PsiElement(DOC_IDENTIFIER)('int')
-          PsiElement(DOC_RPAREN)(')')
-          PsiElement(DOC_TEXT)(':')
-          PhpDocTypeImpl: int
-            PsiElement(DOC_IDENTIFIER)('int')
           PsiElement(DOC_RPAREN)(')')
         PsiWhiteSpace(' ')
         PhpDocVarImpl: param
@@ -102,17 +104,18 @@ PHP file
         PsiElement(DOC_TAG_NAME)('@param')
         PsiWhiteSpace(' ')
         PsiElement(DOC_QUESTION_MARK)('?')
-        PhpDocTypeImpl: callable
+        PhpDocTypeImpl: %EMPTY%
           PsiElement(DOC_LPAREN)('(')
-          PsiElement(DOC_IDENTIFIER)('callable')
-          PsiElement(DOC_LPAREN)('(')
-          PhpDocParamTagImpl: %EMPTY%
+          PhpDocTypeImpl: callable
+            PsiElement(DOC_IDENTIFIER)('callable')
+            PsiElement(DOC_LPAREN)('(')
+            PhpDocParamTagImpl: %EMPTY%
+              PhpDocTypeImpl: int
+                PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_RPAREN)(')')
+            PsiElement(DOC_TEXT)(':')
             PhpDocTypeImpl: int
               PsiElement(DOC_IDENTIFIER)('int')
-          PsiElement(DOC_RPAREN)(')')
-          PsiElement(DOC_TEXT)(':')
-          PhpDocTypeImpl: int
-            PsiElement(DOC_IDENTIFIER)('int')
           PsiElement(DOC_RPAREN)(')')
           PsiElement(DOC_LBRACKET)('[')
           PsiElement(DOC_RBRACKET)(']')
@@ -127,8 +130,6 @@ PHP file
       PhpDocParamTagImpl: @param
         PsiElement(DOC_TAG_NAME)('@param')
         PsiWhiteSpace(' ')
-        PhpDocTypeImpl: %EMPTY%
-          <empty list>
         PhpPsiElementImpl
           PsiElement(DOC_LPAREN)('(')
           PsiWhiteSpace(' ')

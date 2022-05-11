@@ -699,4 +699,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testTemplatedArrayKey() {
     doTypeTest();
   }
+
+  public void testDocTypesInParentheses() {
+    doTypeTest();
+  }
 }
