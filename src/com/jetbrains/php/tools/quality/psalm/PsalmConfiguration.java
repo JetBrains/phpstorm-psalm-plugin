@@ -63,12 +63,6 @@ public class PsalmConfiguration implements QualityToolConfiguration {
 
   @Override
   @NotNull
-  public @NlsContexts.Label String getPresentableName(@Nullable Project project) {
-    return getId();
-  }
-
-  @Override
-  @NotNull
   public @Nls String getId() {
     return PsalmBundle.message("local");
   }
@@ -99,10 +93,10 @@ public class PsalmConfiguration implements QualityToolConfiguration {
       return 1;
     }
 
-    if (StringUtil.equals(getPresentableName(null), PsalmBundle.message("local"))) {
+    if (StringUtil.equals(getPresentableName(null), PsalmBundle.message("label.system.php"))) {
       return -1;
     }
-    else if (StringUtil.equals(o.getPresentableName(null), PsalmBundle.message("local"))) {
+    else if (StringUtil.equals(o.getPresentableName(null), PsalmBundle.message("label.system.php"))) {
       return 1;
     }
     return StringUtil.compare(getPresentableName(null), o.getPresentableName(null), false);
