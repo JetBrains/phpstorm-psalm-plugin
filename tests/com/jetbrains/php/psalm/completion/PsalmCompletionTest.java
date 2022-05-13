@@ -124,4 +124,19 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "MyFooAlias", "MyBarAlias");
   }
+
+  public void testArrayShapePropertyTag() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name");
+  }
+
+  public void testArrayShapePropertyTagAndVarTag() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "surname");
+  }
+
+  public void testArrayShapePropertyTagAndVarTagClassDocComment() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name");
+  }
 }
