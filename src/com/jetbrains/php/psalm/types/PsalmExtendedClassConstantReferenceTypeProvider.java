@@ -10,6 +10,7 @@ import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocRef;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.*;
+import com.jetbrains.php.lang.psi.elements.impl.ClassReferenceImpl;
 import com.jetbrains.php.lang.psi.elements.impl.PhpReferenceImpl;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
@@ -57,8 +58,21 @@ public class PsalmExtendedClassConstantReferenceTypeProvider implements PhpTypeP
     PsiElement className = PhpPsiUtil.getPrevSiblingByCondition(docStatic, IS_DOC_IDENTIFIER);
     PsiElement constantName = PhpPsiUtil.getNextSiblingByCondition(docStatic, IS_DOC_IDENTIFIER);
     if (className == null || constantName == null) return null;
-    String constantFQN = PhpTypeSignatureKey.CLASS.sign(PhpLangUtil.concat(namespaceName, className.getText())) + "." + constantName.getText();
-    return new PhpType().add(isWildcard(constantName) ? sign(constantFQN) : PhpTypeSignatureKey.CLASS_CONSTANT.sign(constantFQN));
+    PhpType classType = ClassReferenceImpl.resolveClassTypeFromSpecialName(docRef, className.getText());
+    if (classType.isEmpty()) {
+      classType = PhpType.from(PhpLangUtil.concat(namespaceName, className.getText()));
+    }
+    return classType
+      .map(fqn -> getClassConstantSignature(namespaceName, constantName, fqn));
+  }
+
+  @NotNull
+  private String getClassConstantSignature(String namespaceName, PsiElement constantName, String classSignature) {
+    if (!PhpType.isSignedType(classSignature)) {
+      classSignature = PhpTypeSignatureKey.CLASS.sign(PhpLangUtil.concat(namespaceName, classSignature));
+    }
+    String constantFQN = classSignature + "." + constantName.getText();
+    return isWildcard(constantName) ? sign(constantFQN) : PhpTypeSignatureKey.CLASS_CONSTANT.sign(constantFQN);
   }
 
   private static boolean isWildcard(PsiElement constantName) {

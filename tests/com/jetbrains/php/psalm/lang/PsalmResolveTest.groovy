@@ -3,6 +3,7 @@ package com.jetbrains.php.psalm.lang
 import com.intellij.psi.PsiPolyVariantReference
 import com.jetbrains.php.fixtures.PhpCodeInsightFixtureTestCase
 import com.jetbrains.php.lang.psi.elements.Field
+import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest
 
 class PsalmResolveTest extends PhpCodeInsightFixtureTestCase{
@@ -166,6 +167,40 @@ function foo($a) {
     assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
   }
 
+  void "test find constant by special self class name in @see tag"() {
+    configure('''
+<?php
 
+namespace {
+    /**
+     * @see <caret>self::foo()
+     */
+    class C {
+       function foo();
+    }
+}''')
+
+    def phpClass = assertInstanceOf(resolve(), PhpClass.class)
+    assertEquals "\\C", phpClass.getFQN()
+  }
+
+  void "test find constant by special parent class name in @see tag"() {
+    configure('''
+<?php
+
+namespace {
+
+    class B {}
+    /**
+     * @see <caret>parent::foo()
+     */
+    class C extends B {
+       function foo();
+    }
+}''')
+
+    def phpClass = assertInstanceOf(resolve(), PhpClass.class)
+    assertEquals "\\B", phpClass.getFQN()
+  }
 
 }
