@@ -4,8 +4,4 @@ import com.jetbrains.php.lang.documentation.phpdoc.parser.tags.PhpDocReturnTagPa
 import com.jetbrains.php.lang.parser.PhpPsiBuilder;
 
 public class PsalmDocReturnTagParser extends PhpDocReturnTagParser {
-  @Override
-  public boolean parseContents(PhpPsiBuilder builder) {
-    return PsalmDocVarTagParser.tryParseExtendedConstantReferences(builder) || super.parseContents(builder);
-  }
 }
