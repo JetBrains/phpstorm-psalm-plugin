@@ -110,6 +110,27 @@ function foo($a) {
     assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
   }
 
+  void testResolveAliasToReferenceTypeFromClosure() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-import-type FooAlias from Phone as MyFooAlias
+ */
+class a {
+function foo($a) {
+        /**
+         * @psalm-return <caret>MyFooAlias
+         */
+        $param = function () {};
+}
+}
+''')
+    def resolved = resolve()
+    assertEquals("MyFooAlias", resolved.getText())
+    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
+  }
+
+
   void testResolveImportedFromMemberToContainingClass() throws Throwable {
     configure('''
 <?php
