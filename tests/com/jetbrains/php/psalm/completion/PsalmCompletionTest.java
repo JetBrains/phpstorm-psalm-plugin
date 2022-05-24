@@ -139,4 +139,19 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "name");
   }
+
+  public void testArrayShapeUnion() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "prop1", "prop2", "prop3", "prop4");
+  }
+
+  public void testNestedListArrayShapeUnion() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "prop1", "prop2");
+  }
+
+  public void testNestedArrayShapeUnion() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "surname");
+  }
 }
