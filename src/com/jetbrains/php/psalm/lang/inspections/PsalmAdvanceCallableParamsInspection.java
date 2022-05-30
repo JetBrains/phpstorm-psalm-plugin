@@ -57,7 +57,7 @@ public class PsalmAdvanceCallableParamsInspection extends PhpInspection {
     return type.global(project).getTypesWithParametrisedParts().stream()
       .filter(PsalmAdvanceCallableParamsInspection::isParametrizedAdvancedCallable)
       .map(PhpType::getParametrizedParts)
-      .map(t -> ContainerUtil.map(t, PsalmAdvanceCallableParamsInspection::getType))
+      .map(t -> ContainerUtil.map(t, PhpExpressionImpl::getTypeFromSerializedClosureParameter))
       .filter(t -> !t.isEmpty())
       .collect(Collectors.toList());
   }
@@ -65,20 +65,5 @@ public class PsalmAdvanceCallableParamsInspection extends PhpInspection {
   public static boolean isParametrizedAdvancedCallable(String t) {
     return PhpType.hasParameterizedPart(t) &&
            PsalmAdvancedCallableTypeProvider.ADVANCED_CALLABLES.contains(PhpType.removeParametrisedType(t));
-  }
-
-  @NotNull
-  private static Pair<String, PhpType> getType(String serializedType) {
-    String name = "";
-    if (serializedType.startsWith(PhpExpressionImpl.CALLABLE_PARAMS_TYPES_SEPARATOR)) {
-      int nameEnd = serializedType.indexOf(PhpExpressionImpl.CALLABLE_PARAMS_TYPES_SEPARATOR, 1);
-      if (nameEnd >= 0) {
-        name = serializedType.substring(1, nameEnd);
-        serializedType = serializedType.substring(nameEnd + 1);
-      }
-    }
-    PhpType type = new PhpType();
-    StringUtil.split(serializedType, PhpExpressionImpl.CALLABLE_PARAMS_TYPES_SEPARATOR).forEach(type::add);
-    return Pair.create(name, type);
   }
 }

@@ -17,7 +17,7 @@ public class PsalmParameterInfoTest extends PhpCodeInsightFixtureTestCase {
   }
 
   public void testPsalmDocClosure() {
-    doTest("bool, int");
+    doTest("bool, j: int");
   }
 
   public void testNativeClosure() {
