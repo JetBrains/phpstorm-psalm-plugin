@@ -11,6 +11,7 @@
  * @param callable(int=, string=, C...): int $param
  * @param Closure(): int $param
  * @param \Closure(): int $param
+ * @param callable(string $i, $j int): void $cb
  */
 function f(): void {
 }
@@ -257,6 +258,39 @@ PHP file
         PsiWhiteSpace(' ')
         PhpDocVarImpl: param
           PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: callable
+          PsiElement(DOC_IDENTIFIER)('callable')
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocParamTagImpl: %EMPTY%
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiWhiteSpace(' ')
+            PhpDocVarImpl: i
+              PsiElement(DOC_VARIABLE)('$i')
+          PsiElement(DOC_COMMA)(',')
+          PsiWhiteSpace(' ')
+          PhpDocParamTagImpl: %EMPTY%
+            PhpDocVarImpl: j
+              PsiElement(DOC_VARIABLE)('$j')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_RPAREN)(')')
+          PsiElement(DOC_TEXT)(':')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: void
+            PsiElement(DOC_IDENTIFIER)('void')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: cb
+          PsiElement(DOC_VARIABLE)('$cb')
         PhpPsiElementImpl
           <empty list>
       PsiWhiteSpace('\n ')

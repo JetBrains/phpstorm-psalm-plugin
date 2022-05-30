@@ -1,6 +1,6 @@
 <?php
 /**
- * @return Closure(bool, int): int
+ * @return Closure(bool, int $j): int
  */
 function createCallable(): Closure
 {}
