@@ -2,6 +2,7 @@ package com.jetbrains.php.psalm.lang.inspections;
 
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -30,11 +31,11 @@ public class PsalmAdvanceCallableParamsInspection extends PhpInspection {
         if (StringUtil.isEmpty(reference.getName())) {
           PsiElement[] parameters = reference.getParameters();
           if (parameters.length == 0) return;
-          List<PhpType> parameterTypes = getAdvancedCallableParametersTypes(reference);
+          List<Pair<String, PhpType>> parameterTypes = getAdvancedCallableParametersTypes(reference);
           if (parameterTypes != null) {
             for (int i = 0; i < Math.min(parameters.length, parameterTypes.size()); i++) {
               PhpType callType = new PhpType().add(parameters[i]).global(holder.getProject());
-              PhpType parameterType = parameterTypes.get(i).global(holder.getProject());
+              PhpType parameterType = parameterTypes.get(i).getSecond().global(holder.getProject());
               if (PhpParamsInspection.isCallTypeConvertibleFromDeclaredType(callType, parameterType, PhpIndex.getInstance(holder.getProject()))) continue;
               String message = PsalmBundle
                 .message("parameter.type.is.not.compatible.with.declaration", callType.toStringResolved(), parameterType.toStringResolved());
@@ -43,16 +44,16 @@ public class PsalmAdvanceCallableParamsInspection extends PhpInspection {
           }
         }
       }
-
-      private List<PhpType> getAdvancedCallableParametersTypes(FunctionReference reference) {
-        List<PhpType> types = ContainerUtil.getFirstItem(getAdvancedCallableTypes(reference.getProject(), new PhpType().add(reference.getFirstPsiChild())));
-        return types == null ? Collections.emptyList() : types.subList(0, types.size() - 1);
-      }
     };
   }
 
+  public static List<Pair<String, PhpType>> getAdvancedCallableParametersTypes(FunctionReference reference) {
+    List<Pair<String, PhpType>> types = ContainerUtil.getFirstItem(getAdvancedCallableTypes(reference.getProject(), new PhpType().add(reference.getFirstPsiChild())));
+    return types == null ? Collections.emptyList() : types.subList(0, types.size() - 1);
+  }
+
   @NotNull
-  public static List<List<PhpType>> getAdvancedCallableTypes(Project project, PhpType type) {
+  public static List<List<Pair<String, PhpType>>> getAdvancedCallableTypes(Project project, PhpType type) {
     return type.global(project).getTypesWithParametrisedParts().stream()
       .filter(PsalmAdvanceCallableParamsInspection::isParametrizedAdvancedCallable)
       .map(PhpType::getParametrizedParts)
@@ -67,9 +68,17 @@ public class PsalmAdvanceCallableParamsInspection extends PhpInspection {
   }
 
   @NotNull
-  private static PhpType getType(String serializedType) {
+  private static Pair<String, PhpType> getType(String serializedType) {
+    String name = "";
+    if (serializedType.startsWith(PhpExpressionImpl.CALLABLE_PARAMS_TYPES_SEPARATOR)) {
+      int nameEnd = serializedType.indexOf(PhpExpressionImpl.CALLABLE_PARAMS_TYPES_SEPARATOR, 1);
+      if (nameEnd >= 0) {
+        name = serializedType.substring(1, nameEnd);
+        serializedType = serializedType.substring(nameEnd + 1);
+      }
+    }
     PhpType type = new PhpType();
     StringUtil.split(serializedType, PhpExpressionImpl.CALLABLE_PARAMS_TYPES_SEPARATOR).forEach(type::add);
-    return type;
+    return Pair.create(name, type);
   }
 }

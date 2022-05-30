@@ -30,6 +30,8 @@
                      enabledByDefault="true" level="WARNING"
                      implementationClass="com.jetbrains.php.psalm.lang.inspections.PsalmAdvanceCallableParamsInspection"
                      key="function.call.is.not.compatible.with.advance.callable.declaration" bundle="messages.PsalmBundle"/>
+    <codeInsight.parameterInfo language="PHP" order="before phpParameterInfo"
+                               implementationClass="com.jetbrains.php.psalm.lang.PsalmAdvancedClosureParameterInfoHandler"/>
 
   </extensions>
 

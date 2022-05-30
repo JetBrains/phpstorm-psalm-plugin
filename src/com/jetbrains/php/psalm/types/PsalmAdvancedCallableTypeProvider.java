@@ -35,8 +35,8 @@ public class PsalmAdvancedCallableTypeProvider extends PhpCharBasedTypeKey imple
         return null;
       }
       String returnType = getSerializedDocTypes(element);
-      List<String> parameterTypes = ContainerUtil.map(PhpPsiUtil.getChildren(element, PhpDocParamTag.class::isInstance),
-                                                            PsalmAdvancedCallableTypeProvider::getSerializedDocTypes);
+      List<String> parameterTypes = ContainerUtil.map(PhpPsiUtil.<PhpDocParamTag>getChildren(element, PhpDocParamTag.class::isInstance),
+                                                      tag -> PhpExpressionImpl.serializeAdvancedClosureParameter(tag.getName(), getSerializedDocTypes(tag)));
       return new PhpType().add(PhpType.createParametrizedType(fqn, ContainerUtil.append(parameterTypes, returnType)));
     }
     return null;
