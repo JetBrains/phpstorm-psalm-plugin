@@ -77,6 +77,42 @@ function foo($a) {
     assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
   }
 
+  void testResolveImportedAliasFromMultilineReferenceToType() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-import-type FooAlias from Phone as MyFooAlias
+ * @psalm-type FileMapType = array{
+ *      0: <caret>MyFooAlias
+ * }
+ */
+function foo($a) {
+  
+}
+''')
+    def resolved = resolve()
+    assertEquals("MyFooAlias", resolved.getText())
+    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
+  }
+
+  void testResolveImportedAliasFromPluralReferenceToType() throws Throwable {
+    configure('''
+<?php
+/**
+ * @psalm-import-type FooAlias from Phone as MyFooAlias
+ * @psalm-type FileMapType = <caret>MyFooAlias[]
+ */
+function foo($a) {
+  
+}
+''')
+    def resolved = resolve()
+    assertEquals("MyFooAlias", resolved.getText())
+    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText())
+  }
+
+
+
   void testResolveImportedFromStatement() throws Throwable {
     configure('''
 <?php
