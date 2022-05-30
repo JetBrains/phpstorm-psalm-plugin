@@ -10,6 +10,7 @@ import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
 import com.jetbrains.php.psalm.lang.inspections.PsalmAdvanceCallableParamsInspection;
+import kotlin.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -35,6 +36,7 @@ public class PsalmAdvancedCallableCallTypeProvider extends PhpCharBasedTypeKey i
   public @Nullable PhpType complete(String expression, Project project) {
     return PsalmAdvanceCallableParamsInspection.getAdvancedCallableTypes(project, PhpType.global(project, expression.substring(2))).stream()
       .map(ContainerUtil::getLastItem).filter(Objects::nonNull)
+      .map(p -> p.getSecond())
       .reduce(new PhpType(), PhpType::add);
   }
 
