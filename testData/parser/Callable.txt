@@ -11,7 +11,7 @@
  * @param callable(int=, string=, C...): int $param
  * @param Closure(): int $param
  * @param \Closure(): int $param
- * @param callable(string $i, $j int): void $cb
+ * @param callable(string $i, $j int, ...$c): void $cb
  */
 function f(): void {
 }
@@ -283,6 +283,11 @@ PHP file
             PsiWhiteSpace(' ')
             PhpDocTypeImpl: int
               PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_COMMA)(',')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: c
+            PsiElement(DOC_TEXT)('...')
+            PsiElement(DOC_VARIABLE)('$c')
           PsiElement(DOC_RPAREN)(')')
           PsiElement(DOC_TEXT)(':')
           PsiWhiteSpace(' ')
