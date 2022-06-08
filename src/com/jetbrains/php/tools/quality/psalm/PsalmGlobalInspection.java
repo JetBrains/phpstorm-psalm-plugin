@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,13 +41,6 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
   public boolean findUnusedCode = false;
   public boolean findUnusedSuppress = false;
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PSALM_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_PSALM");
-
-  @Override
-  public JComponent createOptionsPanel() {
-    final PsalmOptionsPanel optionsPanel = new PsalmOptionsPanel(this);
-    optionsPanel.init();
-    return optionsPanel.getOptionsPanel();
-  }
 
   @Override
   protected void checkCmdOptions(@NotNull Project project) {
