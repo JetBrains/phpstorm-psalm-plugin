@@ -53,6 +53,21 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
     return myOptionsPanel;
   }
 
+  @Override
+  public void reset() {
+
+  }
+
+  @Override
+  public boolean isModified() {
+    return false;
+  }
+
+  @Override
+  public void apply() {
+
+  }
+
   public void init() {
   }
 }
