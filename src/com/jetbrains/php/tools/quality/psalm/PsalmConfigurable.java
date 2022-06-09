@@ -2,6 +2,7 @@ package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
+import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
 import com.jetbrains.php.tools.quality.QualityToolProjectConfigurableForm;
 import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
@@ -14,8 +15,8 @@ public class PsalmConfigurable extends QualityToolProjectConfigurableForm implem
   }
 
   @Override
-  protected QualityToolsOptionsPanel getQualityToolOptionPanel() {
-    return new PsalmOptionsPanel(new PsalmGlobalInspection());
+  protected QualityToolsOptionsPanel getQualityToolOptionPanel(QualityToolConfigurationComboBox configurationBox) {
+    return new PsalmOptionsPanel(new PsalmGlobalInspection(), myProject, configurationBox);
   }
 
   @Override
