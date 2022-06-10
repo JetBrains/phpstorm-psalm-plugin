@@ -1,15 +1,13 @@
 package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.DocumentAdapter;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.components.JBCheckBox;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
 
 public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private JPanel myOptionsPanel;
@@ -17,29 +15,18 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private JBCheckBox myShowInfoJBCheckBox;
   private JBCheckBox myFindUnusedCheckbox;
   private JBCheckBox myFindUnusedSuppressCheckbox;
+  private final Project myProject;
 
-  private final PsalmGlobalInspection myInspection;
 
-  public PsalmOptionsPanel(PsalmGlobalInspection inspection, Project project, QualityToolConfigurationComboBox comboBox) {
-    myInspection = inspection;
-      myConfigPathTextField.setText(inspection.config);
-      myConfigPathTextField
+  public PsalmOptionsPanel(Project project, QualityToolConfigurationComboBox comboBox) {
+    myProject = project;
+    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(project);
+    myConfigPathTextField.setText(configuration.getConfig());
+    myConfigPathTextField
         .init(project, getSdkAdditionalData(project, comboBox), PsalmBundle.message("psalm.configuration.file"), true, false);
-    myConfigPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
-      @Override
-      protected void textChanged(@NotNull DocumentEvent e) {
-        myInspection.config = myConfigPathTextField.getText();
-      }
-    });
-
-    myShowInfoJBCheckBox.setSelected(inspection.showInfo);
-    myShowInfoJBCheckBox.addActionListener(event -> myInspection.showInfo = myShowInfoJBCheckBox.isSelected());
-    
-    myFindUnusedCheckbox.setSelected(inspection.findUnusedCode);
-    myFindUnusedCheckbox.addActionListener(event -> myInspection.findUnusedCode = myFindUnusedCheckbox.isSelected());
-    
-    myFindUnusedSuppressCheckbox.setSelected(inspection.findUnusedSuppress);
-    myFindUnusedSuppressCheckbox.addActionListener(event -> myInspection.findUnusedSuppress = myFindUnusedSuppressCheckbox.isSelected());
+    myShowInfoJBCheckBox.setSelected(configuration.isShowInfo());
+    myFindUnusedCheckbox.setSelected(configuration.isFindUnusedCode());
+    myFindUnusedSuppressCheckbox.setSelected(configuration.isFindUnusedSuppress());
   }
   
   private void createUIComponents(){
@@ -52,19 +39,29 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   public void reset() {
-
+    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(myProject);
+    myConfigPathTextField.setText(configuration.getConfig());
+    myShowInfoJBCheckBox.setSelected(configuration.isShowInfo());
+    myFindUnusedCheckbox.setSelected(configuration.isFindUnusedCode());
+    myFindUnusedSuppressCheckbox.setSelected(configuration.isFindUnusedSuppress());
   }
 
   @Override
   public boolean isModified() {
+    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(myProject);
+    if (!StringUtil.equals(myConfigPathTextField.getText(), configuration.getConfig())) return true;
+    if (myShowInfoJBCheckBox.isSelected() != configuration.isShowInfo()) return true;
+    if (myFindUnusedCheckbox.isSelected() != configuration.isFindUnusedCode()) return true;
+    if (myFindUnusedSuppressCheckbox.isSelected() != configuration.isFindUnusedSuppress()) return true;
     return false;
   }
 
   @Override
   public void apply() {
-
-  }
-
-  public void init() {
+    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(myProject);
+    configuration.setConfig(myConfigPathTextField.getText());
+    configuration.setFindUnusedCode(myFindUnusedCheckbox.isSelected());
+    configuration.setFindUnusedSuppress(myFindUnusedSuppressCheckbox.isSelected());
+    configuration.setShowInfo(myShowInfoJBCheckBox.isSelected());
   }
 }

@@ -54,7 +54,7 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
     if (ruleset == null) return false;
     final VirtualFile customRulesetFile = detectCustomRulesetFile(config.getParent(), ruleset);
     if (customRulesetFile != null) {
-      return modifyRulesetPsalmInspectionSetting(project, tool -> applyRuleset(tool, customRulesetFile.getPath()));
+      return modifyRulesetPsalmInspectionSetting(project, tool -> applyRuleset(project, customRulesetFile.getPath()));
     }
     return false;
   }
@@ -101,7 +101,7 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
 
     if (customRulesetFile != null) {
       final String path = customRulesetFile.getPath();
-      return modifyRulesetPsalmInspectionSetting(project, tool -> applyRuleset(tool, path));
+      return modifyRulesetPsalmInspectionSetting(project, tool -> applyRuleset(project, path));
     }
     return false;
   }
@@ -111,8 +111,8 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
     return PSALM_OPEN_SETTINGS_PROVIDER;
   }
 
-  private static void applyRuleset(PsalmGlobalInspection tool, String customRuleset) {
-    tool.config = customRuleset;
+  private static void applyRuleset(Project project, String customRuleset) {
+    PsalmProjectConfiguration.getInstance(project).setConfig(customRuleset);
   }
 
   @NotNull

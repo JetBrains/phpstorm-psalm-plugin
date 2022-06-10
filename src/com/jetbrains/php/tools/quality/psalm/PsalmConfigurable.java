@@ -16,7 +16,7 @@ public class PsalmConfigurable extends QualityToolProjectConfigurableForm implem
 
   @Override
   protected QualityToolsOptionsPanel getQualityToolOptionPanel(QualityToolConfigurationComboBox configurationBox) {
-    return new PsalmOptionsPanel(new PsalmGlobalInspection(), myProject, configurationBox);
+    return new PsalmOptionsPanel(myProject, configurationBox);
   }
 
   @Override

@@ -9,7 +9,6 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
-import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.profile.codeInspection.InspectionProfileManager;
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
@@ -36,10 +35,6 @@ import static com.jetbrains.php.tools.quality.QualityToolAnnotator.*;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
-  public @NlsSafe String config = "";
-  public boolean showInfo = false;
-  public boolean findUnusedCode = false;
-  public boolean findUnusedSuppress = false;
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PSALM_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_PSALM");
 
   @Override
@@ -123,7 +118,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
         if (file == null) return;
         InspectionProfileManager.getInstance(project).getCurrentProfile().modifyToolSettings(
           Key.<PsalmGlobalInspection>create(PsalmQualityToolType.INSTANCE.getInspectionId()), file,
-          inspection -> inspection.config = configPath.toString());
+          inspection -> PsalmProjectConfiguration.getInstance(project).setConfig(configPath.toString()));
       }
     });
     Notifications.Bus.notify(notification);
@@ -146,19 +141,20 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
 
 
   public List<String> getCommandLineOptions(@Nullable String filePath, Project project) {
+    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(project);
     @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("--output-format=checkstyle");
-    if (!isEmpty(config)) {
+    if (!isEmpty(configuration.getConfig())) {
       options.add("-c");
-      options.add(updateIfRemoteMappingExists(config, project, PsalmQualityToolType.INSTANCE));
+      options.add(updateIfRemoteMappingExists(configuration.getConfig(), project, PsalmQualityToolType.INSTANCE));
     }
-    if (showInfo) {
+    if (configuration.isShowInfo()) {
       options.add("--show-info=true");
     }
-    if (findUnusedCode) {
+    if (configuration.isFindUnusedCode()) {
       options.add("--find-unused-code");
     }
-    if (findUnusedSuppress) {
+    if (configuration.isFindUnusedSuppress()) {
       options.add("--find-unused-psalm-suppress");
     }
     options.add("--monochrome");
