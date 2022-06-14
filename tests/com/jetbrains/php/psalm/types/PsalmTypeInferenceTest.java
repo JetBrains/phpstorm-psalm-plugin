@@ -703,4 +703,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testDocTypesInParentheses() {
     doTypeTest();
   }
+
+  public void testPsalmScalarTypeArrayKey() {
+    doTypeTest();
+  }
+
+  public void testPsalmNotNumericArrayKey() {
+    doTypeTest();
+  }
 }
