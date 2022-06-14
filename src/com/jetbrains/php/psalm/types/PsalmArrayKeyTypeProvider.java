@@ -37,6 +37,14 @@ public class PsalmArrayKeyTypeProvider implements PhpKeyTypeProvider {
       }
       expression = expression.substring(0, dot);
     }
-    return new PhpType().add(expression.substring(2));
+    PhpType type = new PhpType().add(expression.substring(2));
+    if (type.isComplete()) {
+      return type;
+    }
+    PhpType psalmScalarType = new PhpType();
+    for (String s : type.getTypes()) {
+      psalmScalarType.add(PhpType.global(project, s));
+    }
+    return psalmScalarType;
   }
 }
