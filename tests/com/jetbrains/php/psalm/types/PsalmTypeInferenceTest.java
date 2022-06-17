@@ -711,4 +711,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testPsalmNotNumericArrayKey() {
     doTypeTest();
   }
+
+  public void testArrayShapeMultiAssignmentOmittedElements() {
+    doTypeTest();
+  }
 }
