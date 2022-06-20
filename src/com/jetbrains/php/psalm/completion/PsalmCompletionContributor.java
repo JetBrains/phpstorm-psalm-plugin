@@ -46,7 +46,7 @@ public class PsalmCompletionContributor extends CompletionContributor {
     protected void addCompletions(@NotNull CompletionParameters parameters,
                                   @NotNull ProcessingContext context,
                                   @NotNull CompletionResultSet result) {
-      PhpDocComment docComment = PhpPsiUtil.getParentByCondition(parameters.getPosition(), PhpDocComment.INSTANCEOF);
+      PhpDocComment docComment = PhpPsiUtil.getParentOfClass(parameters.getPosition(), PhpDocComment.class);
       if (docComment != null) {
         Set<String> customTypes =
           ContainerUtil.union(PhpGenericsTemplatesCustomDocTagValueStubProvider.getTemplates(docComment), PhpGenericsExtendedTypeProvider.getCustomTypes(docComment));
