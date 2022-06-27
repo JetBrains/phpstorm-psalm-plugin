@@ -715,4 +715,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testArrayShapeMultiAssignmentOmittedElements() {
     doTypeTest();
   }
+
+  public void testVarOnPromotedProperty() {
+    doTypeTest();
+  }
 }
