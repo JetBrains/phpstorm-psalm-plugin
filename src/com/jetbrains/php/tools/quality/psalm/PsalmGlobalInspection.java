@@ -9,6 +9,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.profile.codeInspection.InspectionProfileManager;
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
@@ -35,6 +36,13 @@ import static com.jetbrains.php.tools.quality.QualityToolAnnotator.*;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
+  public @NlsSafe String config = "";
+  public boolean showInfo = false;
+  public boolean findUnusedCode = false;
+  public boolean findUnusedSuppress = false;
+
+  public boolean transferred = false;
+
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PSALM_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_PSALM");
 
   @Override

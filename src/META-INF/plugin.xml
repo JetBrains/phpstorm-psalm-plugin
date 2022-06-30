@@ -33,6 +33,7 @@
     <codeInsight.parameterInfo language="PHP" order="before phpParameterInfo"
                                implementationClass="com.jetbrains.php.psalm.lang.PsalmAdvancedClosureParameterInfoHandler"/>
 
+      <postStartupActivity implementation="com.jetbrains.php.tools.quality.psalm.PsalmSettingsTransferStartupActivity"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.jetbrains.php">
