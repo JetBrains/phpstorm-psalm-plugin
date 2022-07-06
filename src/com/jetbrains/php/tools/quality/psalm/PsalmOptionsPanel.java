@@ -25,8 +25,11 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private JBCheckBox myShowInfoJBCheckBox;
   private JBCheckBox myFindUnusedCheckbox;
   private JBCheckBox myFindUnusedSuppressCheckbox;
+  private final QualityToolConfigurationComboBox myComboBox;
+
   public PsalmOptionsPanel(Project project, QualityToolConfigurationComboBox comboBox, Runnable validate) {
-    super(project, validate);
+    super(project, validate, PsalmQualityToolType.INSTANCE);
+    myComboBox = comboBox;
     PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(project);
     myConfigPathTextField.setText(configuration.getConfig());
     myConfigPathTextField
@@ -47,7 +50,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   protected @Nullable String validatePath() {
-    PhpInterpreter interpreter = getSelectedInterpreter();
+    PhpInterpreter interpreter = getSelectedInterpreter(myProject, myComboBox);
     if (interpreter != null && interpreter.isRemote()) {
       //TODO: validate remote path?
       return null;
