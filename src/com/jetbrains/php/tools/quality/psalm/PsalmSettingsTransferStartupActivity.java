@@ -20,14 +20,14 @@ public class PsalmSettingsTransferStartupActivity implements StartupActivity {
 
     PsalmGlobalInspection tool =
       (PsalmGlobalInspection)PsalmQualityToolType.INSTANCE.getGlobalTool(project,
-                                                                         InspectionProfileManager.getInstance().getCurrentProfile());
+                                                                         InspectionProfileManager.getInstance(project).getCurrentProfile());
     PsalmProjectConfiguration instance = PsalmProjectConfiguration.getInstance(project);
-    if (tool != null && !tool.transferred) {
+    if (tool != null && !instance.isTransferred()) {
       instance.setConfig(tool.config);
       instance.setFindUnusedCode(tool.findUnusedCode);
       instance.setShowInfo(tool.showInfo);
       instance.setFindUnusedSuppress(tool.findUnusedSuppress);
-      tool.transferred = true;
+      instance.setTransferred(true);
     }
   }
 }

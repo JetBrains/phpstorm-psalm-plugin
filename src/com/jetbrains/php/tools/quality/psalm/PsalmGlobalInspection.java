@@ -40,9 +40,6 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
   public boolean showInfo = false;
   public boolean findUnusedCode = false;
   public boolean findUnusedSuppress = false;
-
-  public boolean transferred = false;
-
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PSALM_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_PSALM");
 
   @Override
