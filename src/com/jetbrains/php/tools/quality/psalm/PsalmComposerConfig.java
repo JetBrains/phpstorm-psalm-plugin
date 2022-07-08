@@ -112,7 +112,7 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
   }
 
   private static void applyRuleset(Project project, String customRuleset) {
-    PsalmProjectConfiguration.getInstance(project).setConfig(customRuleset);
+    PsalmOptionsConfiguration.getInstance(project).setConfig(customRuleset);
   }
 
   @NotNull

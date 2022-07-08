@@ -30,7 +30,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   public PsalmOptionsPanel(Project project, QualityToolConfigurationComboBox comboBox, Runnable validate) {
     super(project, validate, PsalmQualityToolType.INSTANCE);
     myComboBox = comboBox;
-    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(project);
+    PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(project);
     myConfigPathTextField.setText(configuration.getConfig());
     myConfigPathTextField
       .init(project, getSdkAdditionalData(project, comboBox), PsalmBundle.message("psalm.configuration.file"), true, false);
@@ -69,7 +69,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   public void reset() {
-    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(myProject);
+    PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(myProject);
     myConfigPathTextField.setText(configuration.getConfig());
     myShowInfoJBCheckBox.setSelected(configuration.isShowInfo());
     myFindUnusedCheckbox.setSelected(configuration.isFindUnusedCode());
@@ -78,7 +78,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   public boolean isModified() {
-    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(myProject);
+    PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(myProject);
     if (!StringUtil.equals(myConfigPathTextField.getText(), configuration.getConfig())) return true;
     if (myShowInfoJBCheckBox.isSelected() != configuration.isShowInfo()) return true;
     if (myFindUnusedCheckbox.isSelected() != configuration.isFindUnusedCode()) return true;
@@ -88,7 +88,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   public void apply() {
-    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(myProject);
+    PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(myProject);
     configuration.setConfig(myConfigPathTextField.getText());
     configuration.setFindUnusedCode(myFindUnusedCheckbox.isSelected());
     configuration.setFindUnusedSuppress(myFindUnusedSuppressCheckbox.isSelected());

@@ -123,7 +123,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
         if (file == null) return;
         InspectionProfileManager.getInstance(project).getCurrentProfile().modifyToolSettings(
           Key.<PsalmGlobalInspection>create(PsalmQualityToolType.INSTANCE.getInspectionId()), file,
-          inspection -> PsalmProjectConfiguration.getInstance(project).setConfig(configPath.toString()));
+          inspection -> PsalmOptionsConfiguration.getInstance(project).setConfig(configPath.toString()));
       }
     });
     Notifications.Bus.notify(notification);
@@ -146,7 +146,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
 
 
   public List<String> getCommandLineOptions(@Nullable String filePath, Project project) {
-    PsalmProjectConfiguration configuration = PsalmProjectConfiguration.getInstance(project);
+    PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(project);
     @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("--output-format=checkstyle");
     if (!isEmpty(configuration.getConfig())) {
