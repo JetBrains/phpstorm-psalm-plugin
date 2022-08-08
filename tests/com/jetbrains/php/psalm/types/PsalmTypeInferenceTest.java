@@ -414,6 +414,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testSuperMemberRecursive() {
+    doTypeTest();
+  }
+
   public void testSubstituteExtendedClasses() {
     doTypeTest();
   }
