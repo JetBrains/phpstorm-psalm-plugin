@@ -44,7 +44,7 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
   }
 
   public void testDocRefInsideDocType() {
-    doInspectionTest(true);
+    doInfoTest();
   }
 
   public void testTypeAlreadyExists() {
@@ -73,7 +73,7 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
   }
 
   public void testPsalmTraceVar() {
-    doInspectionTest(true);
+    doInfoTest();
   }
 
   public void testReturnGenericTemplate() {
