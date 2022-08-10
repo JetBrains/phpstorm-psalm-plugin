@@ -723,4 +723,13 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testVarOnPromotedProperty() {
     doTypeTest();
   }
+
+  public void testParametrisedPolymorphicCallName() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "\n" +
+                                 "class Two {\n" +
+                                 "    public static function getOne(): One {}\n" +
+                                 "}\n");
+    doTypeTest();
+  }
 }
