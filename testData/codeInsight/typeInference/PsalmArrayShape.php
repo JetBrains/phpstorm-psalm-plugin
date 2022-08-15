@@ -17,6 +17,9 @@ function f($a, $b, $c, $d){
     <type value="string|mixed">$c[1]</type>;
     <type value="string|mixed">$d["person"]["name"]</type>;
     <type value="int|mixed">$d["person"]["age"]</type>;
+    foreach ($d as $item) {
+      <type value="int|mixed">$item["age"]</type>;
+    }
     <type value="array|mixed">$d["person"]</type>;
 }
 
