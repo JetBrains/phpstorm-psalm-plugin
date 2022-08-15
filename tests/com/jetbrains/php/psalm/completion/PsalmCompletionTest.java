@@ -37,6 +37,8 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
       , "numeric"
       , "array-key"
       , "empty"
+      , "key-of"
+      , "value-of"
       , "trait-string"
       , "non-empty-list"
       , "non-empty-array"

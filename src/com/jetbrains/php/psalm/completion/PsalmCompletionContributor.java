@@ -27,8 +27,8 @@ public class PsalmCompletionContributor extends CompletionContributor {
 
   private static class PsalmCustomDocTypeCompletionProvider extends CompletionProvider<CompletionParameters> {
 
-    private static final Collection<String> TYPES = ContainerUtil.union(PsalmExtendedStringDocTypeProvider.EXTENDED_SCALAR_TYPES,
-                                                                        PhpWorkaroundUtil.getGenericArraysNames());
+    private static final Collection<String> TYPES = ContainerUtil.union(ContainerUtil.union(PsalmExtendedStringDocTypeProvider.EXTENDED_SCALAR_TYPES,
+                                                                                            PhpWorkaroundUtil.getGenericArraysNames()), Set.of("key-of", "value-of"));
 
     @Override
     protected void addCompletions(@NotNull CompletionParameters parameters,
