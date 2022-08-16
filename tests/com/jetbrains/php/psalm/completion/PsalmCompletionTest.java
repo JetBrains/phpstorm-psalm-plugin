@@ -161,4 +161,9 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "first", "last");
   }
+
+  public void testExpectedArgumentCompletionFromKeyOf() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "a", "b", "c");
+  }
 }
