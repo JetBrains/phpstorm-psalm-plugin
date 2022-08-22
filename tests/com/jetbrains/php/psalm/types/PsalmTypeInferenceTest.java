@@ -736,4 +736,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testKeyOfValueOf() {
     doTypeTest();
   }
+
+  public void testFetchExtendsThroughIntermediateValue() {
+    doTypeTest();
+  }
 }
