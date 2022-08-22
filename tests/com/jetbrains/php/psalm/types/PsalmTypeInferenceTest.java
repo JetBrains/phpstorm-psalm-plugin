@@ -740,4 +740,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testFetchExtendsThroughIntermediateValue() {
     doTypeTest();
   }
+
+  public void testFetchExtendsFromParentClass() {
+    doTypeTest();
+  }
 }
