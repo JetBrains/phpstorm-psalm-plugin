@@ -1,6 +1,6 @@
 <?php
 /**
- * @template T of Foo
+ * @template T of <warning descr="Undefined class 'Foo'">Foo</warning>
  * @template T1
  * @template T2
  * @template
