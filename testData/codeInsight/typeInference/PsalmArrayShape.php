@@ -5,9 +5,10 @@
  * @param $b array{"name": int, string}
  * @param $c array{"name": int, 1?: string}
  * @param $d array{"person": array{name: string, age: int}, 1?: string}
+ * @param $d1 array{"x": array{"person": array{name: string, age: int}}}
  * @psalm-return array{age: int}
  */
-function f($a, $b, $c, $d){
+function f($a, $b, $c, $d, $d1){
     /** @var array{name?: Exception, age: int} $test */
     <type value="array">$test = []</type>;
     <type value="Exception|mixed">$test['name']</type>;
@@ -21,6 +22,10 @@ function f($a, $b, $c, $d){
       <type value="int|mixed">$item["age"]</type>;
     }
     <type value="array|mixed">$d["person"]</type>;
+    foreach($d1['x'] as $item1) {
+      <type value="int|mixed">$item1["age"]</type>;
+      <type value="string|mixed">$item1["name"]</type>;
+    }
 }
 
 $f = f();
