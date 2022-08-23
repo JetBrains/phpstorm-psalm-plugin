@@ -13,7 +13,7 @@ class A {
  * @return A<User>
  */
 function f() {}
-<type value="mixed|User">f()->get()</type>;
+<type value="User">f()->get()</type>;
 
 /**
  * @template T
@@ -27,4 +27,4 @@ class B extends A {
  * @return B<User>
  */
 function f1() {}
-<type value="mixed|User">f1()->get()</type>;
+<type value="User">f1()->get()</type>;

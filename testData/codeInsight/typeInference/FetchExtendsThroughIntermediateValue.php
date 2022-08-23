@@ -33,7 +33,7 @@ class RepositoryHelper{
 }
 
 $repo = new PersonRepo();
-<type value="Person|mixed">$res</type> = $repo->save();
+<type value="Person">$res</type> = $repo->save();
 
 $repo = (new RepositoryHelper())->getPersonRepository();
-<type value="Person|mixed">$res</type> = $repo->save();
+<type value="Person">$res</type> = $repo->save();

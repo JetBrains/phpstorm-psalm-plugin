@@ -35,6 +35,6 @@ $foo = new Foo(new DateTime());
 $bar = new Bar(new DateTime());
 $baz = new Baz(new DateTime());
 
-<type value="mixed|DateTime">$foo->get()</type>;
-<type value="DateTime|mixed">$bar->get()</type>;
-<type value="DateTime|mixed">$baz->get()</type>;
+<type value="DateTime">$foo->get()</type>;
+<type value="DateTime">$bar->get()</type>;
+<type value="DateTime">$baz->get()</type>;

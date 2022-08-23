@@ -32,4 +32,4 @@ interface Promise
     function ff();
 }
 
-<type value="Foo|mixed">f1()->ff()</type>;
+<type value="Foo">f1()->ff()</type>;

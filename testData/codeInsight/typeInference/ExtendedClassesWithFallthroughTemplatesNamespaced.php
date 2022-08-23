@@ -14,7 +14,7 @@ class A {
  * @return A<User>
  */
 function f() {}
-<type value="\N\User|mixed">f()->get()</type>;
+<type value="\N\User">f()->get()</type>;
 namespace N1;
 use N\A;
 /**
@@ -29,4 +29,4 @@ class B extends A {
  * @return B<User>
  */
 function f1() {}
-<type value="mixed|\N1\User">f1()->get()</type>;
+<type value="\N1\User">f1()->get()</type>;

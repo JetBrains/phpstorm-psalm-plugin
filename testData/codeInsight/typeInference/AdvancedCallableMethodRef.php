@@ -31,10 +31,10 @@ class AA {
     }
 }
 
-<type value="BB|mixed">$first</type> = (new AA)->map(function ($id, $aa) {
+<type value="BB">$first</type> = (new AA)->map(function ($id, $aa) {
     return new \BB();
 })->first();
 
-<type value="BB|mixed">$first</type> = collect()->map(function ($id, $aa) {
+<type value="BB">$first</type> = collect()->map(function ($id, $aa) {
     return new \BB();
 })->first();

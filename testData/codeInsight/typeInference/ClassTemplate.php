@@ -16,4 +16,4 @@ class A {
 
 $a = "a";
 $b = 5;
-<type value="int|mixed|string">$c</type> = (new A())->mirror($a, $b);
+<type value="int|string">$c</type> = (new A())->mirror($a, $b);

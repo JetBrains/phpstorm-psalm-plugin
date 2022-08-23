@@ -64,5 +64,5 @@ function extractClosureReturnTemplateWrapped(callable $key1){}
  * @param Closure() : Bar $closure
  */
 function extractAndWrapClosureInferred($closure) {
-    <type value="Bar|mixed">$aa</type> = extractClosureReturnTemplateWrapped($closure)->aa();
+    <type value="Bar">$aa</type> = extractClosureReturnTemplateWrapped($closure)->aa();
 }

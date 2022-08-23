@@ -7,6 +7,6 @@ class Baz
      */
     public function doFoo($p): void
     {
-        <type value="C|mixed">$p->doBaz()</type>;
+        <type value="C">$p->doBaz()</type>;
     }
 }

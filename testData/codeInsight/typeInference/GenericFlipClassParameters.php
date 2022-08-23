@@ -4,8 +4,8 @@ namespace N;
  * @param  \N1\Collection<int, \Exception>  $param
  */
 function f($param) {
-    <type value="int|mixed">$param->flip()->getValue()</type>;
-    <type value="int|mixed">$param->flip2()->getValue()</type>;
+    <type value="int">$param->flip()->getValue()</type>;
+    <type value="int">$param->flip2()->getValue()</type>;
 }
 
 

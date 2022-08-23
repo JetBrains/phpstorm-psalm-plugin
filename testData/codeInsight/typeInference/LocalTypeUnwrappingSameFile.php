@@ -29,7 +29,7 @@ class Baz
      */
     public function doFoo($p): void
     {
-        <type value="mixed|C">$p->doBaz()</type>;
-        <type value="mixed|C">$this->a->doBaz()</type>;
+        <type value="C">$p->doBaz()</type>;
+        <type value="C">$this->a->doBaz()</type>;
     }
 }

@@ -39,7 +39,7 @@ class Foo {}
 
 
 function f() {
-    <type value="string|mixed">B::make(["a"])->getValue()</type>;
-    <type value="Foo|mixed">B::make([new Foo])->getValue()</type>;
-    <type value="Foo|mixed">B::makeFromValue(new Foo)->getValue()</type>;
+    <type value="string">B::make(["a"])->getValue()</type>;
+    <type value="Foo">B::make([new Foo])->getValue()</type>;
+    <type value="Foo">B::makeFromValue(new Foo)->getValue()</type>;
 }

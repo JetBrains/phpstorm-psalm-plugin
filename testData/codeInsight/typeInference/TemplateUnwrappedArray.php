@@ -10,7 +10,7 @@ function unwrap($containers)
 {
 }
 
-<type value="string|mixed">unwrap(["a"])</type>;
+<type value="string">unwrap(["a"])</type>;
 
 /**
  * @template Tv
@@ -21,7 +21,7 @@ function unwrapList($containers)
 {
 }
 
-<type value="int|mixed">unwrapList([1])</type>;
+<type value="int">unwrapList([1])</type>;
 
 /**
  * @template Tv
@@ -32,4 +32,4 @@ function unwrapList($containers)
 function unwrapListWrong($containers)
 {
 }
-<type value="mixed">unwrapListWrong(["a"])</type>;
+<type value="">unwrapListWrong(["a"])</type>;

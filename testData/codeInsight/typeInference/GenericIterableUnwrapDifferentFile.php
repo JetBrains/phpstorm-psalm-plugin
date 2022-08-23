@@ -5,5 +5,5 @@
  * @param  iterable<Exception>  $param
  */
 function f($c, array $param) {
-    <type value="Exception|mixed">$c->f($param)</type>
+    <type value="Exception">$c->f($param)</type>
 }

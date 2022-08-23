@@ -23,8 +23,8 @@ class C {
  * @param C<Exception> $param2
  */
 function f($base, $param1, $param2) {
-    <type value="Exception|mixed">$base->unwrapIterable($param1)</type>;
-    <type value="mixed">$base->unwrapIterable($param2)</type>;
-    <type value="mixed">$base->unwrapClass($param1)</type>;
-    <type value="Exception|mixed">$base->unwrapClass($param2)</type>;
+    <type value="Exception">$base->unwrapIterable($param1)</type>;
+    <type value="">$base->unwrapIterable($param2)</type>;
+    <type value="">$base->unwrapClass($param1)</type>;
+    <type value="Exception">$base->unwrapClass($param2)</type>;
 }

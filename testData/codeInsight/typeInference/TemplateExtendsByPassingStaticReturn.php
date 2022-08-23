@@ -33,10 +33,10 @@ function getDates(): Collection
     return new ArrayCollection([new \DateTime()]);
 }
 
-<type value="mixed|DateTime">getDates()->get(0)</type>;
+<type value="DateTime">getDates()->get(0)</type>;
 
 foreach (getDates()->map() as $user) {
     <type value="mixed|DateTime">$user</type>;
 }
 
-<type value="mixed|DateTime">getDates()->map()->get(0)</type>;
+<type value="DateTime">getDates()->map()->get(0)</type>;

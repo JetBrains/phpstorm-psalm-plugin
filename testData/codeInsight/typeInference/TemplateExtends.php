@@ -41,9 +41,9 @@ class Child extends Base
 }
 
 $child = new Child();
-<type value="mixed|P">$child->item</type>;
+<type value="P">$child->item</type>;
 <type value="array|P[]">$child->items</type>;
-<type value="mixed|P">$child->item()</type>;
+<type value="P">$child->item()</type>;
 <type value="array|P[]">$child->items()</type>;
 
 class P1
@@ -58,7 +58,7 @@ class Child1 extends Base
 }
 
 $child1 = new Child1();
-<type value="mixed|P1">$child1->item</type>;
+<type value="P1">$child1->item</type>;
 <type value="array|P1[]">$child1->items</type>;
-<type value="mixed|P1">$child1->item()</type>;
+<type value="P1">$child1->item()</type>;
 <type value="array|P1[]">$child1->items()</type>;

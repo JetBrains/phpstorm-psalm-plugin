@@ -42,4 +42,4 @@ final class Identifiers
     }
 }
 
-<type value="mixed|\F\Offer">Identifiers::fromInstance(new Offer)->getF()</type>;
+<type value="\F\Offer">Identifiers::fromInstance(new Offer)->getF()</type>;

@@ -73,14 +73,14 @@ class AA {
     function m(I $q) {}
 }
 
-<type value="\N\A|mixed">f(new C1())</type>;
-<type value="\N\B|mixed">f(new C2())</type>;
+<type value="\N\A">f(new C1())</type>;
+<type value="\N\B">f(new C2())</type>;
 
-<type value="\N\A|mixed">f1(new C1())</type>;
-<type value="\N\B|mixed">f1(new C2())</type>;
+<type value="\N\A">f1(new C1())</type>;
+<type value="\N\B">f1(new C2())</type>;
 
-<type value="\N\B|mixed">f2(new C1())</type>;
-<type value="\N\A|mixed">f2(new C2())</type>;
+<type value="\N\B">f2(new C1())</type>;
+<type value="\N\A">f2(new C2())</type>;
 
 <type value="\N\I">f3(new C1())</type>;
 <type value="\N\I">f3(new C2())</type>;
@@ -89,5 +89,5 @@ class AA {
 <type value="\N\I">f4(new C1())</type>;
 <type value="\N\I">f4(new C2())</type>;
 
-<type value="\N\A|mixed">(new AA())->m(new C1())</type>;
-<type value="\N\B|mixed">(new AA())->m(new C2())</type>;
+<type value="\N\A">(new AA())->m(new C1())</type>;
+<type value="\N\B">(new AA())->m(new C2())</type>;

@@ -8,4 +8,4 @@
 function foo($t){
     return $t;
 }
-<type value="int|mixed">$f</type> = foo(1);
+<type value="int">$f</type> = foo(1);

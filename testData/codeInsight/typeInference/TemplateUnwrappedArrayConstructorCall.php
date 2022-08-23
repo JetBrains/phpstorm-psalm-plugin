@@ -15,7 +15,7 @@ class Map
     public function get(string $key) {}
 }
 $map = new Map([new Exception(),new Exception()]);
-<type value="Exception|mixed">$map->get('a')</type>;
+<type value="Exception">$map->get('a')</type>;
 
 
 /**
@@ -33,7 +33,7 @@ class MapList
     public function get(string $key) {}
 }
 $map = new MapList([new Exception(),new Exception()]);
-<type value="Exception|mixed">$map->get('a')</type>;
+<type value="Exception">$map->get('a')</type>;
 
 /**
  * @template T
@@ -50,4 +50,4 @@ class MapSame
     public function get(string $key) {}
 }
 $map = new MapSame([new Exception(),new Exception()]);
-<type value="Exception[]|mixed">$map->get('a')</type>;
+<type value="Exception[]">$map->get('a')</type>;

@@ -37,10 +37,10 @@ class ItemB {
 
 function a(ItemA $a, ItemB $b){
     $collection = new Collection($a, 0, $b);
-    <type value="ItemA|mixed">$b</type> = $collection->first();
-    <type value="mixed|ItemB">$b</type> = $collection->second();
+    <type value="ItemA">$b</type> = $collection->first();
+    <type value="ItemB">$b</type> = $collection->second();
 
     $collection = new Collection(new ItemB(), 0, new ItemA());
-    <type value="mixed|ItemB">$b</type> = $collection->first();
-    <type value="ItemA|mixed">$b</type> = $collection->second();
+    <type value="ItemB">$b</type> = $collection->first();
+    <type value="ItemA">$b</type> = $collection->second();
 }

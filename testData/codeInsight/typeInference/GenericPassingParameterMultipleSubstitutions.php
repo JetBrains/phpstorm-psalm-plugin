@@ -21,4 +21,4 @@ class C2{
 
 }
 /** @var $a C1<A, B> */
-<type value="A|B|mixed">$a->f()->f()</type>;
+<type value="A|B">$a->f()->f()</type>;

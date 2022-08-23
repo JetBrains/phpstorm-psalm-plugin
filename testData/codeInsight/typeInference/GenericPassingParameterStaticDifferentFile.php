@@ -3,5 +3,5 @@
  * @param \C<\Exception> $param
  */
 function temp($param){
-    <type value="Exception[]|mixed">$param->crossJoin()->first()</type>;
+    <type value="Exception[]">$param->crossJoin()->first()</type>;
 }

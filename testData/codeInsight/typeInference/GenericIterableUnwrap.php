@@ -17,6 +17,6 @@ class C {
  * @param  iterable<Exception>  $param
  */
 function f($c, $c1, array $param) {
-    <type value="Exception|mixed">$c->f($param)</type>
-    <type value="Exception|mixed">$c1->f($param)</type>
+    <type value="Exception">$c->f($param)</type>
+    <type value="Exception">$c1->f($param)</type>
 }

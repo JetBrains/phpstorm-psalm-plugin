@@ -26,7 +26,7 @@ function foo(iterable $iterable, \Iterator $iterator, \IteratorAggregate $ia, \T
     }
     foreach ($ia as $k => $v) {
         <type value="I0">$k</type>;
-        <type value="mixed|I1">$v</type>;
+        <type value="I1">$v</type>;
     }
     foreach ($traversable as $k => $v) {
         <type value="I0">$k</type>;

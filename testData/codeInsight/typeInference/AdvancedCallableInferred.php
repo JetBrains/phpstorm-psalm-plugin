@@ -80,5 +80,5 @@ function extractAndWrapClosureInferred(A $dummy) {
     $key1 = function () {
         return new Bar;
     };
-    <type value="Bar|mixed">$aa</type> = extractClosureReturnTemplateWrapping($key1)->aa();
+    <type value="Bar">$aa</type> = extractClosureReturnTemplateWrapping($key1)->aa();
 }

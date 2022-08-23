@@ -15,4 +15,4 @@ class Collection
 
 /** @var Collection<User> $usersCollection */
 $usersCollection = new Collection();
-<type value="mixed|User">$usersCollection->get()</type>;
+<type value="User">$usersCollection->get()</type>;

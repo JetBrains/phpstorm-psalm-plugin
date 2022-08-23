@@ -19,4 +19,4 @@ class C2{
 
 }
 /** @var $a C1<Exception> */
-<type value="Exception|mixed">$a->f()->f()</type>;
+<type value="Exception">$a->f()->f()</type>;

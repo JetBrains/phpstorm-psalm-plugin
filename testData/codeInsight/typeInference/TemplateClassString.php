@@ -17,7 +17,7 @@ class B
  */
 function get(string $a, string $a1) {}
 
-<type value="A|mixed">get("A", "B")</type>;
+<type value="A">get("A", "B")</type>;
 
 
 /**
@@ -41,7 +41,7 @@ function get1(string $a, string $a1) {}
  */
 function get2(string $a, string $a1) {}
 
-<type value="B|mixed">get2( "A", "B")</type>;
+<type value="B">get2( "A", "B")</type>;
 
 
 /**
