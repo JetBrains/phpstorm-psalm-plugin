@@ -748,4 +748,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testExpandFallthroughTemplatesInConstructor() {
     doTypeTest();
   }
+
+  public void testLiteralString() {
+    doTypeTest();
+  }
 }
