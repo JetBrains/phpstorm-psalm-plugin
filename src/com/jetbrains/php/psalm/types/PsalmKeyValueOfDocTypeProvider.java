@@ -4,7 +4,11 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.ObjectUtils;
+import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
+import com.jetbrains.php.lang.psi.elements.PhpClass;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpArrayKeyAccessTP;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
@@ -14,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PsalmKeyValueOfDocTypeProvider implements PhpTypeProvider4 {
   private static final PhpCharBasedTypeKey KEY = new PhpCharBasedTypeKey() {
@@ -36,7 +41,7 @@ public class PsalmKeyValueOfDocTypeProvider implements PhpTypeProvider4 {
         return PhpArrayKeyAccessTP.getArrayKeyType(PhpType.from(getArrayElement(((PhpDocType)element))));
       }
       else if ("value-of".equals(name)) {
-        return PhpType.from(getArrayElement(((PhpDocType)element))).elementType();
+        return PhpType.from(getArrayElement(((PhpDocType)element))).map(KEY::sign);
       }
     }
     return null;
@@ -48,7 +53,17 @@ public class PsalmKeyValueOfDocTypeProvider implements PhpTypeProvider4 {
 
   @Override
   public @Nullable PhpType complete(String expression, Project project) {
-    return null;
+    String signature = expression.substring(2);
+    PhpIndex index = PhpIndex.getInstance(project);
+    Collection<? extends PhpNamedElement> elements = PhpType.global(project, signature).getTypesWithParametrisedParts().stream()
+      .flatMap(fqn -> index.getAnyByFQN(fqn).stream())
+      .collect(Collectors.toSet());
+    if (!elements.isEmpty() && ContainerUtil.all(elements, e -> e instanceof PhpClass && ((PhpClass)e).isEnum())) {
+      return elements.stream()
+        .map(e -> ((PhpClass)e).getBackedEnumType())
+        .reduce(PhpType::or).orElse(PhpType.EMPTY);
+    }
+    return PhpType.from(expression.substring(2)).elementType();
   }
 
   @Override
