@@ -2,6 +2,7 @@
 /**
  * @template T as F
  * @template T of F
+ * @psalm-template T of F
  * @template T
  */
 function f() {
@@ -34,6 +35,21 @@ PHP file
       PsiWhiteSpace(' ')
       PhpDocTagImpl: @template
         PsiElement(DOC_TAG_NAME)('@template')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('T')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('of')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: F
+          PsiElement(DOC_IDENTIFIER)('F')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @psalm-template
+        PsiElement(DOC_TAG_NAME)('@psalm-template')
         PsiWhiteSpace(' ')
         PhpPsiElementImpl
           PsiElement(DOC_IDENTIFIER)('T')

@@ -80,6 +80,7 @@
     <docTagParserExtension tagName="template-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="psalm-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
+    <docTagParserExtension tagName="psalm-template" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTemplateParser" />
     <noReturnProvider implementation="com.jetbrains.php.psalm.PsalmNoReturnProvider" />
     <arrayShapesProvider implementation="com.jetbrains.php.psalm.types.shapes.PsalmDocArrayShapeProvider"/>
 
