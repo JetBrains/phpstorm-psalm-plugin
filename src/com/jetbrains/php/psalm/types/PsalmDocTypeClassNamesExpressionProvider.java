@@ -36,7 +36,7 @@ public class PsalmDocTypeClassNamesExpressionProvider implements PhpExpressionCl
     docTypes(tag)
       .filter(docType -> "class-string".equals(docType.getName()))
       .flatMap(t -> docTypes(PhpPsiUtil.getChildOfType(t, PhpDocElementTypes.phpDocAttributeList)))
-      .map(ClassReferenceImpl::getLocalFQN)
+      .flatMap(t -> t.getType().filterUnknown().types())
       .forEach(classStringArgument -> res.add(classStringArgument));
     if (res.isEmpty()) {
       return Collections.singletonList(null);
