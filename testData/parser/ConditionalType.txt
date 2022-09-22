@@ -1,0 +1,120 @@
+<?php
+
+/**
+ * @return ($size is ($size is positive-int ? int|string : bool) ? ($size is positive-int ? int|string : int) : array)
+ */
+function fillArray(int $size) : int|string|array {
+
+}
+
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocReturnTagImpl: @return
+        PsiElement(DOC_TAG_NAME)('@return')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocVarImpl: size
+            PsiElement(DOC_VARIABLE)('$size')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('is')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: %EMPTY%
+            PsiElement(DOC_LPAREN)('(')
+            PhpDocVarImpl: size
+              PsiElement(DOC_VARIABLE)('$size')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('is')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: positive-int
+              PsiElement(DOC_IDENTIFIER)('positive-int')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('?')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_PIPE)('|')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: bool
+              PsiElement(DOC_IDENTIFIER)('bool')
+            PsiElement(DOC_RPAREN)(')')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_TEXT)('?')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: %EMPTY%
+            PsiElement(DOC_LPAREN)('(')
+            PhpDocVarImpl: size
+              PsiElement(DOC_VARIABLE)('$size')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('is')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: positive-int
+              PsiElement(DOC_IDENTIFIER)('positive-int')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('?')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_PIPE)('|')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiElement(DOC_RPAREN)(')')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_TEXT)(':')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: array
+            PsiElement(DOC_IDENTIFIER)('array')
+          PsiElement(DOC_RPAREN)(')')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: fillArray
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('fillArray')
+      PsiElement(()('(')
+      Parameter list
+        ParameterImpl: size
+          Parameter type
+            ClassReferenceImpl: int
+              PsiElement(identifier)('int')
+          PsiWhiteSpace(' ')
+          PsiElement(variable)('$size')
+      PsiElement())(')')
+      PsiWhiteSpace(' ')
+      PsiElement(colon)(':')
+      PsiWhiteSpace(' ')
+      Return type
+        ClassReferenceImpl: int
+          PsiElement(identifier)('int')
+        PsiElement(bit or)('|')
+        ClassReferenceImpl: string
+          PsiElement(identifier)('string')
+        PsiElement(bit or)('|')
+        ClassReferenceImpl: array
+          PsiElement(array)('array')
+      PsiWhiteSpace(' ')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiWhiteSpace('\n\n')
+        PsiElement(})('}')

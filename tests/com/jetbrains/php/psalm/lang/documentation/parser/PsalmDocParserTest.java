@@ -55,4 +55,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$Template() throws Throwable {
     doTest();
   }
+
+  public void test$ConditionalType() throws Throwable {
+    doTest();
+  }
 }
