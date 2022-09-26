@@ -3,6 +3,7 @@ package com.jetbrains.php.psalm.lang;
 import com.jetbrains.php.PhpInspectionTestCase;
 import com.jetbrains.php.lang.inspections.PhpUndefinedClassInspection;
 import com.jetbrains.php.lang.inspections.controlFlow.PhpUnreachableStatementInspection;
+import com.jetbrains.php.lang.inspections.deadcode.PhpUnusedDeclarationInspection;
 import com.jetbrains.php.lang.inspections.phpdoc.*;
 import com.jetbrains.php.psalm.lang.inspections.PsalmAdvanceCallableParamsInspection;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
@@ -82,5 +83,9 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
 
   public void testParamTagInsideCallable() {
     doInspectionTest(PhpVarTagWithoutVariableNameInspection.class);
+  }
+
+  public void testFindWildcardsUsagesForConstants() {
+    doUnfairInspectionTest(PhpUnusedDeclarationInspection.class);
   }
 }

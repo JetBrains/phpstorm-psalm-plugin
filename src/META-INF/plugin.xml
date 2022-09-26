@@ -35,6 +35,8 @@
                                implementationClass="com.jetbrains.php.psalm.lang.PsalmAdvancedClosureParameterInfoHandler"/>
 
       <postStartupActivity implementation="com.jetbrains.php.tools.quality.psalm.PsalmSettingsTransferStartupActivity"/>
+    <referencesSearch implementation="com.jetbrains.php.psalm.lang.PsalmExtendedClassConstantReferenceSearcher"/>
+    <referencesSearch implementation="com.jetbrains.php.psalm.lang.PsalmExtendedClassConstantWildcardReferenceSearcher"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.jetbrains.php">
@@ -90,6 +92,7 @@
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.psalm.completion.PsalmCompletionContributor"/>
     <psi.referenceContributor language="PHP" implementation="com.jetbrains.php.psalm.lang.PsalmReferenceContributor"/>
     <fileBasedIndex implementation="com.jetbrains.php.psalm.PsalmNoReturnFunctionsIndex"/>
+    <fileBasedIndex implementation="com.jetbrains.php.psalm.PsalmConstantReferenceWildcardIndex"/>
     <lang.elementManipulator forClass="com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType"
                              implementationClass="com.jetbrains.php.psalm.lang.PhpDocTypeManipulator"/>
   </extensions>
