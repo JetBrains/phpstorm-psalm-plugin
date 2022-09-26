@@ -30,6 +30,7 @@ public class PsalmExtendedClassConstantReferenceTypeProvider implements PhpTypeP
 
   private static final Condition<PsiElement> IS_DOC_IDENTIFIER = e -> PhpPsiUtil.isOfType(e, DOC_IDENTIFIER);
   private static final char KEY = 'ᢕ';
+  private static final String WILDCARD = "*";
 
   @Override
   public char getKey() {
@@ -56,28 +57,41 @@ public class PsalmExtendedClassConstantReferenceTypeProvider implements PhpTypeP
     PsiElement docStatic = PhpPsiUtil.getChildOfType(docRef, DOC_STATIC);
     if (docStatic == null) return null;
     PsiElement className = PhpPsiUtil.getPrevSiblingByCondition(docStatic, IS_DOC_IDENTIFIER);
-    PsiElement constantName = PhpPsiUtil.getNextSiblingByCondition(docStatic, IS_DOC_IDENTIFIER);
-    if (className == null || constantName == null) return null;
+    if (className == null) return null;
     PhpType classType = ClassReferenceImpl.resolveClassTypeFromSpecialName(docRef, className.getText());
     if (classType.isEmpty()) {
       classType = PhpType.from(PhpLangUtil.concat(namespaceName, className.getText()));
     }
+    String constantName = getConstantName(docStatic);
+    if (constantName == null) return null;
     return classType
       .map(fqn -> getClassConstantSignature(namespaceName, constantName, fqn));
   }
 
+  @Nullable
+  private static String getConstantName(PsiElement docStatic) {
+    PsiElement constantNameElement = PhpPsiUtil.getNextSiblingByCondition(docStatic, IS_DOC_IDENTIFIER);
+    if (constantNameElement != null) {
+      return isNextSiblingWildcard(constantNameElement) ? constantNameElement.getText() + WILDCARD : constantNameElement.getText();
+    }
+    else if (isNextSiblingWildcard(docStatic)) {
+      return WILDCARD;
+    }
+    return null;
+  }
+
   @NotNull
-  private String getClassConstantSignature(String namespaceName, PsiElement constantName, String classSignature) {
+  private String getClassConstantSignature(String namespaceName, @NotNull String constantName, String classSignature) {
     if (!PhpType.isSignedType(classSignature)) {
       classSignature = PhpTypeSignatureKey.CLASS.sign(PhpLangUtil.concat(namespaceName, classSignature));
     }
-    String constantFQN = classSignature + "." + constantName.getText();
-    return isWildcard(constantName) ? sign(constantFQN) : PhpTypeSignatureKey.CLASS_CONSTANT.sign(constantFQN);
+    String constantFQN = classSignature + "." + constantName;
+    return constantName.endsWith(WILDCARD) ? sign(constantFQN) : PhpTypeSignatureKey.CLASS_CONSTANT.sign(constantFQN);
   }
 
-  private static boolean isWildcard(PsiElement constantName) {
-    PsiElement sibling = constantName.getNextSibling();
-    return PhpPsiUtil.isOfType(sibling, DOC_TEXT) && sibling.textMatches("*");
+  private static boolean isNextSiblingWildcard(@NotNull PsiElement element) {
+    PsiElement sibling = element.getNextSibling();
+    return PhpPsiUtil.isOfType(sibling, DOC_TEXT) && sibling.textMatches(WILDCARD);
   }
 
   @NotNull
@@ -93,7 +107,7 @@ public class PsalmExtendedClassConstantReferenceTypeProvider implements PhpTypeP
   @Override
   public Collection<? extends PhpNamedElement> getBySignature(String expression, Set<String> visited, int depth, Project project) {
     int separatorIndex = expression.lastIndexOf('.');
-    String pattern = expression.substring(separatorIndex + 1);
+    String pattern = expression.substring(separatorIndex + 1, expression.length() - 1); // last symbol is '*'
     return PhpIndex.getInstance(project).getBySignature(expression.substring(0, separatorIndex)).stream()
       .map(e -> e instanceof PhpClass ? ((PhpClass)e) : null).filter(Objects::nonNull)
       .flatMap(c -> c.getFields().stream()).filter(Field::isConstant)

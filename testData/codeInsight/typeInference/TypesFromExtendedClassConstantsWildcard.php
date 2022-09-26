@@ -10,4 +10,7 @@ function f($a, $b)
 {
     /** @psalm-var C::A_* $b*/
     echo <type value="int|string">$b</type>;
+
+    /** @psalm-var C::* $b1*/
+    echo <type value="float|int|string">$b1</type>;
 }

@@ -7,6 +7,7 @@ class Cart {
     private $f;
     /**
      * @param $param A::F*
+     * @param $param A::*
      * @return \nsp\A::F|A::F*
      */
     function m($param) {
@@ -97,6 +98,22 @@ PHP file
               PsiElement(DOC_IDENTIFIER)('A')
               PsiElement(DOC_STATIC)('::')
               PsiElement(DOC_IDENTIFIER)('F')
+              PsiElement(DOC_TEXT)('*')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocParamTagImpl: @param
+          PsiElement(DOC_TAG_NAME)('@param')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: param
+            PsiElement(DOC_VARIABLE)('$param')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: %EMPTY%
+            PhpDocRefImpl: %EMPTY%
+              PsiElement(DOC_IDENTIFIER)('A')
+              PsiElement(DOC_STATIC)('::')
               PsiElement(DOC_TEXT)('*')
           PhpPsiElementImpl
             <empty list>

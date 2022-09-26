@@ -1,6 +1,7 @@
 package com.jetbrains.php.psalm.lang
 
 import com.intellij.psi.PsiPolyVariantReference
+import com.intellij.util.containers.ContainerUtil
 import com.jetbrains.php.fixtures.PhpCodeInsightFixtureTestCase
 import com.jetbrains.php.lang.psi.elements.Field
 import com.jetbrains.php.lang.psi.elements.PhpClass
@@ -43,6 +44,31 @@ function f($a, $b)
     assertInstanceOf(second, Field.class)
     assertEquals(Set.of("\\C.A_1", "\\C.A_2"), Set.of(first.getFQN(), second.getFQN()))
   }
+
+  void testExtendedClassConstantReferenceWithFullWildcard() throws Throwable {
+    configure('''
+<?php
+
+class C{
+    const A_1 = 1;
+    const A_2 = "a";
+    const B_2 = "a";
+}
+
+function f($a, $b)
+{
+    /** @psalm-var C::<caret>* $c */
+    $c;
+}
+''')
+    def reference = reference()
+    assertInstanceOf(reference, PsiPolyVariantReference.class)
+    def multiResolve = reference.multiResolve(false)
+    assertSize(3, multiResolve)
+    def fqns = ContainerUtil.map2Set(multiResolve, { assertInstanceOf(it.getElement(), Field.class).getFQN() })
+    assertEquals(Set.of("\\C.A_1", "\\C.A_2", "\\C.B_2"), fqns)
+  }
+
 
   void testResolveAliasReferenceToType() throws Throwable {
     configure('''
