@@ -752,4 +752,25 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testLiteralString() {
     doTypeTest();
   }
+
+  public void testMetaFromSuperParameter() {
+    doTypeTest();
+  }
+
+  public void testMetaFromSuperParameterGlobal() {
+    addPhpFileToProject("a.php", "<?php\n" +
+                                 "/**\n" +
+                                 " * @template T\n" +
+                                 " */\n" +
+                                 "interface I\n" +
+                                 "{\n" +
+                                 "    /**\n" +
+                                 "     * @param A $min\n" +
+                                 "     * @param B $max\n" +
+                                 "     * @return T\n" +
+                                 "     */\n" +
+                                 "    public function rand($min, $max);\n" +
+                                 "}");
+    doTypeTest();
+  }
 }
