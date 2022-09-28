@@ -71,38 +71,41 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
   }
 
   public void testArrayShapeMultipleFiles() {
-    myFixture.addFileToProject("aa.php", "<?php\n" +
-                                         "/**\n" +
-                                         " * @psalm-return array{age?: Exception, \"name\": string}\n" +
-                                         " */\n" +
-                                         "function f(){}");
-    myFixture.addFileToProject("b.php", "<?php\n" +
-                                        "\n" +
-                                        "function ff() {\n" +
-                                        "    return f();\n" +
-                                        "}");
+    myFixture.addFileToProject("aa.php", """
+      <?php
+      /**
+       * @psalm-return array{age?: Exception, "name": string}
+       */
+      function f(){}""");
+    myFixture.addFileToProject("b.php", """
+      <?php
+
+      function ff() {
+          return f();
+      }""");
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
 
   public void testNoMaterializationForTemplateExtends() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "\n" +
-                                 "/**\n" +
-                                 " * @template T\n" +
-                                 " */\n" +
-                                 "abstract class Base\n" +
-                                 "{\n" +
-                                 "    /**\n" +
-                                 "     * @return T\n" +
-                                 "     */\n" +
-                                 "    public function item() {}\n" +
-                                 "}\n" +
-                                 "\n" +
-                                 "/**\n" +
-                                 " * @extends Base<P1>\n" +
-                                 " */\n" +
-                                 "class C extends Base {} ");
+    addPhpFileToProject("a.php", """
+      <?php
+
+      /**
+       * @template T
+       */
+      abstract class Base
+      {
+          /**
+           * @return T
+           */
+          public function item() {}
+      }
+
+      /**
+       * @extends Base<P1>
+       */
+      class C extends Base {}\s""");
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "f");
   }

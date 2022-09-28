@@ -192,18 +192,19 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testAdvancedCallable() {
-    myFixture.addFileToProject("a.php", "<?php\n" +
-                                        "class Foo {}\n" +
-                                        "/**\n" +
-                                        " * @return Closure(bool, int|string, $a int) : (int|Foo)\n" +
-                                        " */\n" +
-                                        "function a(): Closure{\n" +
-                                        "\n" +
-                                        "}\n" +
-                                        "\n" +
-                                        "function b(){\n" +
-                                        "    return a();\n" +
-                                        "}");
+    myFixture.addFileToProject("a.php", """
+      <?php
+      class Foo {}
+      /**
+       * @return Closure(bool, int|string, $a int) : (int|Foo)
+       */
+      function a(): Closure{
+
+      }
+
+      function b(){
+          return a();
+      }""");
     doTypeTest();
   }
 
@@ -232,54 +233,58 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testStubsConsistencyFunction() {
-    myFixture.addFileToProject("a.php", "<?php\n" +
-                                        "\n" +
-                                        "/**\n" +
-                                        " * @psalm-return int\n" +
-                                        " */\n" +
-                                        "function f(): string\n" +
-                                        "{\n" +
-                                        "}");
+    myFixture.addFileToProject("a.php", """
+      <?php
+
+      /**
+       * @psalm-return int
+       */
+      function f(): string
+      {
+      }""");
     Function function = PhpIndex.getInstance(getProject()).getFunctionsByFQN("\\f").iterator().next();
     assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), function.getGlobalType());
     doTypeTest();
   }
 
   public void testStubsConsistencyParameter() {
-    myFixture.addFileToProject("a.php", "<?php\n" +
-                                        "\n" +
-                                        "/**\n" +
-                                        " * @psalm-param int $a\n" +
-                                        " */\n" +
-                                        "function f(string $a)\n" +
-                                        "{\n" +
-                                        "}");
+    myFixture.addFileToProject("a.php", """
+      <?php
+
+      /**
+       * @psalm-param int $a
+       */
+      function f(string $a)
+      {
+      }""");
     Parameter param = PhpIndex.getInstance(getProject()).getFunctionsByFQN("\\f").iterator().next().getParameter(0);
     assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), param.getGlobalType());
     doTypeTest();
   }
 
   public void testStubsConsistencyField() {
-    myFixture.addFileToProject("a.php", "<?php\n" +
-                                        "\n" +
-                                        "class A {\n" +
-                                        "    /**\n" +
-                                        "     * @psalm-var int $f\n" +
-                                        "     */\n" +
-                                        "    public string $f;\n" +
-                                        "}");
+    myFixture.addFileToProject("a.php", """
+      <?php
+
+      class A {
+          /**
+           * @psalm-var int $f
+           */
+          public string $f;
+      }""");
     Field field = PhpIndex.getInstance(getProject()).getClassesByFQN("\\A").iterator().next().getOwnFields()[0];
     assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), field.getGlobalType());
     doTypeTest();
   }
 
   public void testStubsConsistencyVariable() {
-    myFixture.addFileToProject("a.php", "<?php\n" +
-                                        "\n" +
-                                        "/**\n" +
-                                        " * @psalm-var int $vvv\n" +
-                                        " */\n" +
-                                        "$vvv ='a';");
+    myFixture.addFileToProject("a.php", """
+      <?php
+
+      /**
+       * @psalm-var int $vvv
+       */
+      $vvv ='a';""");
     Variable variable = PhpIndex.getInstance(getProject()).getVariablesByName("vvv").iterator().next();
     assertEquals(new PhpType().add(PhpType.INT), variable.getGlobalType());
     doTypeTest();
@@ -298,28 +303,32 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testPsalmArrayShapeMultipleFiles() {
-    myFixture.addFileToProject("aa.php", "<?php\n" +
-                                        "/**\n" +
-                                        " * @psalm-return array{age?: Exception, f: int}\n" +
-                                        " */\n" +
-                                        "function f(){}");
-    myFixture.addFileToProject("b.php", "<?php\n" +
-                                        "\n" +
-                                        "function ff() {\n" +
-                                        "    return f();\n" +
-                                        "}");
-    myFixture.addFileToProject("c.php", "<?php\n" +
-                                         "/**\n" +
-                                         " * @psalm-return array<array{age?: Exception, f: int}>\n" +
-                                         " */\n" +
-                                         "function ff1(){}");
-    myFixture.addFileToProject("d.php", "<?php\n" +
-                                        "class AA {\n" +
-                                        "/**\n" +
-                                        " * @psalm-return array{age?: Exception, f: int}\n" +
-                                        " */\n" +
-                                        "function ff1(){}\n" +
-                                        "}");
+    myFixture.addFileToProject("aa.php", """
+      <?php
+      /**
+       * @psalm-return array{age?: Exception, f: int}
+       */
+      function f(){}""");
+    myFixture.addFileToProject("b.php", """
+      <?php
+
+      function ff() {
+          return f();
+      }""");
+    myFixture.addFileToProject("c.php", """
+      <?php
+      /**
+       * @psalm-return array<array{age?: Exception, f: int}>
+       */
+      function ff1(){}""");
+    myFixture.addFileToProject("d.php", """
+      <?php
+      class AA {
+      /**
+       * @psalm-return array{age?: Exception, f: int}
+       */
+      function ff1(){}
+      }""");
 
     doTypeTest(true);
   }
@@ -369,24 +378,25 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testLocalTypeUnwrappingDifferentFile() {
-    addPhpFileToProject("a.php", "<?php" +
-                                 "\n" +
-                                 "class C\n" +
-                                 "{\n" +
-                                 "}\n" +
-                                 "\n" +
-                                 "/**\n" +
-                                 " * @template T\n" +
-                                 " */\n" +
-                                 "class Bar\n" +
-                                 "{\n" +
-                                 "    /**\n" +
-                                 "     * @psalm-return T\n" +
-                                 "     */\n" +
-                                 "    public function doBaz()\n" +
-                                 "    {\n" +
-                                 "    }\n" +
-                                 "}\n");
+    addPhpFileToProject("a.php", """
+      <?php
+      class C
+      {
+      }
+
+      /**
+       * @template T
+       */
+      class Bar
+      {
+          /**
+           * @psalm-return T
+           */
+          public function doBaz()
+          {
+          }
+      }
+      """);
     doTypeTest();
   }
 
@@ -481,17 +491,18 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testTypeAliasGlobal() {
-    myFixture.addFileToProject("aa.php", "<?php\n" +
-                                         "\n" +
-                                         "class Foo {}\n" +
-                                         "class Bar {}\n" +
-                                         "/**\n" +
-                                         " * @psalm-type FooAlias = Foo\n" +
-                                         " * @psalm-type BarAlias = Bar\n" +
-                                         " */\n" +
-                                         "class Phone {\n" +
-                                         "\n" +
-                                         "}");
+    myFixture.addFileToProject("aa.php", """
+      <?php
+
+      class Foo {}
+      class Bar {}
+      /**
+       * @psalm-type FooAlias = Foo
+       * @psalm-type BarAlias = Bar
+       */
+      class Phone {
+
+      }""");
     doTypeTest();
   }
 
@@ -512,40 +523,41 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testGenericYieldDifferentFile() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "/**\n" +
-                                 " * @template-covariant TValue\n" +
-                                 " * @psalm-yield TValue\n" +
-                                 " */\n" +
-                                 "interface Promise\n" +
-                                 "{\n" +
-                                 "    /**\n" +
-                                 "     * @return TValue\n" +
-                                 "     */\n" +
-                                 "    function f();\n" +
-                                 "}\n" +
-                                 "\n" +
-                                 "class Foo{}\n" +
-                                 "\n" +
-                                 "/**\n" +
-                                 " * @return Promise<Foo>\n" +
-                                 " */\n" +
-                                 "function f(){}\n" +
-                                 "class Bar{}\n" +
-                                 "\n" +
-                                 "/**\n" +
-                                 " * @template TKey\n" +
-                                 " * @template TValue\n" +
-                                 " * @psalm-yield TValue\n" +
-                                 " */\n" +
-                                 "class Holder {\n" +
-                                 "}\n" +
-                                 "class Base {\n" +
-                                 "     /**\n" +
-                                 "     * @var Holder<Foo, Bar>\n" +
-                                 "     */\n" +
-                                 "    private $a;\n" +
-                                 "}");
+    addPhpFileToProject("a.php", """
+      <?php
+      /**
+       * @template-covariant TValue
+       * @psalm-yield TValue
+       */
+      interface Promise
+      {
+          /**
+           * @return TValue
+           */
+          function f();
+      }
+
+      class Foo{}
+
+      /**
+       * @return Promise<Foo>
+       */
+      function f(){}
+      class Bar{}
+
+      /**
+       * @template TKey
+       * @template TValue
+       * @psalm-yield TValue
+       */
+      class Holder {
+      }
+      class Base {
+           /**
+           * @var Holder<Foo, Bar>
+           */
+          private $a;
+      }""");
     doTypeTest();
   }
 
@@ -562,44 +574,46 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testGenericPassingParameterDifferentFile() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "/**\n" +
-                                 " * @template T\n" +
-                                 " */\n" +
-                                 "class C1{\n" +
-                                 "    /**\n" +
-                                 "     * @return C2<T>\n" +
-                                 "     */\n" +
-                                 "    public function f(){}\n" +
-                                 "}\n" +
-                                 "/**\n" +
-                                 " * @template T\n" +
-                                 " */\n" +
-                                 "class C2{\n" +
-                                 "    /**\n" +
-                                 "     * @return T\n" +
-                                 "     */\n" +
-                                 "    public function f(){}\n" +
-                                 "\n" +
-                                 "}");
+    addPhpFileToProject("a.php", """
+      <?php
+      /**
+       * @template T
+       */
+      class C1{
+          /**
+           * @return C2<T>
+           */
+          public function f(){}
+      }
+      /**
+       * @template T
+       */
+      class C2{
+          /**
+           * @return T
+           */
+          public function f(){}
+
+      }""");
     doTypeTest();
   }
 
   public void testGenericPassingParameterStaticDifferentFile() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "/**\n" +
-                                 " * @template TValue\n" +
-                                 " */\n" +
-                                 "class C {\n" +
-                                 "    /**\n" +
-                                 "     * @return static<array<TValue>>\n" +
-                                 "     */\n" +
-                                 "    public function crossJoin($lists) { }\n" +
-                                 "    /**\n" +
-                                 "     * @return TValue\n" +
-                                 "     */\n" +
-                                 "    public function first() { }\n" +
-                                 "}");
+    addPhpFileToProject("a.php", """
+      <?php
+      /**
+       * @template TValue
+       */
+      class C {
+          /**
+           * @return static<array<TValue>>
+           */
+          public function crossJoin($lists) { }
+          /**
+           * @return TValue
+           */
+          public function first() { }
+      }""");
     doTypeTest();
   }
 
@@ -612,52 +626,54 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testGenericIterableUnwrapDifferentFile() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "/**\n" +
-                                 " * @template T\n" +
-                                 " */\n" +
-                                 "class C {\n" +
-                                 "    /**\n" +
-                                 "     * @template TValue\n" +
-                                 "     * @param  iterable<TValue>  $param\n" +
-                                 "     * @return TValue\n" +
-                                 "     */\n" +
-                                 "    public function f($param) {\n" +
-                                 "    }\n" +
-                                 "}");
+    addPhpFileToProject("a.php", """
+      <?php
+      /**
+       * @template T
+       */
+      class C {
+          /**
+           * @template TValue
+           * @param  iterable<TValue>  $param
+           * @return TValue
+           */
+          public function f($param) {
+          }
+      }""");
     doTypeTest();
   }
 
   public void testElementTypeOfGenericClassDifferentFile() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "\n" +
-                                 "/**\n" +
-                                 " * @template TKey of array-key\n" +
-                                 " * @template TValue\n" +
-                                 " */\n" +
-                                 "class B {\n" +
-                                 "    /**\n" +
-                                 "     * @return array<TKey, TValue>\n" +
-                                 "     */\n" +
-                                 "    public function all()\n" +
-                                 "    {\n" +
-                                 "\n" +
-                                 "    }\n" +
-                                 "}\n" +
-                                 "\n" +
-                                 "/**\n" +
-                                 " * @template TKey of array-key\n" +
-                                 " * @template TValue\n" +
-                                 " */\n" +
-                                 "class A {\n" +
-                                 "    /**\n" +
-                                 "     * @return B<TKey, TValue>\n" +
-                                 "     */\n" +
-                                 "    public function lazy()\n" +
-                                 "    {\n" +
-                                 "\n" +
-                                 "    }\n" +
-                                 "}");
+    addPhpFileToProject("a.php", """
+      <?php
+
+      /**
+       * @template TKey of array-key
+       * @template TValue
+       */
+      class B {
+          /**
+           * @return array<TKey, TValue>
+           */
+          public function all()
+          {
+
+          }
+      }
+
+      /**
+       * @template TKey of array-key
+       * @template TValue
+       */
+      class A {
+          /**
+           * @return B<TKey, TValue>
+           */
+          public function lazy()
+          {
+
+          }
+      }""");
     doTypeTest();
   }
 
@@ -687,16 +703,17 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testAdvancedCallableMethodRef() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "namespace X;\n" +
-                                 "/**\n" +
-                                 " * @template T\n" +
-                                 " * @template T1\n" +
-                                 " * @param T $a\n" +
-                                 " * @param T1 $a1\n" +
-                                 " * @return AA<T, T1>\n" +
-                                 " */\n" +
-                                 "function collect($a, $a1) {}");
+    addPhpFileToProject("a.php", """
+      <?php
+      namespace X;
+      /**
+       * @template T
+       * @template T1
+       * @param T $a
+       * @param T1 $a1
+       * @return AA<T, T1>
+       */
+      function collect($a, $a1) {}""");
     doTypeTest();
   }
 
@@ -725,11 +742,13 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testParametrisedPolymorphicCallName() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "\n" +
-                                 "class Two {\n" +
-                                 "    public static function getOne(): One {}\n" +
-                                 "}\n");
+    addPhpFileToProject("a.php", """
+      <?php
+
+      class Two {
+          public static function getOne(): One {}
+      }
+      """);
     doTypeTest();
   }
 
