@@ -777,19 +777,20 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   }
 
   public void testMetaFromSuperParameterGlobal() {
-    addPhpFileToProject("a.php", "<?php\n" +
-                                 "/**\n" +
-                                 " * @template T\n" +
-                                 " */\n" +
-                                 "interface I\n" +
-                                 "{\n" +
-                                 "    /**\n" +
-                                 "     * @param A $min\n" +
-                                 "     * @param B $max\n" +
-                                 "     * @return T\n" +
-                                 "     */\n" +
-                                 "    public function rand($min, $max);\n" +
-                                 "}");
+    addPhpFileToProject("a.php", """
+      <?php
+      /**
+       * @template T
+       */
+      interface I
+      {
+          /**
+           * @param A $min
+           * @param B $max
+           * @return T
+           */
+          public function rand($min, $max);
+      }""");
     doTypeTest();
   }
 }
