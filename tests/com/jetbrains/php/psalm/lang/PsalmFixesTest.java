@@ -1,5 +1,6 @@
 package com.jetbrains.php.psalm.lang;
 
+import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.PhpFixesTestCase;
 import com.jetbrains.php.lang.inspections.PhpFullyQualifiedNameUsageInspection;
 import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
@@ -37,5 +38,9 @@ public class PsalmFixesTest extends PhpFixesTestCase {
 
   public void testVarTagWithoutVariableName() {
     doTestQuickFix("Add '$a'", new PhpVarTagWithoutVariableNameInspection());
+  }
+
+  public void testFqnUsageInWildcard() {
+    doTestQuickFix("Remove unnecessary qualifier", new PhpUnnecessaryFullyQualifiedNameInspection());
   }
 }

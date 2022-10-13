@@ -42,7 +42,7 @@ PHP file
             PsiElement(DOC_VARIABLE)('$f')
           PsiWhiteSpace(' ')
           PhpDocTypeImpl: %EMPTY%
-            PhpDocRefImpl: %EMPTY%
+            PhpDocRefImpl: A
               PsiElement(DOC_IDENTIFIER)('A')
               PsiElement(DOC_STATIC)('::')
               PsiElement(DOC_IDENTIFIER)('F')
@@ -58,13 +58,13 @@ PHP file
             PsiElement(DOC_VARIABLE)('$f1')
           PsiWhiteSpace(' ')
           PhpDocTypeImpl: %EMPTY%
-            PhpDocRefImpl: %EMPTY%
+            PhpDocRefImpl: A
               PsiElement(DOC_IDENTIFIER)('A')
               PsiElement(DOC_STATIC)('::')
               PsiElement(DOC_IDENTIFIER)('F')
           PsiElement(DOC_PIPE)('|')
           PhpDocTypeImpl: %EMPTY%
-            PhpDocRefImpl: %EMPTY%
+            PhpDocRefImpl: A
               PsiElement(DOC_IDENTIFIER)('A')
               PsiElement(DOC_STATIC)('::')
               PsiElement(DOC_IDENTIFIER)('B_')
@@ -94,7 +94,7 @@ PHP file
             PsiElement(DOC_VARIABLE)('$param')
           PsiWhiteSpace(' ')
           PhpDocTypeImpl: %EMPTY%
-            PhpDocRefImpl: %EMPTY%
+            PhpDocRefImpl: A
               PsiElement(DOC_IDENTIFIER)('A')
               PsiElement(DOC_STATIC)('::')
               PsiElement(DOC_IDENTIFIER)('F')
@@ -111,7 +111,7 @@ PHP file
             PsiElement(DOC_VARIABLE)('$param')
           PsiWhiteSpace(' ')
           PhpDocTypeImpl: %EMPTY%
-            PhpDocRefImpl: %EMPTY%
+            PhpDocRefImpl: A
               PsiElement(DOC_IDENTIFIER)('A')
               PsiElement(DOC_STATIC)('::')
               PsiElement(DOC_TEXT)('*')
@@ -124,7 +124,7 @@ PHP file
           PsiElement(DOC_TAG_NAME)('@return')
           PsiWhiteSpace(' ')
           PhpDocTypeImpl: %EMPTY%
-            PhpDocRefImpl: %EMPTY%
+            PhpDocRefImpl: A
               PhpNamespaceReferenceImpl
                 PsiElement(DOC_NAMESPACE)('\')
                 PsiElement(DOC_IDENTIFIER)('nsp')
@@ -134,7 +134,7 @@ PHP file
               PsiElement(DOC_IDENTIFIER)('F')
           PsiElement(DOC_PIPE)('|')
           PhpDocTypeImpl: %EMPTY%
-            PhpDocRefImpl: %EMPTY%
+            PhpDocRefImpl: A
               PsiElement(DOC_IDENTIFIER)('A')
               PsiElement(DOC_STATIC)('::')
               PsiElement(DOC_IDENTIFIER)('F')

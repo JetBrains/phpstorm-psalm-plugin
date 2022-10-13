@@ -2,6 +2,7 @@ package com.jetbrains.php.psalm.lang;
 
 import com.jetbrains.php.PhpInspectionTestCase;
 import com.jetbrains.php.lang.inspections.PhpUndefinedClassInspection;
+import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
 import com.jetbrains.php.lang.inspections.controlFlow.PhpUnreachableStatementInspection;
 import com.jetbrains.php.lang.inspections.deadcode.PhpUnusedDeclarationInspection;
 import com.jetbrains.php.lang.inspections.phpdoc.*;
@@ -87,5 +88,9 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
 
   public void testFindWildcardsUsagesForConstants() {
     doUnfairInspectionTest(PhpUnusedDeclarationInspection.class);
+  }
+
+  public void testFindWildcardsClassReferenceUnnecessaryFQN() {
+    doInspectionTest(PhpUnnecessaryFullyQualifiedNameInspection.class);
   }
 }
