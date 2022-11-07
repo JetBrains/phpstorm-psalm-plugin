@@ -1,0 +1,87 @@
+<?php
+
+class ConditionalThis
+{
+    /**
+     * @return (static is int ? int : string)
+     */
+    public function foo(): int|string
+    {
+
+    }
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpClass: ConditionalThis
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('ConditionalThis')
+      PsiWhiteSpace('\n')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiWhiteSpace('\n    ')
+      PhpDocCommentImpl
+        PsiElement(DOC_COMMENT_START)('/**')
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocReturnTagImpl: @return
+          PsiElement(DOC_TAG_NAME)('@return')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: %EMPTY%
+            PsiElement(DOC_LPAREN)('(')
+            PsiElement(DOC_IDENTIFIER)('static')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('is')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('?')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_RPAREN)(')')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_COMMENT_END)('*/')
+      PsiWhiteSpace('\n    ')
+      MethodImpl: foo
+        PhpModifierListImpl: public
+          PsiElement(public keyword)('public')
+        PsiWhiteSpace(' ')
+        PsiElement(function)('function')
+        PsiWhiteSpace(' ')
+        PsiElement(identifier)('foo')
+        PsiElement(()('(')
+        Parameter list
+          <empty list>
+        PsiElement())(')')
+        PsiElement(colon)(':')
+        PsiWhiteSpace(' ')
+        Return type
+          ClassReferenceImpl: int
+            PsiElement(identifier)('int')
+          PsiElement(bit or)('|')
+          ClassReferenceImpl: string
+            PsiElement(identifier)('string')
+        PsiWhiteSpace('\n    ')
+        PsiElement(Group statement)
+          PsiElement({)('{')
+          PsiWhiteSpace('\n\n    ')
+          PsiElement(})('}')
+      PsiWhiteSpace('\n')
+      PsiElement(})('}')
