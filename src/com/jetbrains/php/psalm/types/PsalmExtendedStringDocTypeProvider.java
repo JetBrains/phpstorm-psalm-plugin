@@ -9,17 +9,11 @@ import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
-import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
-import com.jetbrains.php.lang.psi.resolve.types.PhpCharTypeKey;
-import com.jetbrains.php.lang.psi.resolve.types.PhpType;
-import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
+import com.jetbrains.php.lang.psi.resolve.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
   private static final Collection<String> EXTENDED_STRINGS = List.of(
@@ -65,13 +59,8 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
   @Override
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType) {
-      PhpType type = getScalarType((PhpDocType)element);
-      if (!type.isEmpty()) {
-        PsiElement attributes = PhpPsiUtil.getChildOfType(element, PhpDocElementTypes.phpDocAttributeList);
-        PhpPsiElement attributeContent = attributes instanceof PhpPsiElement ? ((PhpPsiElement)attributes).getFirstPsiChild() : null;
-        String attributesText = attributeContent != null ? attributeContent.getText() : null;
-        return type.map(name -> KEY.sign(attributesText != null ? name + "." + attributesText : name));
-      }
+      return getScalarType((PhpDocType)element)
+        .map(name -> KEY.sign(PhpParameterBasedTypeProvider.wrapTypes(Arrays.asList(name, element.getText()))));
     }
     return null;
   }
@@ -92,8 +81,7 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
     String expr = expression.substring(2);
     int dimension = PhpType.getPluralDimension(expression);
     expr = PhpType.unpluralize(expr, dimension);
-    int lastDot = expr.lastIndexOf('.');
-    return new PhpType().add(lastDot > 0 ? expr.substring(0, lastDot) : expr).pluralise(dimension);
+    return new PhpType().add(ContainerUtil.getFirstItem(PhpParameterBasedTypeProvider.extractSignatures(expr, 0))).pluralise(dimension);
   }
 
   @Override
