@@ -2,6 +2,7 @@
 
 /**
  * @return ($size is ($size is positive-int ? int|string : bool) ? ($size is positive-int ? int|string : int) : array)
+ * @return ($size is
  */
 function fillArray(int $size) : int|string|array {
 
@@ -83,6 +84,20 @@ PHP file
           PhpDocTypeImpl: array
             PsiElement(DOC_IDENTIFIER)('array')
           PsiElement(DOC_RPAREN)(')')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocReturnTagImpl: @return
+        PsiElement(DOC_TAG_NAME)('@return')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: is
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocVarImpl: size
+            PsiElement(DOC_VARIABLE)('$size')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('is')
         PhpPsiElementImpl
           <empty list>
       PsiWhiteSpace('\n ')
