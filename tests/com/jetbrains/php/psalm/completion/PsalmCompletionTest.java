@@ -179,4 +179,9 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
+
+  public void testConditionalType() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "int", "string");
+  }
 }
