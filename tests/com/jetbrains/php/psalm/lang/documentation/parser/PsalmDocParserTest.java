@@ -63,4 +63,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$StaticInConditionalType() throws Throwable {
     doTest();
   }
+
+  public void test$TemplateInConditionalType() throws Throwable {
+    doTest();
+  }
 }

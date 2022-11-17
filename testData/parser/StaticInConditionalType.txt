@@ -37,7 +37,8 @@ PHP file
           PsiWhiteSpace(' ')
           PhpDocTypeImpl: %EMPTY%
             PsiElement(DOC_LPAREN)('(')
-            PsiElement(DOC_IDENTIFIER)('static')
+            PhpDocTypeImpl: static
+              PsiElement(DOC_IDENTIFIER)('static')
             PsiWhiteSpace(' ')
             PsiElement(DOC_IDENTIFIER)('is')
             PsiWhiteSpace(' ')

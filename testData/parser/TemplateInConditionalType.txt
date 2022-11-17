@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @template T
+ * @return (T is int ? true : false)
+ */
+public function foo(): bool
+{
+
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiErrorElement:Expecting statement
+      <empty list>
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @template
+        PsiElement(DOC_TAG_NAME)('@template')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('T')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocReturnTagImpl: @return
+        PsiElement(DOC_TAG_NAME)('@return')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_LPAREN)('(')
+          PhpDocTypeImpl: T
+            PsiElement(DOC_IDENTIFIER)('T')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('is')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: int
+            PsiElement(DOC_IDENTIFIER)('int')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_TEXT)('?')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: true
+            PsiElement(DOC_IDENTIFIER)('true')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_TEXT)(':')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: false
+            PsiElement(DOC_IDENTIFIER)('false')
+          PsiElement(DOC_RPAREN)(')')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    PsiElement(public keyword)('public')
+    PsiWhiteSpace(' ')
+    FunctionImpl: foo
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('foo')
+      PsiElement(()('(')
+      Parameter list
+        <empty list>
+      PsiElement())(')')
+      PsiElement(colon)(':')
+      PsiWhiteSpace(' ')
+      Return type
+        ClassReferenceImpl: bool
+          PsiElement(identifier)('bool')
+      PsiWhiteSpace('\n')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiWhiteSpace('\n\n')
+        PsiElement(})('}')
