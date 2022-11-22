@@ -798,4 +798,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
       }""");
     doTypeTest();
   }
+
+  public void testMultipleInheritanceWithExtends() {
+    doTypeTest();
+  }
 }
