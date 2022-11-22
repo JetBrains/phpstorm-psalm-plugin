@@ -2,6 +2,7 @@ package com.jetbrains.php.psalm.completion;
 
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.PhpWorkaroundUtil;
@@ -18,7 +19,7 @@ import java.util.Set;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
-public class PsalmCompletionContributor extends CompletionContributor {
+public class PsalmCompletionContributor extends CompletionContributor implements DumbAware {
 
   public PsalmCompletionContributor() {
     extend(CompletionType.BASIC, psiElement().withParent(PhpDocType.class), new PsalmCustomDocTypeCompletionProvider());
