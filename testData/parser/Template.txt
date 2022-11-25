@@ -4,6 +4,7 @@
  * @template T of F
  * @psalm-template T of F
  * @template T
+ * @template-covariant M of F with Description
  */
 function f() {
 }
@@ -70,6 +71,24 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('T')
         PhpPsiElementImpl
           <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @template-covariant
+        PsiElement(DOC_TAG_NAME)('@template-covariant')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('M')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('of')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: F
+          PsiElement(DOC_IDENTIFIER)('F')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('with')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('Description')
       PsiWhiteSpace('\n ')
       PsiElement(DOC_COMMENT_END)('*/')
     PsiWhiteSpace('\n')

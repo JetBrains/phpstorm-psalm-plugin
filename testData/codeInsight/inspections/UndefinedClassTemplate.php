@@ -1,6 +1,8 @@
 <?php
 /**
  * @template T of <warning descr="Undefined class 'Foo'">Foo</warning>
+ * @template-covariant T as <warning descr="Undefined class 'Foo'">Foo</warning>
+ * @psalm-template-covariant T as <warning descr="Undefined class 'Foo'">Foo</warning>
  * @template T1
  * @template T2
  * @template
