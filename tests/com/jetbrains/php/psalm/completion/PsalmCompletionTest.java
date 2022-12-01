@@ -1,10 +1,9 @@
 package com.jetbrains.php.psalm.completion;
 
+import com.intellij.testFramework.NeedsIndex;
 import com.jetbrains.php.fixtures.PhpCompletionTestCase;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class PsalmCompletionTest extends PhpCompletionTestCase {
 
@@ -70,6 +69,7 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
 
+  @NeedsIndex.Full
   public void testArrayShapeMultipleFiles() {
     myFixture.addFileToProject("aa.php", """
       <?php
@@ -87,6 +87,7 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
 
+  @NeedsIndex.Full
   public void testNoMaterializationForTemplateExtends() {
     addPhpFileToProject("a.php", """
       <?php
@@ -110,6 +111,7 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "f");
   }
 
+  @NeedsIndex.Full
   public void testStaticMemberReferenceDynamicClassFQN() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "sayHello", "$sProperty");
@@ -165,6 +167,7 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "first", "last");
   }
 
+  @NeedsIndex.Full
   public void testExpectedArgumentCompletionFromKeyOf() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "a", "b", "c");
