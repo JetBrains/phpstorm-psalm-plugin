@@ -20,7 +20,7 @@ public class PsalmConfigurable extends QualityToolProjectConfigurableForm implem
   }
 
   @Override
-  protected QualityToolType<PsalmConfiguration> getQualityToolType() {
+  protected @NotNull QualityToolType<PsalmConfiguration> getQualityToolType() {
     return PsalmQualityToolType.INSTANCE;
   }
 }
