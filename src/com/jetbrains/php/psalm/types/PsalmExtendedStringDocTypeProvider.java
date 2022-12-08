@@ -4,16 +4,23 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.lang.PhpLangUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.parser.PhpDocElementTypes;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
-import com.jetbrains.php.lang.psi.resolve.types.*;
+import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
+import com.jetbrains.php.lang.psi.resolve.types.PhpCharTypeKey;
+import com.jetbrains.php.lang.psi.resolve.types.PhpType;
+import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
   private static final Collection<String> EXTENDED_STRINGS = List.of(
@@ -59,14 +66,30 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
   @Override
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType) {
-      return getScalarType((PhpDocType)element)
-        .map(name -> KEY.sign(PhpParameterBasedTypeProvider.wrapTypes(Arrays.asList(name, element.getText()))));
+      String name = StringUtil.toLowerCase(((PhpDocType)element).getName());
+      PhpType type = getScalarType(name);
+      if (name != null && !type.isEmpty()) {
+        PsiElement attributes = PhpPsiUtil.getChildOfType(element, PhpDocElementTypes.phpDocAttributeList);
+        PhpPsiElement attributeContent = attributes instanceof PhpPsiElement ? ((PhpPsiElement)attributes).getFirstPsiChild() : null;
+        String attributesText = getAttributesText(attributeContent);
+        return PhpType.from(KEY.sign(attributesText != null ? PhpType.createParametrizedType(name, attributesText) : name));
+      }
     }
     return null;
   }
 
-  public @NotNull PhpType getScalarType(PhpDocType element) {
-    String name = StringUtil.toLowerCase(element.getName());
+  @Nullable
+  private static String getAttributesText(PhpPsiElement attributeContent) {
+    if (attributeContent instanceof PhpDocType) {
+      String type = ContainerUtil.getOnlyItem(((PhpDocType)attributeContent).getType().getTypesWithParametrisedParts());
+      if (type != null) {
+        return type;
+      }
+    }
+    return attributeContent != null ? attributeContent.getText() : null;
+  }
+
+  @NotNull private static PhpType getScalarType(String name) {
     if (ALTERNATIVE_SCALAR_TYPES.containsKey(name)) {
       return ALTERNATIVE_SCALAR_TYPES.get(name);
     }
@@ -78,10 +101,10 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
 
   @Override
   public @Nullable PhpType complete(String expression, Project project) {
-    String expr = expression.substring(2);
+    String expr = PhpLangUtil.toPresentableFQN(expression.substring(2));
     int dimension = PhpType.getPluralDimension(expression);
     expr = PhpType.unpluralize(expr, dimension);
-    return new PhpType().add(ContainerUtil.getFirstItem(PhpParameterBasedTypeProvider.extractSignatures(expr, 0))).pluralise(dimension);
+    return getScalarType(PhpType.removeParametrisedType(expr)).pluralise(dimension);
   }
 
   @Override

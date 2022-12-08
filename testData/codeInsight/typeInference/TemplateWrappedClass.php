@@ -42,4 +42,5 @@ final class Identifiers
     }
 }
 
+<type value="\F\Offer">Identifiers::fromStatic(Offer::class)->getF()</type>;
 <type value="\F\Offer">Identifiers::fromInstance(new Offer)->getF()</type>;
