@@ -6,6 +6,7 @@
  * @psalm-param int<-123, 123>|int $b
  * @psalm-param int<-123, 123>[] $b
  * @psalm-param int|int<-123, 123> $b
+ * @psalm-param array{file: int<-23,2>} $b
  */
 function f($a, $b){}
 
@@ -119,6 +120,33 @@ PHP file
             PsiWhiteSpace(' ')
             PsiElement(DOC_TEXT)('123')
             PsiElement(DOC_RAB)('>')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: b
+          PsiElement(DOC_VARIABLE)('$b')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @psalm-param
+        PsiElement(DOC_TAG_NAME)('@psalm-param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('file')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+              PhpPsiElementImpl
+                PsiElement(DOC_LAB)('<')
+                PsiElement(DOC_IDENTIFIER)('-23')
+                PsiElement(DOC_COMMA)(',')
+                PsiElement(DOC_IDENTIFIER)('2')
+                PsiElement(DOC_RAB)('>')
+            PsiElement(DOC_RBRACE)('}')
         PsiWhiteSpace(' ')
         PhpDocVarImpl: b
           PsiElement(DOC_VARIABLE)('$b')
