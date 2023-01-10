@@ -4,8 +4,9 @@ class Cart {
      * @psalm-param $param Cart|mixed cart to copy
      * @psalm-param param Cart|mixed cart to copy
      * @psalm-param list<string> $param
+     * @psalm-param-out string $s
      */
-    function copy($param) {
+    function copy($param, &$s) {
         echo $param;
     }
 }
@@ -87,6 +88,19 @@ PHP file
           PhpPsiElementImpl
             <empty list>
         PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocParamTagImpl: @psalm-param-out
+          PsiElement(DOC_TAG_NAME)('@psalm-param-out')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: string
+            PsiElement(DOC_IDENTIFIER)('string')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: s
+            PsiElement(DOC_VARIABLE)('$s')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
         PsiElement(DOC_COMMENT_END)('*/')
       PsiWhiteSpace('\n    ')
       MethodImpl: copy
@@ -99,6 +113,11 @@ PHP file
         Parameter list
           ParameterImpl: param
             PsiElement(variable)('$param')
+          PsiElement(comma)(',')
+          PsiWhiteSpace(' ')
+          ParameterImpl: s
+            PsiElement(bit and)('&')
+            PsiElement(variable)('$s')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         PsiElement(Group statement)
