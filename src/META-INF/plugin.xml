@@ -80,6 +80,8 @@
     <docTagParserExtension tagName="extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="psalm-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="template-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
+    <docTagParserExtension tagName="psalm-template-use" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
+    <docTagParserExtension tagName="template-use" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="psalm-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="psalm-template" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTemplateParser" />
