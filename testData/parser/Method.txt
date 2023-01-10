@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @psalm-property-read int $a
+ * @psalm-property int $b
+ * @psalm-property-write int $c
+ * @psalm-method f()
+ */
+class F {
+
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocPropertyTagImpl: @psalm-property-read
+        PsiElement(DOC_TAG_NAME)('@psalm-property-read')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiWhiteSpace(' ')
+        PhpDocPropertyImpl: a
+          PsiElement(DOC_VARIABLE)('$a')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocPropertyTagImpl: @psalm-property
+        PsiElement(DOC_TAG_NAME)('@psalm-property')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiWhiteSpace(' ')
+        PhpDocPropertyImpl: b
+          PsiElement(DOC_VARIABLE)('$b')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocPropertyTagImpl: @psalm-property-write
+        PsiElement(DOC_TAG_NAME)('@psalm-property-write')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiWhiteSpace(' ')
+        PhpDocPropertyImpl: c
+          PsiElement(DOC_VARIABLE)('$c')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocMethodTagImpl: psalm-method
+        PsiElement(error silence)('@')
+        PsiElement(identifier)('psalm-method')
+        PsiWhiteSpace(' ')
+        PhpDocMethodImpl: f
+          PsiElement(identifier)('f')
+          PsiElement(()('(')
+          Parameter list
+            <empty list>
+          PsiElement())(')')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    PhpClass: F
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('F')
+      PsiWhiteSpace(' ')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiWhiteSpace('\n\n')
+      PsiElement(})('}')
