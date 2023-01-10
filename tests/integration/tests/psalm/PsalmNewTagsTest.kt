@@ -1,4 +1,4 @@
-package integtation.tests.psalm
+package integration.tests.psalm
 
 import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.util.io.FileUtil
@@ -35,7 +35,15 @@ class PsalmNewTagsTest : PhpCodeInsightFixtureTestCase() {
   }
 
   override fun tearDown() {
-    FileUtil.deleteRecursively(psalmFolder.toPath())
+    try {
+      FileUtil.deleteRecursively(psalmFolder.toPath())
+    }
+    catch (e: Throwable) {
+      addSuppressedException(e)
+    }
+    finally {
+      super.tearDown()
+    }
   }
 
   fun testNewTags() {
