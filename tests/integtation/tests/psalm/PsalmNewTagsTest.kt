@@ -46,7 +46,7 @@ class PsalmNewTagsTest : PhpCodeInsightFixtureTestCase() {
     (annotationConstant.defaultValue as ArrayCreationExpressionImpl).values().forEach {
       annotations.add(it.text)
     }
-    val tagsFile = FileUtil.createTempFile("psalm-tags.txt", "null")
+    val tagsFile = FileUtil.createTempFile("psalm-tags.txt", "")
     tagsFile.writeText(annotations.joinToString("\n"))
     println("##teamcity[publishArtifacts '${tagsFile.absolutePath}']")
   }
