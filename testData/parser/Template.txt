@@ -5,6 +5,8 @@
  * @psalm-template T of F
  * @template T
  * @template-covariant M of F with Description
+ * @psalm-template-use MyClass<T>
+ * @template-use MyClass<T>
  * @psalm-template-contravariant L
  */
 function f() {
@@ -90,6 +92,36 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('with')
           PsiWhiteSpace(' ')
           PsiElement(DOC_IDENTIFIER)('Description')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @psalm-template-use
+        PsiElement(DOC_TAG_NAME)('@psalm-template-use')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: MyClass
+          PsiElement(DOC_IDENTIFIER)('MyClass')
+          PhpPsiElementImpl
+            PsiElement(DOC_LAB)('<')
+            PhpDocTypeImpl: T
+              PsiElement(DOC_IDENTIFIER)('T')
+            PsiElement(DOC_RAB)('>')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @template-use
+        PsiElement(DOC_TAG_NAME)('@template-use')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: MyClass
+          PsiElement(DOC_IDENTIFIER)('MyClass')
+          PhpPsiElementImpl
+            PsiElement(DOC_LAB)('<')
+            PhpDocTypeImpl: T
+              PsiElement(DOC_IDENTIFIER)('T')
+            PsiElement(DOC_RAB)('>')
+        PhpPsiElementImpl
+          <empty list>
       PsiWhiteSpace('\n ')
       PsiElement(DOC_LEADING_ASTERISK)('*')
       PsiWhiteSpace(' ')
