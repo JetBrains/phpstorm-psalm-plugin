@@ -46,6 +46,6 @@ public class PsalmConstantReferenceWildcardIndex extends PhpFlatCollectionIndexB
 
   @Override
   public boolean dependsOnFileContent() {
-    return true;
+    return super.dependsOnFileContent();
   }
 }
