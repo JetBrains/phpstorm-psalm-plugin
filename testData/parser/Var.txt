@@ -4,6 +4,7 @@ class Cart {
      * @psalm-var $param Cart|mixed cart to copy
      * @psalm-var param Cart|mixed cart to copy
      * @psalm-var list<string> $param
+     * @psalm-scope-this Exception
      */
    private $param;
 }
@@ -82,6 +83,16 @@ PHP file
           PsiWhiteSpace(' ')
           PhpDocVarImpl: param
             PsiElement(DOC_VARIABLE)('$param')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n     ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-scope-this
+          PsiElement(DOC_TAG_NAME)('@psalm-scope-this')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: Exception
+            PsiElement(DOC_IDENTIFIER)('Exception')
           PhpPsiElementImpl
             <empty list>
         PsiWhiteSpace('\n     ')
