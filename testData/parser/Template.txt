@@ -5,6 +5,7 @@
  * @psalm-template T of F
  * @template T
  * @template-covariant M of F with Description
+ * @psalm-template-contravariant L
  */
 function f() {
 }
@@ -89,6 +90,16 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('with')
           PsiWhiteSpace(' ')
           PsiElement(DOC_IDENTIFIER)('Description')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @psalm-template-contravar...
+        PsiElement(DOC_TAG_NAME)('@psalm-template-contravariant')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('L')
+        PhpPsiElementImpl
+          <empty list>
       PsiWhiteSpace('\n ')
       PsiElement(DOC_COMMENT_END)('*/')
     PsiWhiteSpace('\n')
