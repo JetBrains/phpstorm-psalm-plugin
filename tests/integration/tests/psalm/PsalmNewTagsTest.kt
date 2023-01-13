@@ -36,18 +36,6 @@ class PsalmNewTagsTest : PhpCodeInsightFixtureTestCase() {
     downloadAndUnpackZip(zipUrl, psalmFolder)
   }
 
-  override fun tearDown() {
-    try {
-      FileUtil.deleteRecursively(psalmFolder.toPath())
-    }
-    catch (e: Throwable) {
-      addSuppressedException(e)
-    }
-    finally {
-      super.tearDown()
-    }
-  }
-
   fun testNewTags() {
     myFixture.copyFileToProject("psalm-master/src/Psalm/DocComment.php")
     val classWithAnnotations = PhpIndex.getInstance(project).getClassesByFQN("Psalm\\DocComment").first()
@@ -57,7 +45,7 @@ class PsalmNewTagsTest : PhpCodeInsightFixtureTestCase() {
       annotations.add(it.text)
     }
     val resultFileName = "psalm-tags.txt"
-    val resultFile = FileUtil.createTempFile(resultFileName, "")
+    val resultFile = (psalmFolder.toPath() / resultFileName).toFile()
     resultFile.writeText(annotations.joinToString("\n"))
     println("##teamcity[publishArtifacts '${resultFile.absolutePath}']")
     val pathToPreviousResults = (psalmFolder.toPath() / "previousResults" / resultFileName).toFile()
