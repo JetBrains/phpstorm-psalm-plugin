@@ -74,6 +74,8 @@
     <docTagParserExtension tagName="psalm-throws" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocThrowsParser" />
     <docTagParserExtension tagName="psalm-trace" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTraceTagParser" />
     <docTagParserExtension tagName="psalm-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTypeTagParser" />
+    <docTagParserExtension tagName="psalm-check-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTypeTagParser" />
+    <docTagParserExtension tagName="psalm-check-type-exact" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTypeTagParser" />
     <docTagParserExtension tagName="psalm-import-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocImportTypeTagParser" />
     <docTagParserExtension tagName="psalm-var" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocVarTagParser" />
     <docTagParserExtension tagName="template-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
