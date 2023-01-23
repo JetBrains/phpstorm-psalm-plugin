@@ -71,4 +71,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$MultilineConditionalType() throws Throwable {
     doTest();
   }
+
+  public void test$LiteralType() throws Throwable {
+    doTest();
+  }
 }

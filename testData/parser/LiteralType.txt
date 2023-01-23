@@ -1,0 +1,52 @@
+<?php
+
+/** @var 'one'|''|' '|bb $param */
+function foo($param) {}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @var
+        PsiElement(DOC_TAG_NAME)('@var')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_TEXT)(''')
+          PsiElement(DOC_TEXT)('one')
+          PsiElement(DOC_TEXT)(''')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_TEXT)('''')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_TEXT)(''')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_TEXT)(''')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: bb
+          PsiElement(DOC_IDENTIFIER)('bb')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: param
+          PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace(' ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: foo
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('foo')
+      PsiElement(()('(')
+      Parameter list
+        ParameterImpl: param
+          PsiElement(variable)('$param')
+      PsiElement())(')')
+      PsiWhiteSpace(' ')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiElement(})('}')

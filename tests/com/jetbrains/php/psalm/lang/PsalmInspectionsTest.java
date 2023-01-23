@@ -93,4 +93,12 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
   public void testFindWildcardsClassReferenceUnnecessaryFQN() {
     doInspectionTest(PhpUnnecessaryFullyQualifiedNameInspection.class);
   }
+
+  public void testLiteralTypeDuplicate() {
+    doInspectionTest(PhpDocDuplicateTypeInspection.class);
+  }
+
+  public void testLiteralTypeUnresolvedClass() {
+    doInspectionTest(PhpUndefinedClassInspection.class);
+  }
 }
