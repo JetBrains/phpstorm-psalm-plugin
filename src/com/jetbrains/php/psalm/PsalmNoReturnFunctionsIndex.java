@@ -82,8 +82,7 @@ public class PsalmNoReturnFunctionsIndex extends FileBasedIndexExtension<String,
     Ref<Boolean> res = new Ref<>(false);
     PhpDocUtil.processTagElementsByNames(comment, tag -> {
       PhpDocType docType = PhpPsiUtil.getChildByCondition(tag, PhpDocType.INSTANCEOF);
-      res.set(docType != null && PsalmExtendedStringDocTypeProvider.NO_RETURN_TYPES.containsKey(docType.getText()));
-      return !res.get();
+      res.set(res.get() || docType != null && PsalmExtendedStringDocTypeProvider.NO_RETURN_TYPES.containsKey(docType.getText()));
     }, PhpDocUtil.RETURN_TAG, PsalmDocTagTypeProvider.RETURN);
     return res.get();
   }
