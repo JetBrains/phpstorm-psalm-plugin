@@ -79,4 +79,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$QuotedKeysMultiple() throws Throwable {
     doTest();
   }
+
+  public void test$QuotedKeysNullable() throws Throwable {
+    doTest();
+  }
 }
