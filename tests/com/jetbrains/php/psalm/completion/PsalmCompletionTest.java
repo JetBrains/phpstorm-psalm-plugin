@@ -122,6 +122,11 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "a", "b","c","d","f","g");
   }
 
+  public void testArrayShapeQuotedKeysMultiple() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "first", "second");
+  }
+
   public void testPsalmTraceTagCompletion() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "psalm-trace");

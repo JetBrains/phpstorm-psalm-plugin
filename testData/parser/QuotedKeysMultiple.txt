@@ -1,0 +1,58 @@
+<?php
+/**
+ * @param array{'first'|'second': string} $param
+*/
+function foo(array $param){}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_TEXT)(''')
+            PsiElement(DOC_IDENTIFIER)('first')
+            PsiElement(DOC_TEXT)(''')
+            PsiElement(DOC_PIPE)('|')
+            PsiElement(DOC_TEXT)(''')
+            PsiElement(DOC_IDENTIFIER)('second')
+            PsiElement(DOC_TEXT)('':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_RBRACE)('}')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: param
+          PsiElement(DOC_VARIABLE)('$param')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: foo
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('foo')
+      PsiElement(()('(')
+      Parameter list
+        ParameterImpl: param
+          Parameter type
+            ClassReferenceImpl: array
+              PsiElement(array)('array')
+          PsiWhiteSpace(' ')
+          PsiElement(variable)('$param')
+      PsiElement())(')')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiElement(})('}')
