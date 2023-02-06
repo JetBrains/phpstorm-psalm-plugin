@@ -94,7 +94,7 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
       }
       else {
         myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
-        mySeverity = attributes.getValue(SEVERITY_ATTR) == "error" ? ERROR : WARNING;
+        mySeverity = attributes.getValue(SEVERITY_ATTR).equals("error") ? ERROR : WARNING;
         myMessageBuf.append(attributes.getValue(MESSAGE_ATTR));
         myColumn = parseLineNumber(attributes.getValue(COLUMN_NUMBER_ATTR));
       }
