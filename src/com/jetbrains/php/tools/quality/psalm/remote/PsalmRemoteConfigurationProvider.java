@@ -44,8 +44,7 @@ public class PsalmRemoteConfigurationProvider extends PsalmConfigurationProvider
   @Override
   public QualityToolConfigurableForm<PsalmRemoteConfiguration> createConfigurationForm(@NotNull Project project,
                                                                                             @NotNull PsalmConfiguration settings) {
-    if (settings instanceof PsalmRemoteConfiguration) {
-      final PsalmRemoteConfiguration remoteConfiguration = (PsalmRemoteConfiguration)settings;
+    if (settings instanceof PsalmRemoteConfiguration remoteConfiguration) {
       final PsalmConfigurableForm<PsalmRemoteConfiguration> delegate =
         new PsalmConfigurableForm<>(project, remoteConfiguration);
       return new QualityToolByInterpreterConfigurableForm<>(project, remoteConfiguration, delegate) {
