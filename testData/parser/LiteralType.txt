@@ -1,6 +1,7 @@
 <?php
 
 /** @var 'one'|''|' '|bb $param */
+/** @var "one"|""|" ""|bb $param */
 function foo($param) {}
 
 ---
@@ -34,6 +35,29 @@ PHP file
           PsiElement(DOC_VARIABLE)('$param')
         PhpPsiElementImpl
           <empty list>
+      PsiWhiteSpace(' ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @var
+        PsiElement(DOC_TAG_NAME)('@var')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_STRING)('"one"')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_STRING)('""')
+        PsiElement(DOC_PIPE)('|')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_STRING)('" "')
+        PhpPsiElementImpl
+          PsiElement(DOC_STRING)('"')
+          PsiElement(DOC_PIPE)('|')
+          PsiElement(DOC_IDENTIFIER)('bb')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_VARIABLE)('$param')
       PsiWhiteSpace(' ')
       PsiElement(DOC_COMMENT_END)('*/')
     PsiWhiteSpace('\n')
