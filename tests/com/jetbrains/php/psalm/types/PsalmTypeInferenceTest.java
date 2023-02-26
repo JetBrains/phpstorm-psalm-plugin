@@ -806,4 +806,16 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testLiteralType() {
     doTypeTest();
   }
+
+  public void testNegativeInt() {
+    doTypeTest();
+  }
+
+  public void testNonNegativeInt() {
+    doTypeTest();
+  }
+
+  public void testNonPositiveInt() {
+    doTypeTest();
+  }
 }

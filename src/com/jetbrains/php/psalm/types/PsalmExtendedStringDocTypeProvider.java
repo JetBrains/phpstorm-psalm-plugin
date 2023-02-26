@@ -40,17 +40,24 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
     ,"no-return", PhpType.VOID
   );
 
-  private static final Map<String, PhpType> ALTERNATIVE_SCALAR_TYPES = ContainerUtil.union(
+  public static final Map<String, PhpType> INT_ALIASES = Map.of(
+    "positive-int", PhpType.INT
+    ,"non-positive-int", PhpType.INT
+    ,"negative-int", PhpType.INT
+    ,"non-negative-int", PhpType.INT
+  );
+
+  private static final Map<String, PhpType> ALTERNATIVE_SCALAR_TYPES = ContainerUtil.union(ContainerUtil.union(
     Map.of(
       "scalar", PhpType.SCALAR
       ,"numeric", NUMERIC_TYPE
       ,"array-key", PhpType.NUMERIC
       ,"empty", PhpType.MIXED
-      ,"positive-int", PhpType.INT
       ,"closed-resource", PhpType.RESOURCE
       ,"int-mask-of", PhpType.INT
       ,"int-mask", PhpType.INT
     ),
+    INT_ALIASES),
     NO_RETURN_TYPES
   );
 
