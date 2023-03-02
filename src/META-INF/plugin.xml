@@ -90,6 +90,12 @@
     <docTagParserExtension tagName="psalm-template-covariant" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTemplateParser" />
     <docTagParserExtension tagName="psalm-template-contravariant" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTemplateParser" />
     <docTagParserExtension tagName="psalm-param-out" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
+    <docTagParserExtension tagName="psalm-assert" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocAssertTagParser" />
+    <docTagParserExtension tagName="psalm-assert-if-true" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocAssertTagParser" />
+    <docTagParserExtension tagName="psalm-assert-if-false" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocAssertTagParser" />
+    <docTagParserExtension tagName="psalm-if-this-is" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
+    <docTagParserExtension tagName="psalm-this-out" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
+    <docTagParserExtension tagName="psalm-self-out" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="psalm-require-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="psalm-require-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <docTagParserExtension tagName="psalm-scope-this" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
