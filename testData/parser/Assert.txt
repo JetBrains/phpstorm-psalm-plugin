@@ -1,0 +1,235 @@
+<?php
+
+/**
+ * @psalm-assert string[] $arr
+ * @psalm-assert-if-false B $a
+ * @psalm-assert-if-true A $b
+ */
+function a(array $arr, array $arg) : void {
+
+}
+
+class a {
+  /**
+   * @psalm-if-this-is a<int>
+   * @psalm-assert-if-false int $this->test()
+   * @psalm-assert-if-true null $this->b
+   * @psalm-assert-if-true null $c->foo()
+    * @template NewT
+    * @psalm-this-out self<NewT>
+    * @psalm-self-out self<NewT>
+   */
+  public function test(): void {
+
+  }
+}
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @psalm-assert
+        PsiElement(DOC_TAG_NAME)('@psalm-assert')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: string
+          PsiElement(DOC_IDENTIFIER)('string')
+          PsiElement(DOC_LBRACKET)('[')
+          PsiElement(DOC_RBRACKET)(']')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: arr
+          PsiElement(DOC_VARIABLE)('$arr')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @psalm-assert-if-false
+        PsiElement(DOC_TAG_NAME)('@psalm-assert-if-false')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: B
+          PsiElement(DOC_IDENTIFIER)('B')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: a
+          PsiElement(DOC_VARIABLE)('$a')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @psalm-assert-if-true
+        PsiElement(DOC_TAG_NAME)('@psalm-assert-if-true')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: A
+          PsiElement(DOC_IDENTIFIER)('A')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: b
+          PsiElement(DOC_VARIABLE)('$b')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: a
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+      PsiElement(()('(')
+      Parameter list
+        ParameterImpl: arr
+          Parameter type
+            ClassReferenceImpl: array
+              PsiElement(array)('array')
+          PsiWhiteSpace(' ')
+          PsiElement(variable)('$arr')
+        PsiElement(comma)(',')
+        PsiWhiteSpace(' ')
+        ParameterImpl: arg
+          Parameter type
+            ClassReferenceImpl: array
+              PsiElement(array)('array')
+          PsiWhiteSpace(' ')
+          PsiElement(variable)('$arg')
+      PsiElement())(')')
+      PsiWhiteSpace(' ')
+      PsiElement(colon)(':')
+      PsiWhiteSpace(' ')
+      Return type
+        ClassReferenceImpl: void
+          PsiElement(identifier)('void')
+      PsiWhiteSpace(' ')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiWhiteSpace('\n\n')
+        PsiElement(})('}')
+    PsiWhiteSpace('\n\n')
+    PhpClass: a
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+      PsiWhiteSpace(' ')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiWhiteSpace('\n  ')
+      PhpDocCommentImpl
+        PsiElement(DOC_COMMENT_START)('/**')
+        PsiWhiteSpace('\n   ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-if-this-is
+          PsiElement(DOC_TAG_NAME)('@psalm-if-this-is')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: a
+            PsiElement(DOC_IDENTIFIER)('a')
+            PhpPsiElementImpl
+              PsiElement(DOC_LAB)('<')
+              PhpDocTypeImpl: int
+                PsiElement(DOC_IDENTIFIER)('int')
+              PsiElement(DOC_RAB)('>')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n   ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-assert-if-false
+          PsiElement(DOC_TAG_NAME)('@psalm-assert-if-false')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: int
+            PsiElement(DOC_IDENTIFIER)('int')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: this
+            PsiElement(DOC_VARIABLE)('$this')
+          PsiElement(DOC_ARROW)('->')
+          PhpDocRefImpl: test
+            PsiElement(DOC_IDENTIFIER)('test')
+            PsiElement(DOC_LPAREN)('(')
+            PsiElement(DOC_RPAREN)(')')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n   ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-assert-if-true
+          PsiElement(DOC_TAG_NAME)('@psalm-assert-if-true')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: null
+            PsiElement(DOC_IDENTIFIER)('null')
+          PsiWhiteSpace(' ')
+          PhpDocVarImpl: this
+            PsiElement(DOC_VARIABLE)('$this')
+          PsiElement(DOC_ARROW)('->')
+          PhpPsiElementImpl
+            PsiElement(DOC_IDENTIFIER)('b')
+        PsiWhiteSpace('\n    ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @template
+          PsiElement(DOC_TAG_NAME)('@template')
+          PsiWhiteSpace(' ')
+          PhpPsiElementImpl
+            PsiElement(DOC_IDENTIFIER)('NewT')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n    ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-this-out
+          PsiElement(DOC_TAG_NAME)('@psalm-this-out')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: self
+            PsiElement(DOC_IDENTIFIER)('self')
+            PhpPsiElementImpl
+              PsiElement(DOC_LAB)('<')
+              PhpDocTypeImpl: NewT
+                PsiElement(DOC_IDENTIFIER)('NewT')
+              PsiElement(DOC_RAB)('>')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n    ')
+        PsiElement(DOC_LEADING_ASTERISK)('*')
+        PsiWhiteSpace(' ')
+        PhpDocTagImpl: @psalm-self-out
+          PsiElement(DOC_TAG_NAME)('@psalm-self-out')
+          PsiWhiteSpace(' ')
+          PhpDocTypeImpl: self
+            PsiElement(DOC_IDENTIFIER)('self')
+            PhpPsiElementImpl
+              PsiElement(DOC_LAB)('<')
+              PhpDocTypeImpl: NewT
+                PsiElement(DOC_IDENTIFIER)('NewT')
+              PsiElement(DOC_RAB)('>')
+          PhpPsiElementImpl
+            <empty list>
+        PsiWhiteSpace('\n   ')
+        PsiElement(DOC_COMMENT_END)('*/')
+      PsiWhiteSpace('\n  ')
+      MethodImpl: test
+        PhpModifierListImpl: public
+          PsiElement(public keyword)('public')
+        PsiWhiteSpace(' ')
+        PsiElement(function)('function')
+        PsiWhiteSpace(' ')
+        PsiElement(identifier)('test')
+        PsiElement(()('(')
+        Parameter list
+          <empty list>
+        PsiElement())(')')
+        PsiElement(colon)(':')
+        PsiWhiteSpace(' ')
+        Return type
+          ClassReferenceImpl: void
+            PsiElement(identifier)('void')
+        PsiWhiteSpace(' ')
+        PsiElement(Group statement)
+          PsiElement({)('{')
+          PsiWhiteSpace('\n\n  ')
+          PsiElement(})('}')
+      PsiWhiteSpace('\n')
+      PsiElement(})('}')
