@@ -95,4 +95,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$Type() throws Throwable {
     doTest();
   }
+
+  public void test$Taint() throws Throwable {
+    doTest();
+  }
 }
