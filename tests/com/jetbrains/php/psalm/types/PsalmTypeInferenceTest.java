@@ -806,4 +806,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testLiteralType() {
     doTypeTest();
   }
+
+  public void testGenericClassStringParameterWithSuperTypeForT() {
+    doTypeTest();
+  }
 }

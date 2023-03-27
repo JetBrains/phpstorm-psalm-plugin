@@ -14,6 +14,7 @@ import com.jetbrains.php.lang.psi.resolve.types.PhpCharBasedTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpCharTypeKey;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
+import com.jetbrains.php.lang.psi.resolve.types.generics.PhpGenericsExtendedTypeProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -81,7 +82,12 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
   @Nullable
   private static String getAttributesText(PhpPsiElement attributeContent) {
     if (attributeContent instanceof PhpDocType) {
-      String type = ContainerUtil.getOnlyItem(((PhpDocType)attributeContent).getType().getTypesWithParametrisedParts());
+      Set<String> parts = ((PhpDocType)attributeContent).getType().getTypesWithParametrisedParts();
+      if (parts.size() == 1) {
+        return ContainerUtil.getFirstItem(parts);
+      }
+
+      String type = ContainerUtil.find(parts, t -> PhpGenericsExtendedTypeProvider.KEY.signed(t));
       if (type != null) {
         return type;
       }
