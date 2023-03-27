@@ -818,4 +818,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testNonPositiveInt() {
     doTypeTest();
   }
+
+  public void testGenericClassStringParameterWithSuperTypeForT() {
+    doTypeTest();
+  }
 }
