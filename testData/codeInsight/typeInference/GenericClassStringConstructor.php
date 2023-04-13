@@ -27,4 +27,4 @@ class ModelRepo
 }
 
 $user = (new ModelRepo(User::class))->get();
-<type value="null|mixed|User">$user</type>
+<type value="null|User">$user</type>
