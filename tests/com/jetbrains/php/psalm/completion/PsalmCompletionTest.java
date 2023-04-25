@@ -242,4 +242,47 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
       assertEquals("Wrong completion item for '" + name + "'", expectedString, actualString);
     }
   }
+
+  public void testObjectShapeDocParam() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "foo");
+  }
+
+  public void testObjectShapeDocProperty() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "foo");
+  }
+
+  public void testObjectShapeField() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "foo");
+  }
+
+  public void testObjectShapeFunction() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "baz");
+  }
+
+  public void testObjectShapeVariable() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
+  }
+
+  @NeedsIndex.Full
+  public void testObjectShapeMultipleFiles() {
+    addPhpFileToProject("a.php", """
+      <?php
+      
+      /** @psalm-return object{ foo: Foo, bar: object{ baz: string }} */
+      function f() {
+      
+      }""");
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "foo", "bar");
+  }
+
+  public void testObjectShapePhysicalField() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name");
+  }
 }
