@@ -8,19 +8,17 @@ import org.jetbrains.annotations.PropertyKey;
 
 import java.util.function.Supplier;
 
-public final class PsalmBundle extends DynamicBundle {
-  @NonNls public static final String BUNDLE = "messages.PsalmBundle";
-  private static final PsalmBundle INSTANCE = new PsalmBundle();
+public final class PsalmBundle {
+  public static final @NonNls String BUNDLE = "messages.PsalmBundle";
+  private static final DynamicBundle INSTANCE = new DynamicBundle(PsalmBundle.class, BUNDLE);
 
-  private PsalmBundle() { super(BUNDLE); }
+  private PsalmBundle() {}
 
-  @NotNull
-  public static @Nls String message(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object @NotNull ... params) {
+  public static @NotNull @Nls String message(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object @NotNull ... params) {
     return INSTANCE.getMessage(key, params);
   }
 
-  @NotNull
-  public static Supplier<@Nls String> messagePointer(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object @NotNull ... params) {
+  public static @NotNull Supplier<@Nls String> messagePointer(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object @NotNull ... params) {
     return INSTANCE.getLazyMessage(key, params);
   }
 }
