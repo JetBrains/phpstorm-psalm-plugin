@@ -830,4 +830,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericClassStringConstructor() {
     doTypeTest();
   }
+
+  public void testGenericClassStringConstructorWithPromotedProperty() {
+    doTypeTest();
+  }
+
+  public void testGenericClassStringConstructorWithPromotedPropertyWithParamTag() {
+    doTypeTest();
+  }
 }
