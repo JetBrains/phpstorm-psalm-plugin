@@ -25,7 +25,7 @@ PHP file
       PhpDocTagImpl: @template
         PsiElement(DOC_TAG_NAME)('@template')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: T
           PsiElement(DOC_IDENTIFIER)('T')
           PsiWhiteSpace(' ')
           PsiElement(DOC_IDENTIFIER)('as')
@@ -40,7 +40,7 @@ PHP file
       PhpDocTagImpl: @template
         PsiElement(DOC_TAG_NAME)('@template')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: T
           PsiElement(DOC_IDENTIFIER)('T')
           PsiWhiteSpace(' ')
           PsiElement(DOC_IDENTIFIER)('of')
@@ -55,7 +55,7 @@ PHP file
       PhpDocTagImpl: @psalm-template
         PsiElement(DOC_TAG_NAME)('@psalm-template')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: T
           PsiElement(DOC_IDENTIFIER)('T')
           PsiWhiteSpace(' ')
           PsiElement(DOC_IDENTIFIER)('of')
@@ -70,7 +70,7 @@ PHP file
       PhpDocTagImpl: @template
         PsiElement(DOC_TAG_NAME)('@template')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: T
           PsiElement(DOC_IDENTIFIER)('T')
         PhpPsiElementImpl
           <empty list>
@@ -80,7 +80,7 @@ PHP file
       PhpDocTagImpl: @template-covariant
         PsiElement(DOC_TAG_NAME)('@template-covariant')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: M
           PsiElement(DOC_IDENTIFIER)('M')
           PsiWhiteSpace(' ')
           PsiElement(DOC_IDENTIFIER)('of')
@@ -128,7 +128,7 @@ PHP file
       PhpDocTagImpl: @psalm-template-contravar...
         PsiElement(DOC_TAG_NAME)('@psalm-template-contravariant')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: L
           PsiElement(DOC_IDENTIFIER)('L')
         PhpPsiElementImpl
           <empty list>

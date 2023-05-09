@@ -24,7 +24,7 @@ PHP file
       PhpDocTagImpl: @template
         PsiElement(DOC_TAG_NAME)('@template')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: T
           PsiElement(DOC_IDENTIFIER)('T')
         PhpPsiElementImpl
           <empty list>
