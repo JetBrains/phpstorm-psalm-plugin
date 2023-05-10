@@ -51,4 +51,8 @@ public class PsalmDocumentationProviderTest extends PhpCodeInsightFixtureTestCas
     public void testCustomPsalmTags() {
       doTestRenderedDoc();
     }
+
+    public void testTemplateTag() {
+      doTestRenderedDoc();
+    }
 }
