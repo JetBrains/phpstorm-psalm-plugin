@@ -862,4 +862,20 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testGenericAndStatic$queryBuilder() {
     doTypeTest(true);
   }
+
+  public void testReturnStaticOrThis$this() {
+    doTypeTest(true);
+  }
+
+  public void testReturnStaticOrThis$thisWithForeach() {
+    doTypeTest(true);
+  }
+
+  public void testReturnStaticOrThis$arrayOfThis() {
+    doTypeTest(true);
+  }
+
+  public void testReturnStaticOrThis$static() {
+    doTypeTest(true);
+  }
 }
