@@ -1,9 +1,13 @@
 package com.jetbrains.php.psalm.completion;
 
+import com.intellij.codeInsight.lookup.LookupElement;
+import com.intellij.codeInsight.lookup.LookupElementPresentation;
 import com.intellij.testFramework.NeedsIndex;
 import com.jetbrains.php.fixtures.PhpCompletionTestCase;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 public class PsalmCompletionTest extends PhpCompletionTestCase {
 
@@ -191,5 +195,51 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
   public void testConditionalType() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "int", "string");
+  }
+
+  public void testTemplateParameters() {
+    doInitCompletion();
+
+    HashMap<String, String> testCases = new HashMap<>();
+    testCases.put("TPClassSimple",
+                  "TPClassSimple template parameter of \\Foo");
+    testCases.put("TPClassWithSuper",
+                  "TPClassWithSuper template parameter of \\Foo extends Base");
+    testCases.put("TPCovariantClass",
+                  "TPCovariantClass covariant template parameter of \\Foo");
+    testCases.put("TPCovariantClassWithSuper",
+                  "TPCovariantClassWithSuper covariant template parameter of \\Foo extends Base");
+    testCases.put("TPContravariantClassWithSuper",
+                  "TPContravariantClassWithSuper contravariant template parameter of \\Foo extends Base");
+
+    testCases.put("TPFunctionSimple",
+                  "TPFunctionSimple template parameter of method()");
+    testCases.put("TPFunctionWithSuper",
+                  "TPFunctionWithSuper template parameter of method() extends Base");
+    testCases.put("TPCovariantFunction",
+                  "TPCovariantFunction covariant template parameter of method()");
+    testCases.put("TPCovariantFunctionWithSuper",
+                  "TPCovariantFunctionWithSuper covariant template parameter of method() extends Base");
+    testCases.put("TPContravariantFunctionWithSuper",
+                  "TPContravariantFunctionWithSuper contravariant template parameter of method() extends Base");
+
+    LookupElement[] elements = myFixture.getLookupElements();
+    for (LookupElement element : elements) {
+      String name = element.getLookupString();
+      LookupElementPresentation presentation = new LookupElementPresentation();
+      element.renderElement(presentation);
+      if (presentation.getIcon() != null) { // TODO(Petr.Makhnev): replace with actual icon after WI-72207
+        continue;
+      }
+
+      String actualString = presentation.getItemText() + presentation.getTailText();
+      String typeText = presentation.getTypeText();
+      if (typeText != null && !typeText.isEmpty()) {
+        actualString += " " + typeText;
+      }
+      String expectedString = testCases.get(name);
+      assertNotNull("Unhandled '" + name + "' completion item", expectedString);
+      assertEquals("Wrong completion item for '" + name + "'", expectedString, actualString);
+    }
   }
 }
