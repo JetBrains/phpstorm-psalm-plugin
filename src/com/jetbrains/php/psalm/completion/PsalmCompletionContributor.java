@@ -6,6 +6,7 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.PhpIcons;
 import com.jetbrains.php.PhpWorkaroundUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
@@ -108,7 +109,8 @@ public class PsalmCompletionContributor extends CompletionContributor implements
       return LookupElementBuilder.create(name)
         .withBoldness(true)
         .withTailText(tailText)
-        .withTypeText(superTypeText);
+        .withTypeText(superTypeText)
+        .withIcon(PhpIcons.TEMPLATE_PARAMETER);
     }
   }
 
