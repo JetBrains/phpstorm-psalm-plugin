@@ -107,6 +107,7 @@
     <docTagParserExtension tagName="psalm-taint-escape" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTaintTagParser" />
     <docTagParserExtension tagName="psalm-taint-unescape" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTaintTagParser" />
     <docTagParserExtension tagName="psalm-flow" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTaintTagParser" />
+    <docTagParserExtension tagName="psalm-inheritors" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
     <noReturnProvider implementation="com.jetbrains.php.psalm.PsalmNoReturnProvider" />
     <arrayShapesProvider implementation="com.jetbrains.php.psalm.types.shapes.PsalmDocArrayShapeProvider"/>
 

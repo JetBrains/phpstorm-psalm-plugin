@@ -1,0 +1,73 @@
+<?php
+/**
+ * @psalm-inheritors FooClass
+ */
+class BaseClass {}
+class FooClass extends BaseClass {}
+$a = new FooClass();
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @psalm-inheritors
+        PsiElement(DOC_TAG_NAME)('@psalm-inheritors')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: FooClass
+          PsiElement(DOC_IDENTIFIER)('FooClass')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    PhpClass: BaseClass
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('BaseClass')
+      PsiWhiteSpace(' ')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiElement(})('}')
+    PsiWhiteSpace('\n')
+    PhpClass: FooClass
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('FooClass')
+      PsiWhiteSpace(' ')
+      Extends list
+        PsiElement(extends)('extends')
+        PsiWhiteSpace(' ')
+        ClassReferenceImpl: BaseClass
+          PsiElement(identifier)('BaseClass')
+      PsiWhiteSpace(' ')
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiElement(})('}')
+    PsiWhiteSpace('\n')
+    Statement
+      AssignmentExpressionImpl: $a = new FooClass()
+        VariableImpl: a
+          PsiElement(variable)('$a')
+        PsiWhiteSpace(' ')
+        PsiElement(assign)('=')
+        PsiWhiteSpace(' ')
+        NewExpressionImpl: new FooClass()
+          PsiElement(new)('new')
+          PsiWhiteSpace(' ')
+          ClassReferenceImpl: FooClass
+            PsiElement(identifier)('FooClass')
+          PsiElement(()('(')
+          Parameter list
+            <empty list>
+          PsiElement())(')')
+      PsiElement(semicolon)(';')
