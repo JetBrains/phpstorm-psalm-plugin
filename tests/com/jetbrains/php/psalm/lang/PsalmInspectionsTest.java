@@ -79,6 +79,10 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
     doInspectionTest(PhpRedundantVariableDocTypeInspection.class);
   }
 
+  public void testGenericsExtendVarType() {
+    doInspectionTest(PhpRedundantVariableDocTypeInspection.class);
+  }
+
   public void testPsalmTraceVar() {
     doInfoTest();
   }
