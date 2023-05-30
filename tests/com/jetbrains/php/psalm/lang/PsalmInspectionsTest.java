@@ -1,5 +1,6 @@
 package com.jetbrains.php.psalm.lang;
 
+import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.jetbrains.php.PhpInspectionTestCase;
 import com.jetbrains.php.lang.inspections.PhpUndefinedClassInspection;
 import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
@@ -67,7 +68,11 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
   }
 
   public void testArrayShapeExtendsFunctionSignature() {
-    doInspectionTest(PhpDocSignatureIsNotCompleteInspection.class);
+    doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
+  }
+
+  public void testGenericsExtendFunctionSignature() {
+    doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
   }
 
   public void testArrayShape() {

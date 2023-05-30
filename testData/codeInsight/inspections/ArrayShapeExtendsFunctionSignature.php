@@ -27,3 +27,10 @@ function f3()
 function f4(array $a, $b): int
 {
 }
+
+/**
+ * @return array{Exception,int}
+ */
+function f5(): array
+{
+}
