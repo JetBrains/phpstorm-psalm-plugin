@@ -75,6 +75,10 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
     doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
   }
 
+  public void testSpecialTypesExtendSignature() {
+    doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
+  }
+
   public void testArrayShape() {
     doInspectionTest(PhpRedundantVariableDocTypeInspection.class);
   }
