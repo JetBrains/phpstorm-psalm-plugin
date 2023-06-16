@@ -56,5 +56,5 @@ class Goo extends Foo
   }
 }
 
-<type value="mixed|Foo">Foo::query()->one()</type>;
-<type value="Goo|mixed">Goo::query()->one()</type>;
+<type value="BaseModel|mixed|Foo">Foo::query()->one()</type>;
+<type value="BaseModel|Goo|mixed">Goo::query()->one()</type>;
