@@ -4,6 +4,7 @@ import com.intellij.psi.PsiPolyVariantReference
 import com.intellij.util.containers.ContainerUtil
 import com.jetbrains.php.fixtures.PhpCodeInsightFixtureTestCase
 import com.jetbrains.php.lang.psi.elements.Field
+import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest
 
@@ -15,7 +16,7 @@ class PsalmResolveTest extends PhpCodeInsightFixtureTestCase{
 
   @Override
   protected String getFixtureTestDataFolder() {
-    return "codeInsight/resolve"
+    return "resolve"
   }
 
   void testExtendedClassConstantReferenceWithWildcard() throws Throwable {
@@ -265,4 +266,39 @@ namespace {
     assertEquals "\\B", phpClass.getFQN()
   }
 
+  void testGenericMixinMethod() {
+    configureByFile()
+    def method = assertInstanceOf(resolve(), Method.class)
+    assertEquals "\\MixinClass.mixinClassMethod", method.getFQN()
+  }
+
+  void testGenericMixinField() {
+    configureByFile()
+    def field = assertInstanceOf(resolve(), Field.class)
+    assertEquals "\\MixinClass.\$mixinClassProperty", field.getFQN()
+  }
+
+  void testGenericMixinDecorator() {
+    configureByFile()
+    def method = assertInstanceOf(resolve(), Method.class)
+    assertEquals "\\ApiClient.request", method.getFQN()
+  }
+
+  void testGenericMixinSeveralMixins() {
+    configureByFile()
+    def method = assertInstanceOf(resolve(), Method.class)
+    assertEquals "\\MixinClass2.mixinClassMethod2", method.getFQN()
+  }
+
+  void testGenericMixinUnionTwoClassesWithMixins() {
+    configureByFile()
+    def method = assertInstanceOf(resolve(), Method.class)
+    assertEquals "\\MixinClass2.mixinClassMethod2", method.getFQN()
+  }
+
+  void testGenericMixinGenericAndPlainMixins() {
+    configureByFile()
+    def method = assertInstanceOf(resolve(), Method.class)
+    assertEquals "\\MixinClass2.mixinClassMethod2", method.getFQN()
+  }
 }
