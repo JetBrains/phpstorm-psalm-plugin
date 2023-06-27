@@ -17,7 +17,7 @@ public class PsalmComposerConfigTest extends QualityToolsComposerConfigTest {
   @NotNull
   @Override
   protected String getPath() {
-    return "bin/psalm" + (SystemInfo.isWindows ? ".bat" : "");
+    return myFixture.getTempDirPath() + "/vendor/bin/psalm" + (SystemInfo.isWindows ? ".bat" : "");
   }
 
   @NotNull
