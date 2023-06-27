@@ -24,5 +24,5 @@ function getDates(): ArrayCollection
 }
 
 foreach (getDates() as $date) {
-    <type value="DateTime">$date</type>
+    <type value="mixed|DateTime">$date</type>
 }
