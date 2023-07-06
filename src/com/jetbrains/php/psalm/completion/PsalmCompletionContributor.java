@@ -104,12 +104,13 @@ public class PsalmCompletionContributor extends CompletionContributor implements
       String tailText = variantString + " template parameter" + definedAt;
 
       PhpDocType superType = tag.getSuperType();
-      String superTypeText = superType != null ? "extends " + superType.getText() : "";
+      if (superType != null) {
+        tailText += " extends " + superType.getText();
+      }
 
       return LookupElementBuilder.create(name)
         .withBoldness(true)
         .withTailText(tailText)
-        .withTypeText(superTypeText)
         .withIcon(PhpIcons.TEMPLATE_PARAMETER);
     }
   }
