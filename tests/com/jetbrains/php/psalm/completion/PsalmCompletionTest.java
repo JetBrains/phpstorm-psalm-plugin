@@ -241,6 +241,20 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "name");
   }
 
+  public void testObjectShapeConstructor() {
+    addPhpFileToProject("a.php", """
+      <?php
+      
+      class Foo {
+          /**
+           * @return object{name: string, age: int}
+           */
+          function __construct() {}
+      }""");
+    doInitCompletion();
+    assertDoesntContain(myFixture.getLookupElementStrings(), "name");
+  }
+
   @NeedsIndex.Full
   public void testGenericMixins$simple() {
     doInitCompletion();
@@ -253,8 +267,7 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "request");
   }
 
-  @NeedsIndex.Full
-  public void testGenericMixins$stdlibClassMixin() {
+  @NeedsIndex.Full public void testGenericMixins$stdlibClassMixin() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "getConstant", "setStaticPropertyValue");
   }
