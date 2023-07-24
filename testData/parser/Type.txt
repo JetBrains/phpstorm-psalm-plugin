@@ -7,6 +7,7 @@ $foo = 1;
 /**
  * @psalm-check-type $bar = int
  * @psalm-type PhoneType = array{phone: string}
+ * @psalm-type Phone array{phone: string}
  */
 $bar = 1;
 
@@ -72,6 +73,26 @@ PHP file
         PsiElement(DOC_IDENTIFIER)('PhoneType')
         PsiWhiteSpace(' ')
         PsiElement(DOC_TEXT)('=')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('phone')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @psalm-type
+        PsiElement(DOC_TAG_NAME)('@psalm-type')
+        PsiWhiteSpace(' ')
+        PsiElement(DOC_IDENTIFIER)('Phone')
         PsiWhiteSpace(' ')
         PhpDocTypeImpl: array
           PsiElement(DOC_IDENTIFIER)('array')
