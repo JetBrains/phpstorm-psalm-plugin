@@ -103,4 +103,8 @@ public class PsalmDocParserTest extends PhpParserTestCase {
   public void test$PsalmInheritors() throws Throwable {
     doTest();
   }
+
+  public void test$PsalmUnsealedArrayShape() throws Throwable {
+    doTest();
+  }
 }
