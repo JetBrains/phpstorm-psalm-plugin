@@ -95,6 +95,18 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testNonEmptyLowercaseString() {
+    doTypeTest();
+  }
+
+  public void testTruthyString() {
+    doTypeTest();
+  }
+
+  public void testNonFalsyString() {
+    doTypeTest();
+  }
+
   public void testTraitString() {
     doTypeTest();
   }

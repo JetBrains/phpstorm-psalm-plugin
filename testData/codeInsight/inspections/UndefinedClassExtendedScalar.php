@@ -10,6 +10,9 @@
  * @param numeric
  * @param numeric-string
  * @param lowercase-string
+ * @param non-empty-lowercase-string
+ * @param truthy-string
+ * @param non-falsy-string
  * @param callable-string
  * @param callable-string
  * @param scalar
