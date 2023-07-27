@@ -114,4 +114,12 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
   public void testLiteralTypeUnresolvedClass() {
     doInspectionTest(PhpUndefinedClassInspection.class);
   }
+
+  public void testNonEmptyListWithoutTypes() {
+    doInspectionTest(PhpUndefinedClassInspection.class);
+  }
+
+  public void testNonEmptyArrayAsConditionForType() {
+    doInspectionTest(PhpUndefinedClassInspection.class);
+  }
 }

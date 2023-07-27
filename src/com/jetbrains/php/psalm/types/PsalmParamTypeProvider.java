@@ -58,7 +58,12 @@ public class PsalmParamTypeProvider implements PhpTypeProvider4 {
                                                   IElementType rBrace,
                                                   IElementType comma,
                                                   @NotNull Function<PsiElement, PhpTypedElement> typedElementExtractor) {
-    if (!PhpWorkaroundUtil.isGenericArray(docElement, name)) return null;
+    if (!PhpWorkaroundUtil.isGenericArray(docElement, name)) {
+      if (PhpWorkaroundUtil.isSpecialArray(name)) {
+        return PhpType.ARRAY;
+      }
+      return null;
+    }
     return PhpWorkaroundUtil.valueDocTypes(docElement, lBrace, rBrace, comma)
       .map(typedElementExtractor)
       .map(PhpType::from)
