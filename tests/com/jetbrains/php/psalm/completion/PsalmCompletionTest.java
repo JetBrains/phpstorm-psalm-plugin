@@ -37,6 +37,7 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "class-string"
       , "callable-string"
       , "numeric-string"
+      , "lowercase-string"
       , "scalar"
       , "numeric"
       , "array-key"

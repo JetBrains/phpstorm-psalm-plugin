@@ -9,6 +9,7 @@
  * @param class-string[][]
  * @param numeric
  * @param numeric-string
+ * @param lowercase-string
  * @param callable-string
  * @param callable-string
  * @param scalar

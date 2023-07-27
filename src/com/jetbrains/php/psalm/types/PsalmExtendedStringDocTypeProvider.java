@@ -31,6 +31,7 @@ public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider
     ,"non-empty-string"
     ,"trait-string"
     ,"literal-string"
+    ,"lowercase-string"
   );
 
   private static final @NotNull PhpType NUMERIC_TYPE = PhpType.builder().add(PhpType.STRING).add(PhpType.INT).add(PhpType.FLOAT).build();
