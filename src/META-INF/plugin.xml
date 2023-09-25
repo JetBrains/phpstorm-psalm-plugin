@@ -37,10 +37,15 @@
       <postStartupActivity implementation="com.jetbrains.php.tools.quality.psalm.PsalmSettingsTransferStartupActivity"/>
     <referencesSearch implementation="com.jetbrains.php.psalm.lang.PsalmExtendedClassConstantReferenceSearcher"/>
     <referencesSearch implementation="com.jetbrains.php.psalm.lang.PsalmExtendedClassConstantWildcardReferenceSearcher"/>
+    <projectConfigurable instance="com.jetbrains.php.tools.quality.psalm.PsalmConfigurable"
+                         bundle="messages.PsalmBundle"
+                         key="configurable.quality.tool.psalm"
+                         id="settings.php.quality.tools.psalm"
+                         parentId="settings.php.quality.tools"
+                         groupWeight="15"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.jetbrains.php">
-    <tools.projectConfigurableForm instance="com.jetbrains.php.tools.quality.psalm.PsalmConfigurable"/>
     <tools.quality.type implementation="com.jetbrains.php.tools.quality.psalm.PsalmQualityToolType"/>
     <composerConfigClient implementation="com.jetbrains.php.tools.quality.psalm.PsalmComposerConfig"/>
     <openSettingsProvider implementation="com.jetbrains.php.tools.quality.psalm.PsalmOpenSettingsProvider"/>

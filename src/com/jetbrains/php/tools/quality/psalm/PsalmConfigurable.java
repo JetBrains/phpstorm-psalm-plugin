@@ -15,6 +15,10 @@ public class PsalmConfigurable extends QualityToolProjectConfigurableForm implem
   }
 
   @Override
+  public @NotNull String getId() {
+    return "settings.php.quality.tools.psalm";
+  }
+  @Override
   protected QualityToolsOptionsPanel getQualityToolOptionPanel(QualityToolConfigurationComboBox configurationBox, Runnable validate) {
     return new PsalmOptionsPanel(myProject, configurationBox, validate);
   }

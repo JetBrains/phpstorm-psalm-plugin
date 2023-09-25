@@ -35,11 +35,6 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
   }
 
   @Override
-  protected ComposerLogMessageBuilder.Settings getQualityToolsInspectionSettings() {
-    return null;
-  }
-
-  @Override
   public String getQualityInspectionShortName() {
     return PsalmQualityToolType.INSTANCE.getInspectionId();
   }
