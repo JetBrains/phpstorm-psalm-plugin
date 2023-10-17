@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationBaseManager;
@@ -36,9 +35,5 @@ public class PsalmConfigurationBaseManager extends QualityToolConfigurationBaseM
   @Nullable
   protected PsalmConfiguration loadLocal(Element element) {
     return XmlSerializer.deserialize(element, PsalmConfiguration.class);
-  }
-
-  public static PsalmConfigurationBaseManager getInstance() {
-    return ApplicationManager.getApplication().getService(PsalmConfigurationBaseManager.class);
   }
 }
