@@ -1,7 +1,9 @@
 <?php
-
-/** @param array{verbose: string, ...}  $options */
-function handleOptions(array $options): float
+/**
+ * @param array{verbose: string, ...} $options
+ * @param array{someKey: string, ...<array-key, mixed>} $a
+ */
+function handleOptions(array $options, array $a): float
 {
 }
 
@@ -9,9 +11,11 @@ function handleOptions(array $options): float
 PHP file
   PsiElement(Non Lazy Group statement)
     PsiElement(php opening tag)('<?php')
-    PsiWhiteSpace('\n\n')
+    PsiWhiteSpace('\n')
     PhpDocCommentImpl
       PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
       PsiWhiteSpace(' ')
       PhpDocParamTagImpl: @param
         PsiElement(DOC_TAG_NAME)('@param')
@@ -29,12 +33,46 @@ PHP file
             PsiWhiteSpace(' ')
             PsiElement(DOC_TEXT)('...')
             PsiElement(DOC_RBRACE)('}')
-        PsiWhiteSpace('  ')
+        PsiWhiteSpace(' ')
         PhpDocVarImpl: options
           PsiElement(DOC_VARIABLE)('$options')
         PhpPsiElementImpl
           <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
       PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('someKey')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_TEXT)('...')
+            PhpDocTypeImpl: %EMPTY%
+              PhpPsiElementImpl
+                PsiElement(DOC_LAB)('<')
+                PhpDocTypeImpl: array-key
+                  PsiElement(DOC_IDENTIFIER)('array-key')
+                PsiElement(DOC_COMMA)(',')
+                PsiWhiteSpace(' ')
+                PhpDocTypeImpl: mixed
+                  PsiElement(DOC_IDENTIFIER)('mixed')
+                PsiElement(DOC_RAB)('>')
+            PsiElement(DOC_RBRACE)('}')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: a
+          PsiElement(DOC_VARIABLE)('$a')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
       PsiElement(DOC_COMMENT_END)('*/')
     PsiWhiteSpace('\n')
     FunctionImpl: handleOptions
@@ -49,6 +87,14 @@ PHP file
               PsiElement(array)('array')
           PsiWhiteSpace(' ')
           PsiElement(variable)('$options')
+        PsiElement(comma)(',')
+        PsiWhiteSpace(' ')
+        ParameterImpl: a
+          Parameter type
+            ClassReferenceImpl: array
+              PsiElement(array)('array')
+          PsiWhiteSpace(' ')
+          PsiElement(variable)('$a')
       PsiElement())(')')
       PsiElement(colon)(':')
       PsiWhiteSpace(' ')
