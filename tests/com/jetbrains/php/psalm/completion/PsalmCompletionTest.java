@@ -259,6 +259,47 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertDoesntContain(myFixture.getLookupElementStrings(), "name");
   }
 
+  public void testArrayAndObjectShapes() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "abc");
+  }
+
+  @NeedsIndex.Full
+  public void testArrayAndObjectShapesMultipleFiles() {
+    addPhpFileToProject("a.php", """   
+      <?php
+      /**
+       * @psalm-return array{data: array{key: object{abc : int}}}
+       */
+      function foo() {}
+      """);
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "abc");
+  }
+
+  public void testObjectAndArrayShapes() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "abc");
+  }
+
+  @NeedsIndex.Full
+  public void testObjectAndArrayShapesMultipleFiles() {
+    addPhpFileToProject("a.php", """   
+      <?php
+      /**
+       * @psalm-return object{data: object{key: array{abc : int}}
+       */
+      function foo() {}
+      """);
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "abc");
+  }
+
+  public void testObjectAndArrayShapesMixed() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "amb");
+  }
+
   @NeedsIndex.Full
   public void testGenericMixins$simple() {
     doInitCompletion();
