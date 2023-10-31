@@ -287,6 +287,11 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "abc");
   }
 
+  public void testObjectShapeArrayAccessIntIndex() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "key");
+  }
+
   @NeedsIndex.Full
   public void testObjectAndArrayShapesMultipleFiles() {
     addPhpFileToProject("a.php", """   
