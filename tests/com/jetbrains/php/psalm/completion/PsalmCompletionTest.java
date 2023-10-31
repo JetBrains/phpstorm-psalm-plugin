@@ -277,6 +277,11 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "abc");
   }
 
+  public void testArrayShapeArrayAccessIntIndex() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "key");
+  }
+
   public void testObjectAndArrayShapes() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "abc");
