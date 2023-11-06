@@ -197,6 +197,11 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "name", "age");
   }
 
+  public void testArrayShapeNestedForeach() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "somekey");
+  }
+
   public void testConditionalType() {
     doInitCompletion();
     assertContainsElements(myFixture.getLookupElementStrings(), "int", "string");
