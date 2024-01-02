@@ -1,5 +1,7 @@
 package com.jetbrains.php.psalm.types;
 
+import com.intellij.openapi.vfs.VirtualFileFilter;
+import com.intellij.psi.impl.PsiManagerEx;
 import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.codeInsight.PhpTypeInferenceTestCase;
 import com.jetbrains.php.config.PhpLanguageLevel;
@@ -821,6 +823,11 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
           public function rand($min, $max);
       }""");
     doTypeTest();
+  }
+
+  @Override
+  protected void lockPhpFilesLoading(VirtualFileFilter filter) {
+    ((PsiManagerEx)myFixture.getPsiManager()).setAssertOnFileLoadingFilter(VirtualFileFilter.NONE, getTestRootDisposable());
   }
 
   public void testMultipleInheritanceWithExtends() {
