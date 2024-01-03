@@ -898,4 +898,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testReturnStaticOrThis$static() {
     doTypeTest(true);
   }
+
+  public void testLocalTypeUnwrappingTagOrderMustNotMatter() {
+    doTypeTest(true);
+  }
 }
