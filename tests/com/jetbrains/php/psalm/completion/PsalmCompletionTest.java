@@ -2,6 +2,7 @@ package com.jetbrains.php.psalm.completion;
 
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementPresentation;
+import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.NeedsIndex;
 import com.jetbrains.php.PhpIcons;
 import com.jetbrains.php.fixtures.PhpCompletionTestCase;
@@ -34,8 +35,8 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
 
   public void testCustomDocTypes() {
     doInitCompletion();
-    assertContainsElements(myFixture.getLookupElementStrings(), "class-string"
-      , "callable-string"
+    assertContainsElements(myFixture.getLookupElementStrings(),
+      "callable-string"
       , "numeric-string"
       , "lowercase-string"
       , "non-empty-lowercase-string"
@@ -415,5 +416,17 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
       assertNotNull("Unhandled '" + name + "' completion item", expectedString);
       assertEquals("Wrong completion item for '" + name + "'", expectedString, actualString);
     }
+  }
+
+  @NeedsIndex.Full
+  public void testStaticMethodsCompletionViaClassStringForeachValue() {
+    doInitCompletion();
+    assertSameElements(myFixture.getLookupElementStrings(), "staticMethod", "staticMethod2", "class");
+  }
+
+  @NeedsIndex.Full
+  public void testStaticMethodsCompletionViaClassStringForeachKey() {
+    doInitCompletion();
+    assertSameElements(myFixture.getLookupElementStrings(), "staticMethod", "staticMethod2", "class");
   }
 }

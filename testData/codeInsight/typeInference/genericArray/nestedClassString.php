@@ -5,5 +5,5 @@
  */
 function a($a)
 {
-    <type value="string[][]">$a</type>
+    <type value="class-string[][]">$a</type>
 }

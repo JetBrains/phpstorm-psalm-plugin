@@ -902,4 +902,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testLocalTypeUnwrappingTagOrderMustNotMatter() {
     doTypeTest(true);
   }
+
+  public void testNewExpressionWithClassString() {
+    doTypeTest(true);
+  }
 }

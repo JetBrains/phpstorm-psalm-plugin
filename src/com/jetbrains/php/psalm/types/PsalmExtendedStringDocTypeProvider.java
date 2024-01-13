@@ -25,8 +25,7 @@ import java.util.Set;
 
 public final class PsalmExtendedStringDocTypeProvider implements PhpTypeProvider4 {
   private static final Collection<String> EXTENDED_STRINGS = List.of(
-    "class-string"
-    ,"callable-string"
+    "callable-string"
     ,"numeric-string"
     ,"non-empty-string"
     ,"trait-string"
