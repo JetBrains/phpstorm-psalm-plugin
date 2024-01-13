@@ -2,7 +2,6 @@ package com.jetbrains.php.psalm.completion;
 
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementPresentation;
-import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.NeedsIndex;
 import com.jetbrains.php.PhpIcons;
 import com.jetbrains.php.fixtures.PhpCompletionTestCase;
