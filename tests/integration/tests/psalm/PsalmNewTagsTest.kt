@@ -46,7 +46,7 @@ class PsalmNewTagsTest : PhpCodeInsightFixtureTestCase() {
     }
     val resultFileName = "psalm-tags.txt"
     val resultFile = (psalmFolder.toPath() / resultFileName).toFile()
-    resultFile.writeText(annotations.joinToString("\n"))
+    resultFile.writeText(annotations.sorted().joinToString("\n"))
     println("##teamcity[publishArtifacts '${resultFile.absolutePath}']")
     val pathToPreviousResults = (psalmFolder.toPath() / "previousResults" / resultFileName).toFile()
     if(pathToPreviousResults.exists()){
