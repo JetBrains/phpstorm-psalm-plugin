@@ -43,9 +43,4 @@ public class PsalmConstantReferenceWildcardIndex extends PhpFlatCollectionIndexB
   public FileBasedIndex.@NotNull InputFilter getInputFilter() {
     return PhpConstantNameIndex.PHP_INPUT_FILTER;
   }
-
-  @Override
-  public boolean dependsOnFileContent() {
-    return super.dependsOnFileContent();
-  }
 }

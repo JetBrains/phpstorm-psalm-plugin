@@ -19,12 +19,6 @@ public class PsalmOutputParsingTest extends PhpHeavyCodeInsightFixtureTestCase {
     return "output";
   }
 
-  @NotNull
-  @Override
-  protected String getFileBeforeExtension() {
-    return "php";
-  }
-
   @Override
   protected String getBasePath() {
     return "/phpstorm/psalm/testData/output";
