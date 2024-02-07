@@ -917,4 +917,8 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testClassStringConstructorParameterTypeStaticCall() {
     doTypeTest(true);
   }
+
+  public void testFloatType() {
+    doTypeTest(true);
+  }
 }

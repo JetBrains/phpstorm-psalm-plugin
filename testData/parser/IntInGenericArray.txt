@@ -24,11 +24,11 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('list')
           PhpPsiElementImpl
             PsiElement(DOC_LAB)('<')
-            PhpDocTypeImpl: %EMPTY%
-              PsiElement(DOC_TEXT)('0')
+            PhpDocTypeImpl: 0
+              PsiElement(DOC_IDENTIFIER)('0')
             PsiElement(DOC_PIPE)('|')
-            PhpDocTypeImpl: %EMPTY%
-              PsiElement(DOC_TEXT)('1')
+            PhpDocTypeImpl: 1
+              PsiElement(DOC_IDENTIFIER)('1')
             PsiElement(DOC_PIPE)('|')
             PhpDocTypeImpl: positive-int
               PsiElement(DOC_IDENTIFIER)('positive-int')

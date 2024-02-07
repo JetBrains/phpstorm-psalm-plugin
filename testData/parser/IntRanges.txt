@@ -27,7 +27,7 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('int')
           PhpPsiElementImpl
             PsiElement(DOC_LAB)('<')
-            PsiElement(DOC_TEXT)('0')
+            PsiElement(DOC_IDENTIFIER)('0')
             PsiElement(DOC_COMMA)(',')
             PsiWhiteSpace(' ')
             PsiElement(DOC_IDENTIFIER)('max')
@@ -47,10 +47,10 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('int')
           PhpPsiElementImpl
             PsiElement(DOC_LAB)('<')
-            PsiElement(DOC_TEXT)('-123')
+            PsiElement(DOC_IDENTIFIER)('-123')
             PsiElement(DOC_COMMA)(',')
             PsiWhiteSpace(' ')
-            PsiElement(DOC_TEXT)('123')
+            PsiElement(DOC_IDENTIFIER)('123')
             PsiElement(DOC_RAB)('>')
         PsiWhiteSpace(' ')
         PhpDocVarImpl: b
@@ -67,10 +67,10 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('int')
           PhpPsiElementImpl
             PsiElement(DOC_LAB)('<')
-            PsiElement(DOC_TEXT)('-123')
+            PsiElement(DOC_IDENTIFIER)('-123')
             PsiElement(DOC_COMMA)(',')
             PsiWhiteSpace(' ')
-            PsiElement(DOC_TEXT)('123')
+            PsiElement(DOC_IDENTIFIER)('123')
             PsiElement(DOC_RAB)('>')
         PsiElement(DOC_PIPE)('|')
         PhpDocTypeImpl: int
@@ -90,10 +90,10 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('int')
           PhpPsiElementImpl
             PsiElement(DOC_LAB)('<')
-            PsiElement(DOC_TEXT)('-123')
+            PsiElement(DOC_IDENTIFIER)('-123')
             PsiElement(DOC_COMMA)(',')
             PsiWhiteSpace(' ')
-            PsiElement(DOC_TEXT)('123')
+            PsiElement(DOC_IDENTIFIER)('123')
             PsiElement(DOC_RAB)('>')
           PsiElement(DOC_LBRACKET)('[')
           PsiElement(DOC_RBRACKET)(']')
@@ -115,10 +115,10 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('int')
           PhpPsiElementImpl
             PsiElement(DOC_LAB)('<')
-            PsiElement(DOC_TEXT)('-123')
+            PsiElement(DOC_IDENTIFIER)('-123')
             PsiElement(DOC_COMMA)(',')
             PsiWhiteSpace(' ')
-            PsiElement(DOC_TEXT)('123')
+            PsiElement(DOC_IDENTIFIER)('123')
             PsiElement(DOC_RAB)('>')
         PsiWhiteSpace(' ')
         PhpDocVarImpl: b

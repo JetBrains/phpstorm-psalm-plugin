@@ -6,6 +6,8 @@
  * @param $c array{"name": int, 1?: string, 2? : int}
  * @psalm-return array{age?: int}
  * @psalm-return array{age? : int}
+ * @var array{column: 17, foo: string} $array1
+ * @var array{column: 17.1, foo: string} $array2
  * @psalm-return list{age? : int}
  */
 function f($a, $b, $c){
@@ -140,6 +142,62 @@ PHP file
             PhpDocTypeImpl: int
               PsiElement(DOC_IDENTIFIER)('int')
             PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @var
+        PsiElement(DOC_TAG_NAME)('@var')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('column')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: 17
+              PsiElement(DOC_IDENTIFIER)('17')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('foo')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_RBRACE)('}')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: array1
+          PsiElement(DOC_VARIABLE)('$array1')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @var
+        PsiElement(DOC_TAG_NAME)('@var')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('column')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: 17.1
+              PsiElement(DOC_IDENTIFIER)('17.1')
+            PsiElement(DOC_COMMA)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(DOC_IDENTIFIER)('foo')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_RBRACE)('}')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: array2
+          PsiElement(DOC_VARIABLE)('$array2')
         PhpPsiElementImpl
           <empty list>
       PsiWhiteSpace('\n ')
