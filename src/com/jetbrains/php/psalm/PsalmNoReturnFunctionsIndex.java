@@ -1,9 +1,11 @@
 package com.jetbrains.php.psalm;
 
 import com.intellij.openapi.util.Ref;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.indexing.*;
 import com.intellij.util.io.*;
+import com.jetbrains.php.lang.PhpLangUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.PhpDocUtil;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
@@ -22,12 +24,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PsalmNoReturnFunctionsIndex extends FileBasedIndexExtension<String, Void> {
-  @NonNls public static final ID<String, Void> KEY = ID.create("psalm.no.return");
+public class PsalmNoReturnFunctionsIndex extends FileBasedIndexExtension<String, String> {
+  @NonNls public static final ID<String, String> KEY = ID.create("psalm.no.return");
 
   @Override
-  public @NotNull DataExternalizer<Void> getValueExternalizer() {
-    return VoidDataExternalizer.INSTANCE;
+  public @NotNull DataExternalizer<String> getValueExternalizer() {
+    return EnumeratorStringDescriptor.INSTANCE;
   }
 
   @NotNull
@@ -38,7 +40,7 @@ public class PsalmNoReturnFunctionsIndex extends FileBasedIndexExtension<String,
 
   @NotNull
   @Override
-  public ID<String, Void> getName() {
+  public ID<String, String> getName() {
     return KEY;
   }
 
@@ -55,22 +57,21 @@ public class PsalmNoReturnFunctionsIndex extends FileBasedIndexExtension<String,
 
   @Override
   public int getVersion() {
-    return 1;
+    return 2;
   }
 
   @Override
-  public @NotNull DataIndexer<String, Void, FileContent> getIndexer() {
+  public @NotNull DataIndexer<String, String, FileContent> getIndexer() {
     return inputData -> {
       PsiFile file = inputData.getPsiFile();
       if (!(file instanceof PhpFile)) {
         return Collections.emptyMap();
       }
-      Map<String, Void> map = new HashMap<>();
+      Map<String, String> map = new HashMap<>();
       ((PhpFile)file).getTopLevelDefs().values().stream()
         .flatMap(PhpFuncGetArgUsageProvider::getFunctions)
         .filter(PsalmNoReturnFunctionsIndex::hasPsalmNoReturnTag)
-        .map(PhpNamedElement::getFQN)
-        .forEach(fqn -> map.put(fqn, null));
+        .forEach(e -> map.put(StringUtil.toLowerCase(e.getName()), e.getFQN()));
       return map;
     };
   }
