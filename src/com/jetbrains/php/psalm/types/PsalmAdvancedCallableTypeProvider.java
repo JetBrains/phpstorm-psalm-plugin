@@ -32,7 +32,7 @@ public class PsalmAdvancedCallableTypeProvider extends PhpCharBasedTypeKey imple
   @Override
   public @Nullable PhpType getType(PsiElement element) {
     if (element instanceof PhpDocType docType && PhpDocTypeImpl.isAdvancedCallable(docType)) {
-      String fqn = resolveFQN(((PhpDocType)element));
+      String fqn = resolveFQN(docType);
       if (!ADVANCED_CALLABLES.contains(fqn)) {
         return null;
       }
