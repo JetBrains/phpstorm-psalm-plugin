@@ -1,9 +1,9 @@
 package com.jetbrains.php.psalm.lang.documentation.parser;
 
-import com.jetbrains.php.lang.parser.PhpParserTestCase;
+import com.jetbrains.php.lang.parser.BasicPhpParserTestCase;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
 
-public class PsalmDocParserTest extends PhpParserTestCase {
+public class PsalmDocParserTest extends BasicPhpParserTestCase {
 
   public static final String DATA_PATH = PsalmTypeInferenceTest.TEST_DATA_HOME + "parser";
 
