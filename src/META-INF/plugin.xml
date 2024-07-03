@@ -52,6 +52,7 @@
   </extensions>
 
   <extensionPoints>
+    <!--suppress PluginXmlValidity -->
     <extensionPoint qualifiedName="com.jetbrains.php.tools.quality.Psalm.PsalmConfigurationProvider"
                     interface="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationProvider"/>
   </extensionPoints>
