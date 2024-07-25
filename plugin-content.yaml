@@ -1,0 +1,3 @@
+- name: lib/psalm.jar
+  modules:
+  - name: intellij.psalm
