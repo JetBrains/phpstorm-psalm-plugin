@@ -25,18 +25,7 @@
                       implementationClass="com.jetbrains.php.tools.quality.psalm.PsalmGlobalInspection"
                       key="inspection.psalm.global.display.name" bundle="messages.PsalmBundle"/>
     <externalAnnotator language="PHP" implementationClass="com.jetbrains.php.tools.quality.psalm.PsalmAnnotatorProxy"/>
-
-    <localInspection language="PHP" groupPath="PHP" shortName="PsalmAdvanceCallableParamsInspection"
-                     groupKey="inspection.php.psalm"
-                     enabledByDefault="true" level="WARNING"
-                     implementationClass="com.jetbrains.php.psalm.lang.inspections.PsalmAdvanceCallableParamsInspection"
-                     key="function.call.is.not.compatible.with.advance.callable.declaration" bundle="messages.PsalmBundle"/>
-    <codeInsight.parameterInfo language="PHP" order="before phpParameterInfo"
-                               implementationClass="com.jetbrains.php.psalm.lang.PsalmAdvancedClosureParameterInfoHandler"/>
-
-      <postStartupActivity implementation="com.jetbrains.php.tools.quality.psalm.PsalmSettingsTransferStartupActivity"/>
-    <referencesSearch implementation="com.jetbrains.php.psalm.lang.PsalmExtendedClassConstantReferenceSearcher"/>
-    <referencesSearch implementation="com.jetbrains.php.psalm.lang.PsalmExtendedClassConstantWildcardReferenceSearcher"/>
+    <postStartupActivity implementation="com.jetbrains.php.tools.quality.psalm.PsalmSettingsTransferStartupActivity"/>
     <projectConfigurable instance="com.jetbrains.php.tools.quality.psalm.PsalmConfigurable"
                          bundle="messages.PsalmBundle"
                          key="configurable.quality.tool.psalm"
@@ -63,70 +52,4 @@
       <add-to-group group-id="PHPQualityToolsAddToIgnoredList"/>
     </action>
   </actions>
-  <extensions defaultExtensionNs="com.intellij">
-    <php.docTagParserExtension tagName="psalm-param" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
-    <php.docTagParserExtension tagName="psalm-use" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-yield" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-return" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocReturnTagParser" />
-    <php.docTagParserExtension tagName="psalm-throws" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocThrowsParser" />
-    <php.docTagParserExtension tagName="psalm-trace" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTraceTagParser" />
-    <php.docTagParserExtension tagName="psalm-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTypeTagParser" />
-    <php.docTagParserExtension tagName="psalm-check-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTypeTagParser" />
-    <php.docTagParserExtension tagName="psalm-check-type-exact" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTypeTagParser" />
-    <php.docTagParserExtension tagName="psalm-import-type" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocImportTypeTagParser" />
-    <php.docTagParserExtension tagName="psalm-var" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocVarTagParser" />
-    <php.docTagParserExtension tagName="template-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="template-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-template-use" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="template-use" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-template" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTemplateParser" />
-    <php.docTagParserExtension tagName="psalm-template-covariant" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTemplateParser" />
-    <php.docTagParserExtension tagName="psalm-template-contravariant" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTemplateParser" />
-    <php.docTagParserExtension tagName="psalm-param-out" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmParamDocParser" />
-    <php.docTagParserExtension tagName="psalm-assert" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocAssertTagParser" />
-    <php.docTagParserExtension tagName="psalm-assert-if-true" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocAssertTagParser" />
-    <php.docTagParserExtension tagName="psalm-assert-if-false" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocAssertTagParser" />
-    <php.docTagParserExtension tagName="psalm-if-this-is" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-this-out" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-self-out" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-require-extends" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-require-implements" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-scope-this" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-    <php.docTagParserExtension tagName="psalm-property" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocPropertyTagParser" />
-    <php.docTagParserExtension tagName="psalm-property-read" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocPropertyTagParser" />
-    <php.docTagParserExtension tagName="psalm-property-write" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocPropertyTagParser" />
-    <php.docTagParserExtension tagName="psalm-taint-source" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTaintTagParser" />
-    <php.docTagParserExtension tagName="psalm-taint-sink" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTaintTagParser" />
-    <php.docTagParserExtension tagName="psalm-taint-escape" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTaintTagParser" />
-    <php.docTagParserExtension tagName="psalm-taint-unescape" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTaintTagParser" />
-    <php.docTagParserExtension tagName="psalm-flow" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmDocTaintTagParser" />
-    <php.docTagParserExtension tagName="psalm-inheritors" implementationClass="com.jetbrains.php.psalm.lang.documentation.parser.PsalmExtendsTagParser" />
-  </extensions>
-  <extensions defaultExtensionNs="com.jetbrains.php">
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmParamTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmDocTagTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedStringDocTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmExtendedClassConstantReferenceTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmAdvancedCallableCallTypeProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.psalm.types.PsalmKeyValueOfDocTypeProvider"/>
-    <expressionClassNamesProvider implementation="com.jetbrains.php.psalm.types.PsalmDocTypeClassNamesExpressionProvider"/>
-    <keyTypeProvider implementation="com.jetbrains.php.psalm.types.PsalmArrayKeyTypeProvider"/>
-    <noReturnProvider implementation="com.jetbrains.php.psalm.PsalmNoReturnProvider" />
-    <arrayShapesProvider implementation="com.jetbrains.php.psalm.types.shapes.PsalmDocArrayShapeProvider"/>
-
-    <docPrefixProvider implementation="com.jetbrains.php.psalm.types.PsalmDocPrefixProvider" />
-  </extensions>
-  <extensions defaultExtensionNs="com.intellij">
-    <completion.contributor language="PHP" implementationClass="com.jetbrains.php.psalm.completion.PsalmCompletionContributor"/>
-    <psi.referenceContributor language="PHP" implementation="com.jetbrains.php.psalm.lang.PsalmReferenceContributor"/>
-    <fileBasedIndex implementation="com.jetbrains.php.psalm.PsalmNoReturnFunctionsIndex"/>
-    <fileBasedIndex implementation="com.jetbrains.php.psalm.PsalmConstantReferenceWildcardIndex"/>
-    <lang.elementManipulator forClass="com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType"
-                             implementationClass="com.jetbrains.php.psalm.lang.PhpDocTypeManipulator"/>
-  </extensions>
 </idea-plugin>
