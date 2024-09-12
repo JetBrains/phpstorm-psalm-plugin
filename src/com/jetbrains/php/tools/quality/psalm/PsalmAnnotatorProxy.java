@@ -72,7 +72,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
             }
           }
           catch (ExecutionException exception) {
-            LOG.warn("PhpStormn couldn't create psalm cache");
+            LOG.warn("PhpStorm couldn't create psalm cache");
           }
         }
       }
@@ -85,7 +85,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
   }
 
   @Override
-  protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo collectedInfo) {
+  protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo<PsalmValidationInspection> collectedInfo) {
     return new PsalmMessageProcessor(collectedInfo);
   }
 

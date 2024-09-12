@@ -16,7 +16,10 @@ import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.jetbrains.php.tools.quality.*;
+import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
+import com.jetbrains.php.tools.quality.QualityToolValidationException;
+import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
+import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -63,8 +66,8 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
                                 @NotNull GlobalInspectionContext globalContext,
                                 @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
     super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
-    final QualityToolAnnotator annotator = getAnnotator();
-    final QualityToolAnnotatorInfo info =
+    final PsalmAnnotatorProxy annotator = getAnnotator();
+    final QualityToolAnnotatorInfo<PsalmValidationInspection> info =
       annotator.collectAnnotatorInfo(null, null, globalContext.getProject(), ((InspectionManagerBase)manager).getCurrentProfile(), false);
     if (info != null) {
       manager.getProject().putUserData(ANNOTATOR_INFO, annotator.doAnnotate(info));
@@ -135,7 +138,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
   }
 
   @Override
-  protected @NotNull QualityToolAnnotator getAnnotator() {
+  protected @NotNull PsalmAnnotatorProxy getAnnotator() {
     return PsalmAnnotatorProxy.INSTANCE;
   }
 

@@ -1,18 +1,17 @@
 package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.openapi.util.NlsSafe;
-import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManager.PSALM;
 
 @SuppressWarnings("InspectionDescriptionNotFoundInspection")
-public class PsalmValidationInspection extends QualityToolValidationInspection {
+public class PsalmValidationInspection extends QualityToolValidationInspection<PsalmValidationInspection> {
 
   @NotNull
   @Override
-  protected QualityToolAnnotator<PsalmValidationInspection> getAnnotator() {
+  protected PsalmAnnotatorProxy getAnnotator() {
     return PsalmAnnotatorProxy.INSTANCE;
   }
 

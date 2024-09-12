@@ -35,7 +35,7 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   }
 
   @Override
-  protected @NotNull QualityToolValidationInspection getInspection() {
+  protected @NotNull PsalmValidationInspection getInspection() {
     return new PsalmValidationInspection();
   }
 
@@ -77,7 +77,7 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
     if (profile == null) {
       profile = InspectionProjectProfileManager.getInstance(project).getCurrentProfile();
     }
-    final InspectionToolWrapper inspectionTool = profile.getInspectionTool(getInspectionId(), project);
+    final InspectionToolWrapper<?, ?> inspectionTool = profile.getInspectionTool(getInspectionId(), project);
     if (inspectionTool == null) {
       return null;
     }

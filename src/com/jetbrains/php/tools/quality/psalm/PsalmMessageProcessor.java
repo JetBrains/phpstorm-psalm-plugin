@@ -2,7 +2,6 @@ package com.jetbrains.php.tools.quality.psalm;
 
 import com.intellij.openapi.project.Project;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
-import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +28,7 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   @NonNls private final static String SEVERITY_ATTR = "severity";
   final Project myProject;
 
-  protected PsalmMessageProcessor(QualityToolAnnotatorInfo info) {
+  protected PsalmMessageProcessor(QualityToolAnnotatorInfo<?> info) {
     super(info);
     myProject = info.getProject();
   }
@@ -79,7 +78,7 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   @Override
-  protected QualityToolType<PsalmConfiguration> getQualityToolType() {
+  protected PsalmQualityToolType getQualityToolType() {
     return PsalmQualityToolType.INSTANCE;
   }
 
