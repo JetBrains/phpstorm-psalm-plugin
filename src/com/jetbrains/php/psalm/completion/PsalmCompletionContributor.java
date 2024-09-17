@@ -8,6 +8,7 @@ import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.PhpIcons;
 import com.jetbrains.php.PhpWorkaroundUtil;
+import com.jetbrains.php.completion.PhpTraitDocTagCompletionProvider;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocComment;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.documentation.phpdoc.psi.impl.PhpDocTemplateParameter;
@@ -27,14 +28,21 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
+import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes.DOC_TAG_NAME;
 import static com.jetbrains.php.lang.psi.resolve.types.generics.PhpGenericsBaseExtendedWithGenericTypeProvider.getTemplateNames;
 import static com.jetbrains.php.lang.psi.resolve.types.generics.PhpGenericsTemplatesCustomDocTagValueStubProvider.getTypeNamesPsi;
 
 public class PsalmCompletionContributor extends CompletionContributor implements DumbAware {
 
+  private static final String[] ADDITIONAL_TRAIT_DOC_TAG_COMPLETIONS = {
+    "psalm-require-extends",
+    "psalm-require-implements"
+  };
+
   public PsalmCompletionContributor() {
     extend(CompletionType.BASIC, psiElement().withParent(PhpDocType.class), new PsalmCustomDocTypeCompletionProvider());
     extend(CompletionType.BASIC, psiElement().withParent(PhpDocType.class), new PsalmCustomTypesCompletionProvider());
+    extend(CompletionType.BASIC, psiElement(DOC_TAG_NAME), new PhpTraitDocTagCompletionProvider(ADDITIONAL_TRAIT_DOC_TAG_COMPLETIONS));
   }
 
   private static class PsalmCustomDocTypeCompletionProvider extends CompletionProvider<CompletionParameters> {

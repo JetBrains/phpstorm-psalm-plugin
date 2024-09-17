@@ -355,6 +355,10 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "mixinClassProperty1", "mixinClassMethod1", "mixinClassProperty2", "mixinClassMethod2");
   }
 
+  public void testDocTagCompletions() {
+    doTestLookupElementsContains("psalm-require-extends", "psalm-require-implements");
+  }
+
   @NeedsIndex.Full
   public void testGenericMixins$genericMixinsInOtherFile() {
     myFixture.addFileToProject("aa.php", """
