@@ -1,0 +1,69 @@
+### auto-generated section `build intellij.psalm` start
+load("@rules_jvm//:jvm.bzl", "jvm_resources")
+load("@rules_jvm//:rules.bzl", "jvm_library")
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
+
+jvm_resources(
+  name = "psalm_resources",
+  files = glob(["resources/**/*"]),
+  strip_prefix = "resources"
+)
+
+jvm_library(
+  name = "psalm",
+  module_name = "intellij.psalm",
+  visibility = ["//visibility:public"],
+  srcs = glob(["src/**/*.kt", "src/**/*.java"], allow_empty = True, exclude = ["**/module-info.java"]),
+  javac_opts = "@rules_jvm//:j17",
+  kotlinc_opts = "@rules_jvm//:k17",
+  deps = [
+    "//phpstorm/php:php-impl",
+    "@community//platform/core-api:core",
+    "@community//platform/analysis-api:analysis",
+    "@community//platform/platform-api:ide",
+    "//phpstorm/php-openapi:php",
+    "@community//platform/core-impl",
+    "@community//platform/projectModel-api:projectModel",
+    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter",
+    "@community//platform/util/jdom",
+    "@community//platform/platform-impl:ide-impl",
+    "@lib//:gson",
+    "@community//platform/lang-impl",
+    "@community//platform/core-ui",
+    "@community//platform/platform-util-io:ide-util-io",
+    "@lib//:stream_ex",
+    "@community//platform/util",
+    "@lib//:fastutil-min",
+  ],
+  runtime_deps = [":psalm_resources"]
+)
+
+kt_jvm_test(
+  name = "psalm_test",
+  visibility = ["//visibility:public"],
+  srcs = glob(["tests/**/*.kt", "tests/**/*.java"], allow_empty = True, exclude = ["**/module-info.java"]),
+  javac_opts = "@rules_jvm//:j17",
+  kotlinc_opts = "@rules_jvm//:k17",
+  associates = [":psalm"],
+  deps = [
+    "//phpstorm/php:php-impl",
+    "@community//platform/core-api:core",
+    "@community//platform/analysis-api:analysis",
+    "@community//platform/platform-api:ide",
+    "//phpstorm/php-openapi:php",
+    "@community//platform/core-impl",
+    "@community//platform/projectModel-api:projectModel",
+    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter",
+    "@community//platform/util/jdom",
+    "@community//platform/platform-impl:ide-impl",
+    "@lib//:gson",
+    "@community//platform/lang-impl",
+    "@community//platform/core-ui",
+    "@community//platform/platform-util-io:ide-util-io",
+    "@lib//:stream_ex",
+    "@community//platform/util",
+    "@lib//:fastutil-min",
+  ],
+  runtime_deps = [":psalm_resources"]
+)
+### auto-generated section `build intellij.psalm` end
