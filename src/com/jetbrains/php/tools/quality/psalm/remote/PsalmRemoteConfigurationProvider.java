@@ -11,10 +11,7 @@ import com.jetbrains.php.remote.interpreter.PhpRemoteSdkAdditionalData;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterConfigurableForm;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
-import com.jetbrains.php.tools.quality.psalm.PsalmConfigurableForm;
-import com.jetbrains.php.tools.quality.psalm.PsalmConfiguration;
-import com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager;
-import com.jetbrains.php.tools.quality.psalm.PsalmConfigurationProvider;
+import com.jetbrains.php.tools.quality.psalm.*;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
+import static com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog.getLocalOrDefaultInterpreterConfiguration;
 import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManager.PSALM;
 
 public class PsalmRemoteConfigurationProvider extends PsalmConfigurationProvider {
@@ -59,8 +57,8 @@ public class PsalmRemoteConfigurationProvider extends PsalmConfigurationProvider
 
   @Override
   public PsalmConfiguration createNewInstance(@Nullable Project project, @NotNull List<PsalmConfiguration> existingSettings) {
-    final QualityToolByInterpreterDialog<PsalmConfiguration, PsalmRemoteConfiguration>
-      dialog = new QualityToolByInterpreterDialog<>(project, existingSettings, PSALM, PsalmRemoteConfiguration.class);
+    var dialog =
+      new QualityToolByInterpreterDialog<>(project, existingSettings, PSALM, PsalmRemoteConfiguration.class, PsalmQualityToolType.INSTANCE);
     if (dialog.showAndGet()) {
       final String id = PhpInterpretersManagerImpl.getInstance(project).findInterpreterId(dialog.getSelectedInterpreterName());
       if (isNotEmpty(id)) {
@@ -68,10 +66,11 @@ public class PsalmRemoteConfigurationProvider extends PsalmConfigurationProvider
         settings.setInterpreterId(id);
 
         final PhpSdkAdditionalData data = PhpInterpretersManagerImpl.getInstance(project).findInterpreterDataById(id);
-        fillDefaultSettings(project, settings, PsalmConfigurationManager.getInstance(project).getLocalSettings(), data, data instanceof PhpRemoteSdkAdditionalData);
+        fillDefaultSettings(project, settings, PsalmConfigurationManager.getInstance(project).getOrCreateLocalSettings(), data, data instanceof PhpRemoteSdkAdditionalData);
 
         return settings;
       }
+      return (PsalmConfiguration)getLocalOrDefaultInterpreterConfiguration(dialog.getSelectedInterpreterName(), project, PsalmQualityToolType.INSTANCE);
     }
     return null;
   }
