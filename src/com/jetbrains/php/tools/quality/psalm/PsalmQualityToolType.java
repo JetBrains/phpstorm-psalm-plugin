@@ -30,7 +30,8 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   }
 
   @Override
-  protected @NotNull QualityToolConfigurationManager<PsalmConfiguration> getConfigurationManager(@NotNull Project project) {
+  @NotNull
+  public QualityToolConfigurationManager<PsalmConfiguration> getConfigurationManager(@NotNull Project project) {
     return PsalmConfigurationManager.getInstance(project);
   }
 

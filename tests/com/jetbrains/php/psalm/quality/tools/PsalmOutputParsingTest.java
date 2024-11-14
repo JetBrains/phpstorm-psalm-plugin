@@ -3,12 +3,11 @@ package com.jetbrains.php.psalm.quality.tools;
 import com.jetbrains.php.fixtures.PhpHeavyCodeInsightFixtureTestCase;
 import com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager;
 import com.jetbrains.php.tools.quality.psalm.PsalmGlobalInspection;
-import org.jetbrains.annotations.NotNull;
 
 public class PsalmOutputParsingTest extends PhpHeavyCodeInsightFixtureTestCase {
  
   public void testSimple() {
-    PsalmConfigurationManager.getInstance(myFixture.getProject()).getLocalSettings().setToolPath("psalm"); // Dummy, needed to run annotator
+    PsalmConfigurationManager.getInstance(myFixture.getProject()).getOrCreateLocalSettings().setToolPath("psalm"); // Dummy, needed to run annotator
     configureByFiles(getFileBeforeRelativePath().replace(".php", ".txt"));
     myFixture.enableInspections(new PsalmGlobalInspection());
     myFixture.testHighlighting(true, false, true);

@@ -16,7 +16,7 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager.DE
 /**
  * Stores configuration needed to run Psalm in selected environment.
  */
-public class PsalmConfiguration implements QualityToolConfiguration {
+public class PsalmConfiguration extends QualityToolConfiguration {
   private String myPsalmPath = "";
   private int myMaxMessagesPerFile = DEFAULT_MAX_MESSAGES_PER_FILE;
   private int myTimeoutMs = 30000;
@@ -63,7 +63,7 @@ public class PsalmConfiguration implements QualityToolConfiguration {
 
   @Override
   @NotNull
-  public @Nls String getId() {
+  public String getId() {
     return PsalmBundle.message("local");
   }
 
