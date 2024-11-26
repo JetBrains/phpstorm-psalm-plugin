@@ -58,6 +58,7 @@ public class PsalmRemoteConfiguration extends PsalmConfiguration implements PhpS
     PsalmRemoteConfiguration settings = new PsalmRemoteConfiguration();
     settings.myInterpreterId = myInterpreterId;
     settings.setCreatedAsDefaultInterpreterConfiguration(this.isCreatedAsDefaultInterpreterConfiguration());
+    settings.setDeletedFromTheList(this.isDeletedFromTheList());
     clone(settings);
     return settings;
   }
