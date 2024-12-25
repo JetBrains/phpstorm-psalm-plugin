@@ -26,9 +26,9 @@ import static com.intellij.openapi.util.text.StringUtil.*;
 import static com.jetbrains.php.tools.quality.psalm.PsalmOpenSettingsProvider.PSALM_OPEN_SETTINGS_PROVIDER;
 
 public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfiguration, PsalmValidationInspection> {
-  @NonNls private static final String PACKAGE = "vimeo/psalm";
-  @NonNls private static final String RELATIVE_PATH = "bin/psalm" + (SystemInfo.isWindows ? ".bat" : "");
-  @NonNls private static final String PSALM_XML = "psalm.xml";
+  private static final @NonNls String PACKAGE = "vimeo/psalm";
+  private static final @NonNls String RELATIVE_PATH = "bin/psalm" + (SystemInfo.isWindows ? ".bat" : "");
+  private static final @NonNls String PSALM_XML = "psalm.xml";
 
   public PsalmComposerConfig() {
     super(PACKAGE, RELATIVE_PATH);
@@ -110,9 +110,8 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
     PsalmOptionsConfiguration.getInstance(project).setConfig(customRuleset);
   }
 
-  @NotNull
   @Override
-  public QualityToolConfigurationManager<PsalmConfiguration> getConfigurationManager(@NotNull Project project) {
+  public @NotNull QualityToolConfigurationManager<PsalmConfiguration> getConfigurationManager(@NotNull Project project) {
     return PsalmConfigurationManager.getInstance(project);
   }
 }

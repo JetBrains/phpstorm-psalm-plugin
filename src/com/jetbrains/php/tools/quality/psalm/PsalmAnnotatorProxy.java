@@ -24,14 +24,13 @@ import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolO
 
 public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationInspection> {
   private static final Logger LOG = Logger.getInstance(PsalmAnnotatorProxy.class);
-  public final static PsalmAnnotatorProxy INSTANCE = new PsalmAnnotatorProxy();
+  public static final PsalmAnnotatorProxy INSTANCE = new PsalmAnnotatorProxy();
 
   @Override
-  @Nullable
-  protected List<String> getOptions(@Nullable String filePath,
-                                    @NotNull PsalmValidationInspection inspection,
-                                    @Nullable InspectionProfile profile,
-                                    @NotNull Project project) {
+  protected @Nullable List<String> getOptions(@Nullable String filePath,
+                                              @NotNull PsalmValidationInspection inspection,
+                                              @Nullable InspectionProfile profile,
+                                              @NotNull Project project) {
     final PsalmGlobalInspection tool = (PsalmGlobalInspection)getQualityToolType().getGlobalTool(project, profile);
     if (tool == null) {
       return emptyList();

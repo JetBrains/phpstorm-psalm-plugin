@@ -18,9 +18,8 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   private PsalmQualityToolType() {
   }
 
-  @NotNull
   @Override
-  public String getDisplayName() {
+  public @NotNull String getDisplayName() {
     return PSALM;
   }
 
@@ -30,8 +29,7 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   }
 
   @Override
-  @NotNull
-  public QualityToolConfigurationManager<PsalmConfiguration> getConfigurationManager(@NotNull Project project) {
+  public @NotNull QualityToolConfigurationManager<PsalmConfiguration> getConfigurationManager(@NotNull Project project) {
     return PsalmConfigurationManager.getInstance(project);
   }
 
@@ -61,9 +59,8 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
     return PsalmProjectConfiguration.getInstance(project);
   }
 
-  @NotNull
   @Override
-  protected PsalmConfiguration createConfiguration() {
+  protected @NotNull PsalmConfiguration createConfiguration() {
     return new PsalmConfiguration();
   }
 

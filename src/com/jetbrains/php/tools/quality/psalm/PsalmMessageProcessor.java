@@ -20,12 +20,12 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmGlobalInspection.PSALM_
 import static java.util.Collections.singletonList;
 
 public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
-  @NonNls private final static String WARNING_MESSAGE_START = "<file name=";
-  @NonNls private final static String WARNING_MESSAGE_END = "</file>";
-  @NonNls private final static String LINE_NUMBER_ATTR = "line";
-  @NonNls private final static String COLUMN_NUMBER_ATTR = "column";
-  private final static String MESSAGE_ATTR = "message";
-  @NonNls private final static String SEVERITY_ATTR = "severity";
+  private static final @NonNls String WARNING_MESSAGE_START = "<file name=";
+  private static final @NonNls String WARNING_MESSAGE_END = "</file>";
+  private static final @NonNls String LINE_NUMBER_ATTR = "line";
+  private static final @NonNls String COLUMN_NUMBER_ATTR = "column";
+  private static final String MESSAGE_ATTR = "message";
+  private static final @NonNls String SEVERITY_ATTR = "severity";
   final Project myProject;
 
   protected PsalmMessageProcessor(QualityToolAnnotatorInfo<?> info) {
@@ -70,10 +70,8 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
     }
   }
 
-  @NonNls
-  @Nullable
   @Override
-  protected String getMessagePrefix() {
+  protected @NonNls @Nullable String getMessagePrefix() {
     return "psalm";
   }
 

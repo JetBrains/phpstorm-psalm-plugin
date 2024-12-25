@@ -10,30 +10,27 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PsalmConfigurationBaseManager extends QualityToolConfigurationBaseManager<PsalmConfiguration> {
-  @NonNls private static final String PSALM_PATH = "PsalmPath";
+  private static final @NonNls String PSALM_PATH = "PsalmPath";
   public static final @NlsSafe String PSALM = "Psalm";
-  @NonNls private static final String ROOT_NAME = "Psalm_settings";
+  private static final @NonNls String ROOT_NAME = "Psalm_settings";
 
   @Override
   protected @NotNull QualityToolType<PsalmConfiguration> getQualityToolType() {
     return PsalmQualityToolType.INSTANCE;
   }
 
-  @NotNull
   @Override
-  protected String getOldStyleToolPathName() {
+  protected @NotNull String getOldStyleToolPathName() {
     return PSALM_PATH;
   }
 
-  @NotNull
   @Override
-  protected String getConfigurationRootName() {
+  protected @NotNull String getConfigurationRootName() {
     return ROOT_NAME;
   }
 
   @Override
-  @Nullable
-  protected PsalmConfiguration loadLocal(Element element) {
+  protected @Nullable PsalmConfiguration loadLocal(Element element) {
     return XmlSerializer.deserialize(element, PsalmConfiguration.class);
   }
 }

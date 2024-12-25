@@ -9,9 +9,8 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManage
 @SuppressWarnings("InspectionDescriptionNotFoundInspection")
 public class PsalmValidationInspection extends QualityToolValidationInspection<PsalmValidationInspection> {
 
-  @NotNull
   @Override
-  protected PsalmAnnotatorProxy getAnnotator() {
+  protected @NotNull PsalmAnnotatorProxy getAnnotator() {
     return PsalmAnnotatorProxy.INSTANCE;
   }
 

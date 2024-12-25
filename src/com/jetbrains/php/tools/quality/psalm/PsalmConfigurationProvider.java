@@ -13,8 +13,7 @@ public abstract class PsalmConfigurationProvider extends QualityToolConfiguratio
   private static final ExtensionPointName<PsalmConfigurationProvider> EP_NAME =
     ExtensionPointName.create("com.jetbrains.php.tools.quality.Psalm.PsalmConfigurationProvider");
 
-  @Nullable
-  public static PsalmConfigurationProvider getInstances() {
+  public static @Nullable PsalmConfigurationProvider getInstances() {
     final @NotNull List<PsalmConfigurationProvider> extensions = EP_NAME.getExtensionList();
     if (extensions.size() > 1) {
       LOG.error("Several providers for remote Psalm configuration was found");

@@ -25,23 +25,21 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManage
 
 public class PsalmRemoteConfigurationProvider extends PsalmConfigurationProvider {
 
-  @NonNls private static final String PSALM_BY_INTERPRETER = "psalm_fixer_by_interpreter";
+  private static final @NonNls String PSALM_BY_INTERPRETER = "psalm_fixer_by_interpreter";
 
   @Override
   public boolean canLoad(@NotNull String tagName) {
     return StringUtil.equals(tagName, PSALM_BY_INTERPRETER);
   }
 
-  @Nullable
   @Override
-  public PsalmConfiguration load(@NotNull Element element) {
+  public @Nullable PsalmConfiguration load(@NotNull Element element) {
     return XmlSerializer.deserialize(element, PsalmRemoteConfiguration.class);
   }
 
-  @Nullable
   @Override
-  public QualityToolConfigurableForm<PsalmRemoteConfiguration> createConfigurationForm(@NotNull Project project,
-                                                                                            @NotNull PsalmConfiguration settings) {
+  public @Nullable QualityToolConfigurableForm<PsalmRemoteConfiguration> createConfigurationForm(@NotNull Project project,
+                                                                                                 @NotNull PsalmConfiguration settings) {
     if (settings instanceof PsalmRemoteConfiguration remoteConfiguration) {
       final PsalmConfigurableForm<PsalmRemoteConfiguration> delegate =
         new PsalmConfigurableForm<>(project, remoteConfiguration);

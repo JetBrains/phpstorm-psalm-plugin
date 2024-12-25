@@ -27,9 +27,8 @@ public class PsalmConfigurableForm<C extends PsalmConfiguration> extends Quality
     return "reference.settings.php.Psalm";
   }
 
-  @NotNull
   @Override
-  public Pair<Boolean, String> validateMessage(@NonNls String message) {
+  public @NotNull Pair<Boolean, String> validateMessage(@NonNls String message) {
     final Version version = extractVersion(message.trim().replaceFirst("Psalm.* v?([\\d.]*).*", "$1").trim());
     if ((version == null && !message.contains("dev-master")) || !message.contains(PSALM)) {
       return Pair.create(false, PhpBundle.message("quality.tool.can.not.determine.version", message));

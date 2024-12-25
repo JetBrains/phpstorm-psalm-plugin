@@ -8,9 +8,7 @@ import com.intellij.util.xmlb.annotations.Tag;
 import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
 import com.jetbrains.php.config.interpreters.PhpSdkDependentConfiguration;
-import com.jetbrains.php.tools.quality.psalm.PsalmBundle;
 import com.jetbrains.php.tools.quality.psalm.PsalmConfiguration;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,9 +20,8 @@ public class PsalmRemoteConfiguration extends PsalmConfiguration implements PhpS
   private String myInterpreterId;
 
   @Override
-  @Nullable
   @Attribute("interpreter_id")
-  public @NlsSafe String getInterpreterId() {
+  public @Nullable @NlsSafe String getInterpreterId() {
     return myInterpreterId;
   }
 
@@ -33,23 +30,20 @@ public class PsalmRemoteConfiguration extends PsalmConfiguration implements PhpS
     myInterpreterId = interpreterId;
   }
 
-  @NotNull
   @Override
-  public @NlsContexts.Label String getPresentableName(@Nullable Project project) {
+  public @NotNull @NlsContexts.Label String getPresentableName(@Nullable Project project) {
     if (isCreatedAsDefaultInterpreterConfiguration()) return PhpBundle.message("quality.tools.label.by.default.project.interpreter");
     return getDefaultName(PhpInterpretersManagerImpl.getInstance(project).findInterpreterName(getInterpreterId()));
   }
 
-  @NotNull
   @Override
-  public String getId() {
+  public @NotNull String getId() {
     if (isCreatedAsDefaultInterpreterConfiguration()) return DEFAULT_INTERPRETER_CONFIGURATION_ID;
     final String interpreterId = getInterpreterId();
     return isEmpty(interpreterId) ? PhpBundle.message("undefined.interpreter") : interpreterId;
   }
 
-  @NotNull
-  public static @NlsContexts.Label String getDefaultName(@NlsContexts.Label @Nullable String interpreterName) {
+  public static @NotNull @NlsContexts.Label String getDefaultName(@NlsContexts.Label @Nullable String interpreterName) {
     return isEmpty(interpreterName) ? PhpBundle.message("undefined.interpreter") : interpreterName;
   }
 

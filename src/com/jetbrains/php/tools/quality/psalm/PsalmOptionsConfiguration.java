@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 @State(name = "PsalmOptionsConfiguration", storages = @Storage("php.xml"))
 public class PsalmOptionsConfiguration extends QualityToolsOptionsConfiguration implements PersistentStateComponent<PsalmOptionsConfiguration> {
 
-  @NlsSafe private String config = "";
+  private @NlsSafe String config = "";
   private boolean showInfo = false;
   private boolean findUnusedCode = false;
   private boolean findUnusedSuppress = false;
@@ -50,9 +50,8 @@ public class PsalmOptionsConfiguration extends QualityToolsOptionsConfiguration 
     this.findUnusedSuppress = findUnusedSuppress;
   }
 
-  @Nullable
   @Override
-  public PsalmOptionsConfiguration getState() {
+  public @Nullable PsalmOptionsConfiguration getState() {
     return this;
   }
 

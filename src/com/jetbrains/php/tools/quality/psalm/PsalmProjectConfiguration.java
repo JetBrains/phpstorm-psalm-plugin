@@ -15,9 +15,8 @@ import org.jetbrains.annotations.Nullable;
 public class PsalmProjectConfiguration extends QualityToolProjectConfiguration<PsalmConfiguration>
   implements PersistentStateComponent<PsalmProjectConfiguration> {
 
-  @Nullable
   @Override
-  public PsalmProjectConfiguration getState() {
+  public @Nullable PsalmProjectConfiguration getState() {
     return this;
   }
 
