@@ -18,6 +18,6 @@ public abstract class PsalmConfigurationProvider extends QualityToolConfiguratio
     if (extensions.size() > 1) {
       LOG.error("Several providers for remote Psalm configuration was found");
     }
-    return extensions.size() == 0 ? null : extensions.get(0);
+    return extensions.isEmpty() ? null : extensions.get(0);
   }
 }
