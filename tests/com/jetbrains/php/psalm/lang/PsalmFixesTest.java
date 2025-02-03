@@ -1,6 +1,5 @@
 package com.jetbrains.php.psalm.lang;
 
-import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.PhpFixesTestCase;
 import com.jetbrains.php.lang.inspections.PhpFullyQualifiedNameUsageInspection;
 import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
