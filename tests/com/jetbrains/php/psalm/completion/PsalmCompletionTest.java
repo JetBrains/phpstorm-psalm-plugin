@@ -432,4 +432,11 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertSameElements(myFixture.getLookupElementStrings(), "staticMethod", "staticMethod2", "class");
   }
+
+  @NeedsIndex.Full
+  public void testArrayShapeWithLineComment() {
+    doInitCompletion();
+    assertSameElements(myFixture.getLookupElementStrings(), "key1", "key2");
+    assertDoesntContain(myFixture.getLookupElementStrings(), "comment", "Comment");
+  }
 }
