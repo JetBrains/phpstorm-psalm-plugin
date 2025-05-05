@@ -40,4 +40,4 @@ class Baz
 $arr = (new Foo(new Bar()))->chain();
 $f = $arr[0]->item();
 
-<type value="mixed|Bar">$f</type>;
+<type value="Bar">$f</type>;

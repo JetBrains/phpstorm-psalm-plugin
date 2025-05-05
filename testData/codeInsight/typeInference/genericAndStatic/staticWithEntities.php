@@ -18,5 +18,5 @@ class EntityList
   function first() {}
 }
 
-<type value="mixed|Users">Users::where()->first()</type>;
-<type value="mixed|Occupations">Occupations::where()->first()</type>;
+<type value="Users">Users::where()->first()</type>;
+<type value="Occupations">Occupations::where()->first()</type>;

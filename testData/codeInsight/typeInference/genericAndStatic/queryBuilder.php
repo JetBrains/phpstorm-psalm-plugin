@@ -31,4 +31,4 @@ class QueryBuilder {
 }
 
 $c = ExampleSubclassExtendingBase::BeginQuery()->one();
-<type value="mixed|ExampleSubclassExtendingBase">$c</type>;
+<type value="ExampleSubclassExtendingBase">$c</type>;

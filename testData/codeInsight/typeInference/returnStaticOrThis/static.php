@@ -32,4 +32,4 @@ $f = (new Foo(new Bar()))
   ->chain()
   ->item();
 
-<type value="mixed|Bar">$f</type>;
+<type value="Bar">$f</type>;

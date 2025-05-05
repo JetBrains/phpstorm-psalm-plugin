@@ -38,8 +38,8 @@ class C
 
 $c = (new B())->query();
 <type value="C">$c</type>;
-<type value="mixed|B">$c->model()</type>;
+<type value="B">$c->model()</type>;
 
 $c2 = (new A())->query();
 <type value="C">$c2</type>;
-<type value="A|mixed">$c2->model()</type>;
+<type value="A">$c2->model()</type>;
