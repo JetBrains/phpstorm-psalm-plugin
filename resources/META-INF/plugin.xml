@@ -1,4 +1,4 @@
-<idea-plugin>
+<idea-plugin allow-bundled-update="true">
   <name>Psalm Support</name>
   <id>com.intellij.php.psalm</id>
   <description>Plugin provides Psalm static analysis tool support</description>
