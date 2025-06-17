@@ -3,9 +3,9 @@
   <id>com.intellij.php.psalm</id>
   <description>Plugin provides Psalm static analysis tool support</description>
   <vendor>JetBrains</vendor>
+  <category>PHP Tools</category>
   <depends>com.jetbrains.php</depends>
   <depends>com.intellij.modules.ultimate</depends>
-  <category>Other Tools</category>
   <resource-bundle>messages.PsalmBundle</resource-bundle>
   <depends optional="true" config-file="psalm-remote-plugin.xml">org.jetbrains.plugins.phpstorm-remote-interpreter</depends>
   <extensions defaultExtensionNs="com.intellij">
