@@ -65,7 +65,6 @@ jvm_library(
     "@community//platform/testFramework:testFramework_test_lib",
     "@community//platform/util/jdom",
     "@community//platform/platform-impl:ide-impl",
-    "@community//platform/platform-impl:ide-impl_test_lib",
     "@lib//:gson",
     "@community//platform/lang-impl",
     "@community//platform/core-ui",
