@@ -1,6 +1,5 @@
 ### auto-generated section `build intellij.psalm` start
-load("@community//build:tests-options.bzl", "jps_test")
-load("@rules_jvm//:jvm.bzl", "jvm_library", "jvm_resources", "jvm_test")
+load("@rules_jvm//:jvm.bzl", "jvm_library", "jvm_resources")
 
 jvm_resources(
   name = "psalm_resources",
@@ -78,9 +77,13 @@ jvm_library(
     ":psalm_test_resources",
   ]
 )
+### auto-generated section `build intellij.psalm` end
+
+### auto-generated section `test intellij.psalm` start
+load("@community//build:tests-options.bzl", "jps_test")
 
 jps_test(
   name = "psalm_test",
   runtime_deps = [":psalm_test_lib"]
 )
-### auto-generated section `build intellij.psalm` end
+### auto-generated section `test intellij.psalm` end
