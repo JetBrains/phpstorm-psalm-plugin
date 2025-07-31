@@ -14,4 +14,4 @@ function b() {
 }
 
 $b1 = a1();
-<type value="int|mixed">$b1()</type>;
+<type value="int">$b1()</type>;
