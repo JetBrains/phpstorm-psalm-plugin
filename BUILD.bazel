@@ -45,7 +45,7 @@ jvm_library(
 jvm_library(
   name = "psalm_test_lib",
   visibility = ["//visibility:public"],
-  srcs = glob(["tests/**/*.kt", "tests/**/*.java", "tests/**/*.form"], allow_empty = True),
+  srcs = glob(["tests/**/*.kt", "tests/**/*.java"], allow_empty = True),
   associates = [":psalm"],
   deps = [
     "//phpstorm/php:php-impl",
