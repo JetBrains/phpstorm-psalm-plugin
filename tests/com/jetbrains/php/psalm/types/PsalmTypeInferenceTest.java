@@ -133,6 +133,18 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testArrayKeyTemplateType() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP850, () -> {
+      doTypeTest();
+    });
+  }
+
+  public void testArrayKeyVarType() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP850, () -> {
+      doTypeTest();
+    });
+  }
+
   public void testTypesFromExtendedClassConstants() {
     doTypeTest();
   }
