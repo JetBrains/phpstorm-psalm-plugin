@@ -72,10 +72,7 @@ jvm_library(
     "@community//platform/util",
     "@lib//:fastutil-min",
   ],
-  runtime_deps = [
-    ":psalm_resources",
-    ":psalm_test_resources",
-  ]
+  runtime_deps = [":psalm_test_resources"]
 )
 ### auto-generated section `build intellij.psalm` end
 
