@@ -38,7 +38,7 @@ jvm_library(
     "@community//platform/platform-util-io:ide-util-io",
     "@lib//:stream_ex",
     "@community//platform/util",
-    "@lib//:fastutil-min",
+    "@community//libraries/fastutil",
   ]
 )
 
@@ -71,7 +71,7 @@ jvm_library(
     "@community//platform/platform-util-io:ide-util-io",
     "@lib//:stream_ex",
     "@community//platform/util",
-    "@lib//:fastutil-min",
+    "@community//libraries/fastutil",
   ]
 )
 ### auto-generated section `build intellij.psalm` end
