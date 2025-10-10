@@ -36,7 +36,7 @@ jvm_library(
     "@community//platform/lang-impl",
     "@community//platform/core-ui",
     "@community//platform/platform-util-io:ide-util-io",
-    "@lib//:stream_ex",
+    "@community//libraries/stream",
     "@community//platform/util",
     "@community//libraries/fastutil",
   ]
@@ -69,7 +69,7 @@ jvm_library(
     "@community//platform/lang-impl",
     "@community//platform/core-ui",
     "@community//platform/platform-util-io:ide-util-io",
-    "@lib//:stream_ex",
+    "@community//libraries/stream",
     "@community//platform/util",
     "@community//libraries/fastutil",
   ]
