@@ -33,12 +33,14 @@ jvm_library(
     "@community//platform/util/jdom",
     "@community//platform/platform-impl:ide-impl",
     "@community//libraries/gson",
+    "@community//platform/lang-api:lang",
     "@community//platform/lang-impl",
     "@community//platform/core-ui",
     "@community//platform/platform-util-io:ide-util-io",
     "@community//libraries/stream",
     "@community//platform/util",
     "@community//libraries/fastutil",
+    "@community//platform/forms_rt:java-guiForms-rt",
   ]
 )
 
@@ -66,12 +68,14 @@ jvm_library(
     "@community//platform/util/jdom",
     "@community//platform/platform-impl:ide-impl",
     "@community//libraries/gson",
+    "@community//platform/lang-api:lang",
     "@community//platform/lang-impl",
     "@community//platform/core-ui",
     "@community//platform/platform-util-io:ide-util-io",
     "@community//libraries/stream",
     "@community//platform/util",
     "@community//libraries/fastutil",
+    "@community//platform/forms_rt:java-guiForms-rt",
   ]
 )
 ### auto-generated section `build intellij.psalm` end
