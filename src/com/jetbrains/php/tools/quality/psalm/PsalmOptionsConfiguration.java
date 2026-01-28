@@ -6,17 +6,22 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.intellij.util.xmlb.annotations.Property;
+import com.intellij.util.xmlb.annotations.Transient;
+import com.jetbrains.php.tools.quality.QualityToolRateLimitSettings;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @State(name = "PsalmOptionsConfiguration", storages = @Storage("php.xml"))
-public class PsalmOptionsConfiguration extends QualityToolsOptionsConfiguration implements PersistentStateComponent<PsalmOptionsConfiguration> {
+public class PsalmOptionsConfiguration extends QualityToolsOptionsConfiguration
+  implements PersistentStateComponent<PsalmOptionsConfiguration> {
 
   private @NlsSafe String config = "";
   private boolean showInfo = false;
   private boolean findUnusedCode = false;
   private boolean findUnusedSuppress = false;
+  private QualityToolRateLimitSettings rateLimitSettings = new QualityToolRateLimitSettings();
 
   public String getConfig() {
     return config;
@@ -48,6 +53,16 @@ public class PsalmOptionsConfiguration extends QualityToolsOptionsConfiguration 
 
   public void setFindUnusedSuppress(boolean findUnusedSuppress) {
     this.findUnusedSuppress = findUnusedSuppress;
+  }
+
+  @Property(flat = true)
+  public @NotNull QualityToolRateLimitSettings getRateLimitSettings() {
+    return rateLimitSettings;
+  }
+
+  @SuppressWarnings("UnusedDeclaration")
+  public void setRateLimitSettings(@NotNull QualityToolRateLimitSettings rateLimitSettings) {
+    this.rateLimitSettings = rateLimitSettings;
   }
 
   @Override

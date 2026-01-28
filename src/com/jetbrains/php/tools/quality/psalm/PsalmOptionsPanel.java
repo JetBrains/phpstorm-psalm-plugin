@@ -12,6 +12,8 @@ import com.jetbrains.php.config.interpreters.PhpInterpreter;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
+import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitPanel;
+import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitUI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,6 +37,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   private final JBCheckBox myShowInfoJBCheckBox;
   private final JBCheckBox myFindUnusedCheckbox;
   private final JBCheckBox myFindUnusedSuppressCheckbox;
+  private final QualityToolRateLimitPanel myRateLimitPanel;
   private final QualityToolConfigurationComboBox myComboBox;
 
   public PsalmOptionsPanel(Project project, QualityToolConfigurationComboBox comboBox, Runnable validate) {
@@ -45,9 +48,9 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
       // >>> IMPORTANT!! <<<
       // DO NOT EDIT OR ADD ANY CODE HERE!
       myOptionsPanel = new JPanel();
-      myOptionsPanel.setLayout(new GridLayoutManager(5, 2, new Insets(0, 5, 0, 0), -1, -1));
+      myOptionsPanel.setLayout(new GridLayoutManager(6, 2, new Insets(0, 5, 0, 0), -1, -1));
       final Spacer spacer1 = new Spacer();
-      myOptionsPanel.add(spacer1, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1,
+      myOptionsPanel.add(spacer1, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1,
                                                       GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
       myShowInfoJBCheckBox = new JBCheckBox();
       this.$$$loadButtonText$$$(myShowInfoJBCheckBox, this.$$$getMessageFromBundle$$$("messages/PsalmBundle", "psalm.show.info"));
@@ -67,6 +70,11 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
                          new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
                                              GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0,
                                              false));
+      myRateLimitPanel = new QualityToolRateLimitPanel();
+      myOptionsPanel.add(myRateLimitPanel, new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                                                               GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                                                               GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                                                               null, null, null, 0, false));
       final JPanel panel1 = new JPanel();
       panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
       myOptionsPanel.add(panel1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
@@ -85,6 +93,8 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
                                                             null, null, null, 0, false));
     }
     PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(project);
+    myRateLimitPanel.configure(QualityToolRateLimitUI.DEFAULT_UI);
+    myRateLimitPanel.reset(configuration.getRateLimitSettings());
     myConfigPathTextField.setText(configuration.getConfig());
     myConfigPathTextField
       .init(project, getSdkAdditionalData(project, comboBox), PsalmBundle.message("psalm.configuration.file"), true, false);
@@ -170,7 +180,6 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
 
   /** @noinspection ALL */
   public JComponent $$$getRootComponent$$$() { return myOptionsPanel; }
-
   @Override
   protected @Nullable String validatePath() {
     PhpInterpreter interpreter = getSelectedInterpreter(myProject, myComboBox);
@@ -193,6 +202,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   @Override
   public void reset() {
     PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(myProject);
+    myRateLimitPanel.reset(configuration.getRateLimitSettings());
     myConfigPathTextField.setText(configuration.getConfig());
     myShowInfoJBCheckBox.setSelected(configuration.isShowInfo());
     myFindUnusedCheckbox.setSelected(configuration.isFindUnusedCode());
@@ -202,6 +212,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   @Override
   public boolean isModified() {
     PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(myProject);
+    if (myRateLimitPanel.isModified(configuration.getRateLimitSettings())) return true;
     if (!StringUtil.equals(myConfigPathTextField.getText(), configuration.getConfig())) return true;
     if (myShowInfoJBCheckBox.isSelected() != configuration.isShowInfo()) return true;
     if (myFindUnusedCheckbox.isSelected() != configuration.isFindUnusedCode()) return true;
@@ -212,6 +223,7 @@ public class PsalmOptionsPanel extends QualityToolsOptionsPanel {
   @Override
   public void apply() {
     PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(myProject);
+    myRateLimitPanel.applyTo(configuration.getRateLimitSettings());
     configuration.setConfig(myConfigPathTextField.getText());
     configuration.setFindUnusedCode(myFindUnusedCheckbox.isSelected());
     configuration.setFindUnusedSuppress(myFindUnusedSuppressCheckbox.isSelected());
