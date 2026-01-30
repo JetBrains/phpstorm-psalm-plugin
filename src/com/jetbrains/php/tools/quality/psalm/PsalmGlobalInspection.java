@@ -30,7 +30,6 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -116,7 +115,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
           getToolOutput(project, configuration.getInterpreterId(), configuration.getToolPath(), configuration.getTimeout(),
                         PsalmBundle.message("action.generate.psalm.xml.in.project.root"), null, "--init", ".", "3");
           final Path configPath = Paths.get(project.getBasePath(), "psalm.xml");
-          markDirtyAndRefresh(true, false, false, new File(configPath.toString()));
+          markDirtyAndRefresh(true, false, false, configPath);
           updateInspectionSettings(configPath);
           notification.expire();
         }
