@@ -1,6 +1,12 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.codeInspection.*;
+import com.intellij.codeInspection.GlobalInspectionContext;
+import com.intellij.codeInspection.InspectionManager;
+import com.intellij.codeInspection.InspectionManagerBase;
+import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.codeInspection.ProblemDescriptionsProcessor;
+import com.intellij.codeInspection.ProblemDescriptor;
+import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.execution.ExecutionException;
 import com.intellij.notification.Notification;
@@ -35,7 +41,9 @@ import static com.intellij.codeInspection.ex.EditInspectionToolsSettingsAction.e
 import static com.intellij.notification.NotificationType.WARNING;
 import static com.intellij.openapi.util.text.StringUtilRt.isEmpty;
 import static com.intellij.openapi.vfs.VfsUtil.markDirtyAndRefresh;
-import static com.jetbrains.php.tools.quality.QualityToolAnnotator.*;
+import static com.jetbrains.php.tools.quality.QualityToolAnnotator.GROUP_ID;
+import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemoteMappingExists;
+import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateToLocalIfRemote;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {

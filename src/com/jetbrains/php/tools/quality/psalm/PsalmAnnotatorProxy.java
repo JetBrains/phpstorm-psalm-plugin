@@ -9,7 +9,11 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.util.ArrayUtil;
 import com.jetbrains.php.PhpBundle;
-import com.jetbrains.php.tools.quality.*;
+import com.jetbrains.php.tools.quality.QualityToolAnnotator;
+import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
+import com.jetbrains.php.tools.quality.QualityToolConfiguration;
+import com.jetbrains.php.tools.quality.QualityToolMessageProcessor;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

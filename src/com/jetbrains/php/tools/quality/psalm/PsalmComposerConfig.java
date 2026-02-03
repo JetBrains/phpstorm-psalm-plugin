@@ -22,7 +22,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.intellij.openapi.util.text.StringUtil.*;
+import static com.intellij.openapi.util.text.StringUtil.split;
+import static com.intellij.openapi.util.text.StringUtil.startsWith;
+import static com.intellij.openapi.util.text.StringUtil.trimStart;
 import static com.jetbrains.php.tools.quality.psalm.PsalmOpenSettingsProvider.PSALM_OPEN_SETTINGS_PROVIDER;
 
 public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfiguration, PsalmValidationInspection> {
