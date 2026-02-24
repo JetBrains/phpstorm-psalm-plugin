@@ -1,3 +1,6 @@
+- name: lib/modules/intellij.psalm.remoteInterpreter.jar
+  contentModules:
+  - name: intellij.psalm.remoteInterpreter
 - name: lib/psalm.jar
   modules:
   - name: intellij.psalm
