@@ -41,6 +41,8 @@ jvm_library(
     "@community//platform/util",
     "@community//libraries/fastutil",
     "@community//platform/forms_rt:java-guiForms-rt",
+    "@community//platform/util/concurrency",
+    "@community//platform/execution",
   ]
 )
 
@@ -93,6 +95,10 @@ jvm_library(
     "@community//libraries/fastutil:fastutil_test_lib",
     "@community//platform/forms_rt:java-guiForms-rt",
     "@community//platform/forms_rt:java-guiForms-rt_test_lib",
+    "@community//platform/util/concurrency",
+    "@community//platform/util/concurrency:concurrency_test_lib",
+    "@community//platform/execution",
+    "@community//platform/execution:execution_test_lib",
   ],
   runtime_deps = [
     "@community//platform/platform-impl:ide-impl_test_lib",
