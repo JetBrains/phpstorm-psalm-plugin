@@ -7,12 +7,6 @@ resourcegroup(
   strip_prefix = "resources"
 )
 
-resourcegroup(
-  name = "psalm_test_resources",
-  srcs = glob(["testData/**/*"]),
-  strip_prefix = "testData"
-)
-
 jvm_library(
   name = "psalm",
   module_name = "intellij.psalm",
@@ -48,10 +42,68 @@ jvm_library(
 
 jvm_library(
   name = "psalm_test_lib",
+  module_name = "intellij.psalm",
+  visibility = ["//visibility:public"],
+  srcs = glob([], allow_empty = True),
+  runtime_deps = [
+    ":psalm",
+    "//phpstorm/php:php-impl_test_lib",
+    "@community//platform/core-api:core_test_lib",
+    "@community//platform/analysis-api:analysis_test_lib",
+    "@community//platform/editor-ui-api:editor-ui_test_lib",
+    "@community//platform/platform-api:ide_test_lib",
+    "//phpstorm/php-openapi:php_test_lib",
+    "@community//platform/core-impl:core-impl_test_lib",
+    "@community//platform/projectModel-api:projectModel_test_lib",
+    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter_test_lib",
+    "@community//platform/remote-core:remote-core_test_lib",
+    "@community//platform/testFramework",
+    "@community//platform/testFramework:testFramework_test_lib",
+    "@community//platform/util/jdom:jdom_test_lib",
+    "@community//platform/platform-impl:ide-impl_test_lib",
+    "@community//libraries/gson:gson_test_lib",
+    "@community//platform/lang-api:lang_test_lib",
+    "@community//platform/lang-impl:lang-impl_test_lib",
+    "@community//platform/core-ui:core-ui_test_lib",
+    "@community//platform/platform-util-io:ide-util-io_test_lib",
+    "@community//libraries/stream:stream_test_lib",
+    "@community//platform/util:util_test_lib",
+    "@community//libraries/fastutil:fastutil_test_lib",
+    "@community//platform/forms_rt:java-guiForms-rt_test_lib",
+    "@community//platform/util/concurrency:concurrency_test_lib",
+    "@community//platform/execution:execution_test_lib",
+  ]
+)
+### auto-generated section `build intellij.psalm` end
+
+### auto-generated section `iml intellij.psalm` start
+exports_files([
+  "intellij.psalm.iml",
+], visibility = ["//visibility:public"])
+### auto-generated section `iml intellij.psalm` end
+
+### auto-generated section `build intellij.psalm.tests` start
+resourcegroup(
+  name = "psalm-tests_test_resources",
+  srcs = glob(["testData/**/*"]),
+  strip_prefix = "testData"
+)
+
+jvm_library(
+  name = "psalm-tests",
+  visibility = ["//visibility:public"],
+  srcs = glob([], allow_empty = True)
+)
+
+jvm_library(
+  name = "psalm-tests_test_lib",
   visibility = ["//visibility:public"],
   srcs = glob(["tests/**/*.kt", "tests/**/*.java", "tests/**/*.form"], allow_empty = True),
-  resources = [":psalm_test_resources"],
-  associates = [":psalm"],
+  resources = [":psalm-tests_test_resources"],
+  associates = [
+    "//phpstorm/psalm",
+    "//phpstorm/psalm:psalm_test_lib",
+  ],
   deps = [
     "//phpstorm/php:php-impl",
     "//phpstorm/php:php-impl_test_lib",
@@ -99,25 +151,30 @@ jvm_library(
     "@community//platform/util/concurrency:concurrency_test_lib",
     "@community//platform/execution",
     "@community//platform/execution:execution_test_lib",
+    "//phpstorm/php:php-impl-tests",
+    "//phpstorm/php:php-impl-tests_test_lib",
+    "//phpstorm/php-frontback-impl:php-frontback-impl-tests",
+    "//phpstorm/php-frontback-impl:php-frontback-impl-tests_test_lib",
   ],
   runtime_deps = [
+    ":psalm-tests",
     "@community//platform/platform-impl:ide-impl_test_lib",
     "@community//platform/platform-util-io:ide-util-io_test_lib",
   ]
 )
-### auto-generated section `build intellij.psalm` end
+### auto-generated section `build intellij.psalm.tests` end
 
-### auto-generated section `iml intellij.psalm` start
+### auto-generated section `iml intellij.psalm.tests` start
 exports_files([
-  "intellij.psalm.iml",
+  "intellij.psalm.tests.iml",
 ], visibility = ["//visibility:public"])
-### auto-generated section `iml intellij.psalm` end
+### auto-generated section `iml intellij.psalm.tests` end
 
-### auto-generated section `test intellij.psalm` start
+### auto-generated section `test intellij.psalm.tests` start
 load("@community//build:tests-options.bzl", "jps_test")
 
 jps_test(
-  name = "psalm_test",
-  runtime_deps = [":psalm_test_lib"]
+  name = "psalm-tests_test",
+  runtime_deps = [":psalm-tests_test_lib"]
 )
-### auto-generated section `test intellij.psalm` end
+### auto-generated section `test intellij.psalm.tests` end
