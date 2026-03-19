@@ -91,6 +91,7 @@ resourcegroup(
 
 jvm_library(
   name = "psalm-tests",
+  module_name = "intellij.psalm.tests",
   visibility = ["//visibility:public"],
   srcs = glob([], allow_empty = True)
 )
