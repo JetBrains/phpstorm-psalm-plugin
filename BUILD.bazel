@@ -30,8 +30,10 @@ jvm_library(
     "@community//platform/lang-impl",
     "@community//platform/core-ui",
     "@community//platform/platform-util-io:ide-util-io",
+    "@community//platform/ide-core",
     "@community//libraries/stream",
     "@community//platform/util",
+    "@community//platform/util:util-ui",
     "@community//libraries/fastutil",
     "@community//platform/forms_rt:java-guiForms-rt",
     "@community//platform/util/concurrency",
@@ -64,8 +66,10 @@ jvm_library(
     "@community//platform/lang-impl:lang-impl_test_lib",
     "@community//platform/core-ui:core-ui_test_lib",
     "@community//platform/platform-util-io:ide-util-io_test_lib",
+    "@community//platform/ide-core:ide-core_test_lib",
     "@community//libraries/stream:stream_test_lib",
     "@community//platform/util:util_test_lib",
+    "@community//platform/util:util-ui_test_lib",
     "@community//libraries/fastutil:fastutil_test_lib",
     "@community//platform/forms_rt:java-guiForms-rt_test_lib",
     "@community//platform/util/concurrency:concurrency_test_lib",
@@ -138,6 +142,7 @@ jvm_library(
     "@community//platform/core-ui",
     "@community//platform/core-ui:core-ui_test_lib",
     "@community//platform/platform-util-io:ide-util-io",
+    "@community//platform/ide-core",
     "@community//libraries/stream",
     "@community//libraries/stream:stream_test_lib",
     "@community//platform/util",
@@ -159,6 +164,7 @@ jvm_library(
     ":psalm-tests",
     "@community//platform/platform-impl:ide-impl_test_lib",
     "@community//platform/platform-util-io:ide-util-io_test_lib",
+    "@community//platform/ide-core:ide-core_test_lib",
   ]
 )
 ### auto-generated section `build intellij.psalm.tests` end
