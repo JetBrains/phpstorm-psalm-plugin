@@ -756,6 +756,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testAdvancedCallableMethodRefCallable() {
+    doTypeTest();
+  }
+
   public void testTemplatedArrayKey() {
     doTypeTest();
   }
