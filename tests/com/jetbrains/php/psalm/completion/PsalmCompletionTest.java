@@ -3,9 +3,13 @@ package com.jetbrains.php.psalm.completion;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementPresentation;
 import com.intellij.testFramework.NeedsIndex;
+import com.intellij.testFramework.TestFrameworkUtil;
+import com.intellij.testFramework.TestIndexingModeSupporter;
 import com.jetbrains.php.PhpIcons;
 import com.jetbrains.php.fixtures.PhpCompletionTestCase;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -438,5 +442,12 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     doInitCompletion();
     assertSameElements(myFixture.getLookupElementStrings(), "key1", "key2");
     assertDoesntContain(myFixture.getLookupElementStrings(), "comment", "Comment");
+  }
+
+  public static Test suite() {
+    TestSuite suite = new TestSuite();
+    suite.addTestSuite(PsalmCompletionTest.class);
+    TestIndexingModeSupporter.addAllTests(PsalmCompletionTest.class, suite);
+    return TestFrameworkUtil.flattenSuite(suite);
   }
 }
