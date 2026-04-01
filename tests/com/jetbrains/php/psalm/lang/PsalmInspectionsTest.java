@@ -2,6 +2,7 @@ package com.jetbrains.php.psalm.lang;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.jetbrains.php.PhpInspectionTestCase;
+import com.jetbrains.php.config.PhpLanguageLevel;
 import com.jetbrains.php.lang.inspections.PhpUndefinedClassInspection;
 import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
 import com.jetbrains.php.lang.inspections.controlFlow.PhpUnreachableStatementInspection;
@@ -49,6 +50,10 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
 
   public void testUndefinedClassNoReturn() {
     doInspectionTest(PhpUndefinedClassInspection.class);
+  }
+
+  public void testUndefinedClassArrayValueOfBackedEnum() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP810, () -> doInspectionTest(PhpUndefinedClassInspection.class));
   }
 
   public void testDocRefInsideDocType() {

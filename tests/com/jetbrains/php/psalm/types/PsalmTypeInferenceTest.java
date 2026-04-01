@@ -803,6 +803,14 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testValueOfBackedEnumInArray() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP810, () -> doTypeTest());
+  }
+
+  public void testValueOfBackedEnumInArrayShorthand() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP810, () -> doTypeTest());
+  }
+
   public void testFetchExtendsThroughIntermediateValue() {
     doTypeTest();
   }
