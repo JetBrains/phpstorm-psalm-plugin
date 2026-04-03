@@ -38,6 +38,11 @@
                          id="settings.php.quality.tools.psalm"
                          parentId="settings.php.quality.tools"
                          groupWeight="15"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.psalm.PsalmProjectConfiguration"/>
+    <applicationSettings service="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager$PsalmAppConfigurationManager"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager$PsalmProjectConfigurationManager"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.psalm.PsalmOptionsConfiguration"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.psalm.PsalmBlackList"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.jetbrains.php">
