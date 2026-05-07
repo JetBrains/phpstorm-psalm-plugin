@@ -1,18 +1,13 @@
 ### auto-generated section `build intellij.psalm.remoteInterpreter` start
-load("@rules_jvm//:jvm.bzl", "jvm_library", "resourcegroup")
-
-resourcegroup(
-  name = "remoteInterpreter_resources",
-  srcs = glob(["resources/**/*"]),
-  strip_prefix = "resources"
-)
+load("@rules_jvm//:jvm.bzl", "jvm_library")
 
 jvm_library(
   name = "remoteInterpreter",
   module_name = "intellij.psalm.remoteInterpreter",
   visibility = ["//visibility:public"],
   srcs = glob(["src/**/*.kt", "src/**/*.java", "src/**/*.form"], allow_empty = True),
-  resources = [":remoteInterpreter_resources"],
+  resources = glob(["resources/**/*"]),
+  resource_strip_prefix = "resources",
   deps = [
     "//phpstorm/psalm",
     "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter",
