@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -16,6 +15,7 @@ import com.jetbrains.php.composer.ComposerDataService;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
 import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
+import com.jetbrains.php.util.PhpOsUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,11 +29,15 @@ import static com.jetbrains.php.tools.quality.psalm.PsalmOpenSettingsProvider.PS
 
 public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfiguration, PsalmValidationInspection> {
   private static final @NonNls String PACKAGE = "vimeo/psalm";
-  private static final @NonNls String RELATIVE_PATH = "bin/psalm" + (SystemInfo.isWindows ? ".bat" : "");
   private static final @NonNls String PSALM_XML = "psalm.xml";
 
   public PsalmComposerConfig() {
-    super(PACKAGE, RELATIVE_PATH);
+    super(PACKAGE);
+  }
+
+  @Override
+  protected @NotNull String getRelativePath(@Nullable Project project) {
+    return "bin/psalm" + (PhpOsUtil.isWindows(project) ? ".bat" : "");
   }
 
   @Override
