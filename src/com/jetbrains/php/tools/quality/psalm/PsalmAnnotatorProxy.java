@@ -16,6 +16,7 @@ import com.jetbrains.php.tools.quality.QualityToolMessageProcessor;
 import com.jetbrains.php.tools.quality.QualityToolRateLimitSettings;
 import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.RateLimitedQualityToolAnnotator;
+import com.jetbrains.php.util.PhpPathUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,8 +55,8 @@ public class PsalmAnnotatorProxy extends RateLimitedQualityToolAnnotator<PsalmVa
     }
     else {
       path = Paths.get(options.get(options.indexOf("-c") + 1));
-      path = Path.of(updateToLocalIfRemote(path.toString(), project, PsalmQualityToolType.INSTANCE));
-      if (options.contains("-c") && !Files.exists(path) && FileUtil.isAncestor(project.getBasePath(), path.toString(), false)) {
+      path = PhpPathUtils.tryParsePath(updateToLocalIfRemote(path.toString(), project, PsalmQualityToolType.INSTANCE));
+      if (options.contains("-c") && path != null && !Files.exists(path) && FileUtil.isAncestor(project.getBasePath(), path.toString(), false)) {
         PsalmGlobalInspection.notifyAboutMissingConfig(project, path.toString());
       }
     }

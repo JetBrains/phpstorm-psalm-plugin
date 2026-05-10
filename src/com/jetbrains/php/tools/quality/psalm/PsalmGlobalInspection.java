@@ -26,6 +26,7 @@ import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolValidationException;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
+import com.jetbrains.php.util.PhpPathUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -61,8 +62,8 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
     }
     else {
       path = Paths.get(options.get(options.indexOf("-c") + 1));
-      path = Path.of(updateToLocalIfRemote(path.toString(),project, PsalmQualityToolType.INSTANCE));
-      if (options.contains("-c") && !Files.exists(path)) {
+      path = PhpPathUtils.tryParsePath(updateToLocalIfRemote(path.toString(), project, PsalmQualityToolType.INSTANCE));
+      if (options.contains("-c") && path != null && !Files.exists(path)) {
         notifyAboutMissingConfig(project, path.toString());
       }
     }
