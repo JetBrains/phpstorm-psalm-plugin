@@ -7,7 +7,7 @@
   <resource-bundle>messages.PsalmBundle</resource-bundle>
 
   <dependencies>
-    <plugin id="com.jetbrains.php"/>
+    <module name="intellij.php.backend"/>
     <plugin id="com.intellij.modules.ultimate"/>
   </dependencies>
   <content>
