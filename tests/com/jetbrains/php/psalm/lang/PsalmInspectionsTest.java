@@ -105,6 +105,14 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
     doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
   }
 
+  public void testVariadicClosureParams() {
+    doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
+  }
+
+  public void testVariadicArrowFunctionParams() {
+    doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
+  }
+
   public void testParamTagInsideCallable() {
     doInspectionTest(PhpVarTagWithoutVariableNameInspection.class);
   }
