@@ -497,6 +497,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testIssues$wi85100DryRunRegressions() {
+    doTypeTest();
+  }
+
   public void testParameterUnwrapToArray() {
     doTypeTest();
   }
