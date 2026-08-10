@@ -18,7 +18,7 @@ interface ISeq extends \IteratorAggregate {
 
 function walkISeq(ISeq $seq) {
   foreach ($seq as $value) {
-    <type value="\A\I">$value</type>;
+    <type value="mixed|\A\I">$value</type>;
   }
 }
 
@@ -46,6 +46,6 @@ interface ISeq extends \IteratorAggregate {
 */
 function walkISeq(ISeq $seq) {
   foreach ($seq as $value) {
-    <type value="\B\I">$value</type>;
+    <type value="mixed|\B\I">$value</type>;
   }
 }

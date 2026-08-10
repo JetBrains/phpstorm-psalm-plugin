@@ -604,13 +604,13 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
-/*  public void testGenericIteratorBases() {
+  public void testGenericIteratorBases() {
     doTypeTest();
   }
 
   public void testGenericIteratorSubstitutionByImplementedMethod() {
     doTypeTest();
-  }*/
+  }
 
   public void testGenericPassingParameter() {
     doTypeTest();
