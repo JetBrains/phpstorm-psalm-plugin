@@ -898,6 +898,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest(true);
   }
 
+  public void testDocMethodReturnsClassTemplateList() {
+    doTypeTest(true);
+  }
+
   public void testGenericAndStatic$static() {
     doTypeTest(true);
   }
