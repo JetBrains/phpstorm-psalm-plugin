@@ -16,3 +16,15 @@ This plugin adds dedicated functionality for [Psalm](https://psalm.dev/) to [Php
 
 - Existing PhpStorm code analysis features are aware of Psalm-specific annotations
 - New Psalm-related inspections
+
+## Building from source
+
+The repository includes a Gradle wrapper and downloads the required JDK automatically.
+
+```shell
+./gradlew buildPlugin
+```
+
+The plugin archive is written to `build/distributions`. Use `./gradlew runIde` to start a development instance of PhpStorm with the plugin installed.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for test and contribution instructions.
