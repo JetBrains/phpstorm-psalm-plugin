@@ -104,7 +104,6 @@ exports_files(
 ### auto-generated section `dev content intellij.psalm` start
 dev_dist_plugin_content(
     name = "psalm_dev_content",
-    content_modules = ["//phpstorm/psalm/remoteInterpreter"],
     descriptor_module = ":psalm",
     libraries = [
         "@lib//:com.google.code.gson/gson-2.13.2.jar",
@@ -120,6 +119,9 @@ dev_dist_plugin_content(
         "@lib//:org.slf4j/slf4j-api-2.0.13.jar",
         "@lib//:org.slf4j/slf4j-jdk14-2.0.13.jar",
     ],
+    prepacked_content_modules = {
+        "//phpstorm/psalm/remoteInterpreter": "modules/intellij.psalm.remoteInterpreter.jar",
+    },
     visibility = ["//visibility:public"],
 )
 ### auto-generated section `dev content intellij.psalm` end
