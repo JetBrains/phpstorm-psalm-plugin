@@ -54,8 +54,7 @@ class PsalmOptionsPanel(
     myRateLimitPanel.configure(QualityToolRateLimitUI.DEFAULT_UI)
     myRateLimitPanel.reset(configuration.rateLimitSettings)
     myConfigPathTextField.text = configuration.config
-    myConfigPathTextField.init(project, getSdkAdditionalData(project, myComboBox),
-                               PsalmBundle.message("psalm.configuration.file"), true, false)
+    bindSdkBasedBrowse(project, myConfigPathTextField, myComboBox, PsalmBundle.message("psalm.configuration.file"), true, false)
     myShowInfoJBCheckBox.isSelected = configuration.isShowInfo
     myFindUnusedCheckbox.isSelected = configuration.isFindUnusedCode
     myFindUnusedSuppressCheckbox.isSelected = configuration.isFindUnusedSuppress
