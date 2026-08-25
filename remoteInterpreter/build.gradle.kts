@@ -29,15 +29,3 @@ dependencies {
 }
 
 configureJvm()
-
-tasks.processResources {
-  filesMatching("intellij.psalm.remoteInterpreter.xml") {
-    filter {
-      when {
-        it == "<idea-plugin>" -> "<idea-plugin package=\"com.intellij.psalm.remoteInterpreter\">"
-        it.contains("<module name=\"intellij.php.backend\"/>") -> ""
-        else -> it
-      }
-    }
-  }
-}

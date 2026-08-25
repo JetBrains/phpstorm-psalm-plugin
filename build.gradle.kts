@@ -52,18 +52,6 @@ dependencies {
 configureJvm()
 
 tasks {
-  processResources {
-    filesMatching("intellij.psalm.remoteInterpreter.xml") {
-      filter {
-        when {
-          it == "<idea-plugin>" -> "<idea-plugin package=\"com.intellij.psalm.remoteInterpreter\">"
-          it.contains("<module name=\"intellij.php.backend\"/>") -> ""
-          else -> it
-        }
-      }
-    }
-  }
-
   test {
     systemProperty("idea.home.path", projectDir.absolutePath)
   }
@@ -76,17 +64,6 @@ tasks {
     version = prop("pluginVersion")
     sinceBuild.set(prop("pluginSinceBuild"))
     prop("pluginUntilBuild").takeIf(String::isNotEmpty)?.let(untilBuild::set)
-    doLast {
-      val descriptor = outputFile.get().asFile
-      val compatibleDescriptor = descriptor.readText()
-        .replace("    <module name=\"intellij.php.backend\" />\r\n", "")
-        .replace("    <module name=\"intellij.php.backend\" />\n", "")
-        .replace(
-          "    <plugin id=\"com.intellij.modules.ultimate\" />",
-          "    <plugin id=\"com.intellij.modules.ultimate\" />\n    <plugin id=\"com.jetbrains.php\" />",
-        )
-      descriptor.writeText(compatibleDescriptor)
-    }
   }
 
   verifyPlugin {
