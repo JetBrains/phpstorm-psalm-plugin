@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.psalm
 
+import com.intellij.openapi.util.Disposer
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.util.ui.UIUtil
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse
@@ -12,7 +13,9 @@ class PsalmOptionsPanelParityTest : BasePlatformTestCase() {
 
   private val captions = listOf("Show info", "Find unused code", "Find unused @psalm-suppress")
 
+  // the combo box is a Disposable that holds the project; nothing else owns it in the test
   private fun comboBox() = QualityToolConfigurationComboBox(project, PsalmQualityToolType.INSTANCE)
+    .also { Disposer.register(testRootDisposable, it) }
 
   private fun createPanel(): PsalmOptionsPanel = PsalmOptionsPanel(project, comboBox(), Runnable {})
 
