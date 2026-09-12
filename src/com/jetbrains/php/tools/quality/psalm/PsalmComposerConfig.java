@@ -5,7 +5,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.StandardFileSystems;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.profile.codeInspection.InspectionProfileManager;
 import com.intellij.psi.PsiDirectory;
@@ -48,7 +48,7 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
   @Override
   protected boolean applyRulesetFromComposer(@NotNull Project project, PsalmConfiguration configuration) {
     final String configPath = ComposerDataService.getInstance(project).getConfigPath();
-    final VirtualFile config = LocalFileSystem.getInstance().refreshAndFindFileByPath(configPath);
+    final VirtualFile config = StandardFileSystems.local().refreshAndFindFileByPath(configPath);
     if (config == null) return false;
 
     final String ruleset = getRuleset(config);
