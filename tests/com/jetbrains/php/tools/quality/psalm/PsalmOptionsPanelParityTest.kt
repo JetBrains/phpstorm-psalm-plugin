@@ -1,12 +1,8 @@
 package com.jetbrains.php.tools.quality.psalm
 
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.util.Disposer
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
-import com.intellij.testFramework.registerOrReplaceServiceInstance
 import com.intellij.util.ui.UIUtil
-import com.jetbrains.php.config.PhpProjectConfigurationFacade
-import com.jetbrains.php.config.PhpProjectWorkspaceConfiguration
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox
 import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitPanel
@@ -16,37 +12,6 @@ import javax.swing.JLabel
 class PsalmOptionsPanelParityTest : BasePlatformTestCase() {
 
   private val captions = listOf("Show info", "Find unused code", "Find unused @psalm-suppress")
-
-  override fun setUp() {
-    super.setUp()
-    ApplicationManager.getApplication().registerOrReplaceServiceInstance(
-      PsalmConfigurationManager.PsalmAppConfigurationManager::class.java,
-      PsalmConfigurationManager.PsalmAppConfigurationManager(),
-      testRootDisposable,
-    )
-    project.registerOrReplaceServiceInstance(
-      PsalmConfigurationManager.PsalmProjectConfigurationManager::class.java,
-      PsalmConfigurationManager.PsalmProjectConfigurationManager(),
-      testRootDisposable,
-    )
-    project.registerOrReplaceServiceInstance(
-      PsalmConfigurationManager::class.java,
-      PsalmConfigurationManager(project),
-      testRootDisposable,
-    )
-    project.registerOrReplaceServiceInstance(PsalmProjectConfiguration::class.java, PsalmProjectConfiguration(), testRootDisposable)
-    project.registerOrReplaceServiceInstance(PsalmOptionsConfiguration::class.java, PsalmOptionsConfiguration(), testRootDisposable)
-    project.registerOrReplaceServiceInstance(
-      PhpProjectWorkspaceConfiguration::class.java,
-      PhpProjectWorkspaceConfiguration(),
-      testRootDisposable,
-    )
-    project.registerOrReplaceServiceInstance(
-      PhpProjectConfigurationFacade::class.java,
-      PhpProjectConfigurationFacade(project),
-      testRootDisposable,
-    )
-  }
 
   // the combo box is a Disposable that holds the project; nothing else owns it in the test
   private fun comboBox() = QualityToolConfigurationComboBox(project, PsalmQualityToolType.INSTANCE)
