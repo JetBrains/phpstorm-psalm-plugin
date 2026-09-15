@@ -5,7 +5,6 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.util.ui.UIUtil
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox
-import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitPanel
 import javax.swing.JCheckBox
 import javax.swing.JLabel
 
@@ -71,8 +70,6 @@ class PsalmOptionsPanelParityTest : BasePlatformTestCase() {
 
     assertNotNull("Config-path field missing",
                   UIUtil.findComponentOfType(root, PhpTextFieldWithSdkBasedBrowse::class.java))
-    assertNotNull("Rate-limit sub-panel missing",
-                  UIUtil.findComponentOfType(root, QualityToolRateLimitPanel::class.java))
 
     val labels = UIUtil.findComponentsOfType(root, JLabel::class.java).mapNotNull { it.text?.filterNot(Char::isISOControl) }
     assertTrue("Configuration-file label missing: $labels", labels.any { it.contains("Configuration file") })

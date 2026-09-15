@@ -13,9 +13,7 @@ import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolConfiguration;
 import com.jetbrains.php.tools.quality.QualityToolMessageProcessor;
-import com.jetbrains.php.tools.quality.QualityToolRateLimitSettings;
 import com.jetbrains.php.tools.quality.QualityToolType;
-import com.jetbrains.php.tools.quality.RateLimitedQualityToolAnnotator;
 import com.jetbrains.php.util.PhpPathUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +29,7 @@ import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateToLocal
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 import static javax.security.auth.login.Configuration.getConfiguration;
 
-public class PsalmAnnotatorProxy extends RateLimitedQualityToolAnnotator<PsalmValidationInspection> {
+public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationInspection> {
   private static final Logger LOG = Logger.getInstance(PsalmAnnotatorProxy.class);
   public static final PsalmAnnotatorProxy INSTANCE = new PsalmAnnotatorProxy();
 
@@ -100,11 +98,6 @@ public class PsalmAnnotatorProxy extends RateLimitedQualityToolAnnotator<PsalmVa
   @Override
   protected @NotNull QualityToolType<PsalmConfiguration> getQualityToolType() {
     return PsalmQualityToolType.INSTANCE;
-  }
-
-  @Override
-  protected @NotNull QualityToolRateLimitSettings getRateLimitSettings(@NotNull Project project) {
-    return PsalmOptionsConfiguration.getInstance(project).getRateLimitSettings();
   }
 
 }

@@ -11,8 +11,6 @@ import com.intellij.ui.dsl.builder.panel
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel
-import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitPanel
-import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitUI
 import javax.swing.JPanel
 import javax.swing.SwingConstants
 import javax.swing.event.DocumentEvent
@@ -24,7 +22,6 @@ class PsalmOptionsPanel(
 ) : QualityToolsOptionsPanel(project, validate, PsalmQualityToolType.INSTANCE) {
 
   private val myConfigPathTextField = PhpTextFieldWithSdkBasedBrowse()
-  private val myRateLimitPanel = QualityToolRateLimitPanel()
   private lateinit var myShowInfoJBCheckBox: JBCheckBox
   private lateinit var myFindUnusedCheckbox: JBCheckBox
   private lateinit var myFindUnusedSuppressCheckbox: JBCheckBox
@@ -44,15 +41,10 @@ class PsalmOptionsPanel(
     row {
       myFindUnusedSuppressCheckbox = checkBox(PsalmBundle.message("psalm.find.unused.supress")).component
     }
-    row {
-      cell(myRateLimitPanel).align(AlignX.FILL)
-    }
   }
 
   init {
     val configuration = PsalmOptionsConfiguration.getInstance(project)
-    myRateLimitPanel.configure(QualityToolRateLimitUI.DEFAULT_UI)
-    myRateLimitPanel.reset(configuration.rateLimitSettings)
     myConfigPathTextField.text = configuration.config
     bindSdkBasedBrowse(project, myConfigPathTextField, myComboBox, PsalmBundle.message("psalm.configuration.file"), true, false)
     myShowInfoJBCheckBox.isSelected = configuration.isShowInfo
@@ -82,7 +74,6 @@ class PsalmOptionsPanel(
 
   override fun reset() {
     val configuration = PsalmOptionsConfiguration.getInstance(myProject)
-    myRateLimitPanel.reset(configuration.rateLimitSettings)
     myConfigPathTextField.text = configuration.config
     myShowInfoJBCheckBox.isSelected = configuration.isShowInfo
     myFindUnusedCheckbox.isSelected = configuration.isFindUnusedCode
@@ -91,7 +82,6 @@ class PsalmOptionsPanel(
 
   override fun isModified(): Boolean {
     val configuration = PsalmOptionsConfiguration.getInstance(myProject)
-    if (myRateLimitPanel.isModified(configuration.rateLimitSettings)) return true
     if (!StringUtil.equals(myConfigPathTextField.text, configuration.config)) return true
     if (myShowInfoJBCheckBox.isSelected != configuration.isShowInfo) return true
     if (myFindUnusedCheckbox.isSelected != configuration.isFindUnusedCode) return true
@@ -101,7 +91,6 @@ class PsalmOptionsPanel(
 
   override fun apply() {
     val configuration = PsalmOptionsConfiguration.getInstance(myProject)
-    myRateLimitPanel.applyTo(configuration.rateLimitSettings)
     configuration.config = myConfigPathTextField.text
     configuration.isFindUnusedCode = myFindUnusedCheckbox.isSelected
     configuration.isFindUnusedSuppress = myFindUnusedSuppressCheckbox.isSelected
