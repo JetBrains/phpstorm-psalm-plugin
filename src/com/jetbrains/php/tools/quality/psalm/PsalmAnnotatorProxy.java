@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.intellij.util.ArrayUtil;
 import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
@@ -32,15 +33,12 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
   public static final PsalmAnnotatorProxy INSTANCE = new PsalmAnnotatorProxy();
 
   @Override
-  protected @Nullable List<String> getOptions(@Nullable String filePath,
-                                              @NotNull PsalmValidationInspection inspection,
-                                              @Nullable InspectionProfile profile,
-                                              @NotNull Project project) {
-    final PsalmGlobalInspection tool = (PsalmGlobalInspection)getQualityToolType().getGlobalTool(project, profile);
+  protected @Nullable List<String> getOptions(@Nullable String filePath, @NotNull QualityToolAnnotatorInfo<PsalmValidationInspection> info) {
+    final PsalmGlobalInspection tool = (PsalmGlobalInspection)getQualityToolType().getGlobalTool(info.getProject(), info.getProfile());
     if (tool == null) {
       return emptyList();
     }
-    return tool.getCommandLineOptions(filePath, project);
+    return tool.getCommandLineOptions(filePath, info.getProject());
   }
   
   @Override
@@ -70,9 +68,12 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
 
           try {
             if (configuration != null) {
+              InspectionProfile profile = InspectionProjectProfileManager.getInstance(project).getCurrentProfile();
+              QualityToolAnnotatorInfo<PsalmValidationInspection> info =
+                createAnnotatorInfo(null, inspection, profile, project, configuration, false);
               getToolOutput(project, configuration.getInterpreterId(), configuration.getToolPath(),
                             configuration.getTimeout(), PhpBundle.message("cache.creating"), null,
-                            ArrayUtil.toStringArray(getOptions(null, inspection, null, project)));
+                            ArrayUtil.toStringArray(getOptions(null, info)));
             }
           }
           catch (ExecutionException exception) {
