@@ -11,31 +11,22 @@ import com.jetbrains.php.util.PhpPathUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.intellij.openapi.util.io.FileUtilRt.toSystemIndependentName;
-import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.ERROR;
-import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNING;
 import static com.jetbrains.php.tools.quality.psalm.PsalmGlobalInspection.PSALM_ANNOTATOR_INFO;
 import static java.util.Collections.singletonList;
 
 public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   private static final @NonNls String WARNING_MESSAGE_START = "<file name=";
   private static final @NonNls String WARNING_MESSAGE_END = "</file>";
-  private static final @NonNls String LINE_NUMBER_ATTR = "line";
-  private static final @NonNls String COLUMN_NUMBER_ATTR = "column";
-  private static final String MESSAGE_ATTR = "message";
-  private static final @NonNls String SEVERITY_ATTR = "severity";
   private static final @NonNls String MISSING_FILE_MARKER = "Cannot find file ";
   private static final Pattern MISSING_FILE_MESSAGE = Pattern.compile(MISSING_FILE_MARKER + "(.+?) to include");
   final Project myProject;
@@ -93,17 +84,10 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
     else {
       PsalmXmlMessageHandler messageHandler = (PsalmXmlMessageHandler)getXmlMessageHandler();
       mySAXParser.parse(source, messageHandler);
-      final List<ProblemDescription> data = myProject.getUserData(PSALM_ANNOTATOR_INFO);
       final ProblemDescription problemDescription =
         new ProblemDescription(messageHandler.getSeverity(), messageHandler.getLineNumber(), messageHandler.getColumn(),
                                messageHandler.getMessageText(), messageHandler.getFile());
-      if (data != null) {
-        data.add(problemDescription);
-        myProject.putUserData(PSALM_ANNOTATOR_INFO, data);
-      }
-      else {
-        myProject.putUserData(PSALM_ANNOTATOR_INFO, new ArrayList<>(singletonList(problemDescription)));
-      }
+      appendProblems(myProject, PSALM_ANNOTATOR_INFO, singletonList(problemDescription));
     }
   }
 
@@ -147,21 +131,21 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
     }
   }
 
-  private static class PsalmXmlMessageHandler extends XMLMessageHandler {
+  private static class PsalmXmlMessageHandler extends CheckstyleXmlMessageHandler {
     String myFile;
     int myColumn = 0;
 
     @Override
-    protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
-      if (tagName.equals("file")) {
-        myFile = attributes.getValue("name");
-      }
-      else {
-        myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
-        mySeverity = attributes.getValue(SEVERITY_ATTR).equals("error") ? ERROR : WARNING;
-        myMessageBuf.append(attributes.getValue(MESSAGE_ATTR));
-        myColumn = parseLineNumber(attributes.getValue(COLUMN_NUMBER_ATTR));
-      }
+    protected void onFile(@Nullable String fileName) {
+      myFile = fileName;
+    }
+
+    @Override
+    protected void onMessage(@NotNull QualityToolMessage.Severity severity, int line, int column, @Nullable String message) {
+      mySeverity = severity;
+      myLineNumber = line;
+      myColumn = column;
+      myMessageBuf.append(message);
     }
 
     @Override
