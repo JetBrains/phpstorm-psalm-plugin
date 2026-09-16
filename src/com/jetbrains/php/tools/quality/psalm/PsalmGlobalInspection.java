@@ -1,13 +1,6 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.codeInspection.GlobalInspectionContext;
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.InspectionManagerBase;
 import com.intellij.codeInspection.LocalInspectionTool;
-import com.intellij.codeInspection.ProblemDescriptionsProcessor;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.execution.ExecutionException;
 import com.intellij.notification.Notification;
 import com.intellij.notification.Notifications;
@@ -20,9 +13,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.profile.codeInspection.InspectionProfileManager;
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolValidationException;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
@@ -46,7 +37,7 @@ import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateToLocal
 import static com.jetbrains.php.tools.quality.QualityToolErrorReporterKt.PHP_QUALITY_TOOLS_NOTIFICATION_GROUP;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
-public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
+public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection {
   public @NlsSafe String config = "";
   public boolean showInfo = false;
   public boolean findUnusedCode = false;
@@ -67,28 +58,6 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
         notifyAboutMissingConfig(project, path.toString());
       }
     }
-  }
-
-  @Override
-  public void inspectionStarted(@NotNull InspectionManager manager,
-                                @NotNull GlobalInspectionContext globalContext,
-                                @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
-    super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
-    final PsalmAnnotatorProxy annotator = getAnnotator();
-    final QualityToolAnnotatorInfo<PsalmValidationInspection> info =
-      annotator.collectAnnotatorInfo(null, null, globalContext.getProject(), ((InspectionManagerBase)manager).getCurrentProfile(), false);
-    if (info != null) {
-      manager.getProject().putUserData(ANNOTATOR_INFO, annotator.doAnnotate(info));
-    }
-  }
-
-  @Override
-  public ProblemDescriptor @NotNull [] checkFile(@NotNull PsiFile file,
-                                                 @NotNull GlobalInspectionContext context,
-                                                 @NotNull InspectionManager manager) {
-    ProblemsHolder holder = new ProblemsHolder(manager, file, false);
-    super.checkFile(file, manager, holder, context, null);
-    return holder.getResultsArray();
   }
 
   public static void notifyAboutMissingConfig(@NotNull Project project, @NotNull String path) {

@@ -1,10 +1,7 @@
 package com.jetbrains.php.tools.quality.psalm;
 
-import com.intellij.codeInspection.InspectionProfile;
-import com.intellij.codeInspection.ex.InspectionToolWrapper;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
-import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.jetbrains.php.tools.quality.QualityToolBlackList;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
@@ -15,7 +12,6 @@ import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.intellij.util.ObjectUtils.tryCast;
 import static com.jetbrains.php.tools.quality.psalm.PsalmConfigurationBaseManager.PSALM;
 
 public final class PsalmQualityToolType extends QualityToolType<PsalmConfiguration> {
@@ -76,29 +72,12 @@ public final class PsalmQualityToolType extends QualityToolType<PsalmConfigurati
   }
   
   @Override
-  public QualityToolValidationGlobalInspection getGlobalTool(@NotNull Project project,
-                                                             @Nullable InspectionProfile profile) {
-    if (profile == null) {
-      profile = InspectionProjectProfileManager.getInstance(project).getCurrentProfile();
-    }
-    final InspectionToolWrapper<?, ?> inspectionTool = profile.getInspectionTool(getInspectionId(), project);
-    if (inspectionTool == null) {
-      return null;
-    }
-    return tryCast(inspectionTool.getTool(), PsalmGlobalInspection.class);
+  protected @NotNull Class<? extends QualityToolValidationGlobalInspection> getGlobalInspectionClass() {
+    return PsalmGlobalInspection.class;
   }
 
   @Override
   public String getInspectionId() {
     return "PsalmGlobal";
-  }
-
-  @Override
-  public String getInspectionShortName(@NotNull Project project) {
-    final QualityToolValidationGlobalInspection tool = getGlobalTool(project, null);
-    if (tool != null) {
-      return tool.getShortName();
-    }
-    return getInspection().getShortName();
   }
 }
