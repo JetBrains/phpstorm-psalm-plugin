@@ -56,7 +56,7 @@ class Baz extends Bar {
 }
 
 $bar = new Bar();
-<type value="I|B|mixed">$bar->get()</type>;
+<type value="I|B">$bar->get()</type>;
 
 $baz = new Baz();
 <type value="I|B|mixed">$baz->get()</type>;
