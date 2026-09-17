@@ -32,13 +32,19 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
   private static final Logger LOG = Logger.getInstance(PsalmAnnotatorProxy.class);
   public static final PsalmAnnotatorProxy INSTANCE = new PsalmAnnotatorProxy();
 
+  protected static @Nullable List<String> getBaseOptions(@Nullable String filePath, @NotNull Project project,
+                                                          @Nullable InspectionProfile profile) {
+    if (PsalmQualityToolType.INSTANCE.getGlobalTool(project, profile) == null) return null;
+    return PsalmGlobalInspection.getBaseCommandLineOptions(filePath, project);
+  }
+
   @Override
   protected @Nullable List<String> getOptions(@Nullable String filePath, @NotNull QualityToolAnnotatorInfo<PsalmValidationInspection> info) {
-    final PsalmGlobalInspection tool = (PsalmGlobalInspection)getQualityToolType().getGlobalTool(info.getProject(), info.getProfile());
-    if (tool == null) {
-      return emptyList();
-    }
-    return tool.getCommandLineOptions(filePath, info.getProject());
+    List<String> options = getBaseOptions(filePath, info.getProject(), info.getProfile());
+    if (options == null) return emptyList();
+    options.add("--output-format=checkstyle");
+    options.add("--monochrome");
+    return options;
   }
   
   @Override

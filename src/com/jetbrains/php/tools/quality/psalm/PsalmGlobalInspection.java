@@ -55,7 +55,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
 
   @Override
   protected void checkCmdOptions(@NotNull Project project) {
-    final List<String> options = getCommandLineOptions(null, project);
+    final List<String> options = getBaseCommandLineOptions(null, project);
     Path path = Paths.get(project.getBasePath(), "psalm.xml");
     if (!options.contains("-c") && !Files.exists(path)) {
       notifyAboutMissingConfig(project, path.toString());
@@ -155,11 +155,9 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
     return PSALM_ANNOTATOR_INFO;
   }
 
-
-  public List<String> getCommandLineOptions(@Nullable String filePath, Project project) {
+  public static List<String> getBaseCommandLineOptions(@Nullable String filePath, Project project) {
     PsalmOptionsConfiguration configuration = PsalmOptionsConfiguration.getInstance(project);
     @NonNls ArrayList<String> options = new ArrayList<>();
-    options.add("--output-format=checkstyle");
     if (!isEmpty(configuration.getConfig())) {
       options.add("-c");
       options.add(updateIfRemoteMappingExists(configuration.getConfig(), project, PsalmQualityToolType.INSTANCE));
@@ -173,7 +171,6 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
     if (configuration.isFindUnusedSuppress()) {
       options.add("--find-unused-psalm-suppress");
     }
-    options.add("--monochrome");
     if (filePath != null) {
       options.add(updateIfRemoteMappingExists(filePath, project, PsalmQualityToolType.INSTANCE));
     }
