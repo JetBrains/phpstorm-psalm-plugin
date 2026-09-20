@@ -41,8 +41,8 @@ import static com.intellij.codeInspection.ex.EditInspectionToolsSettingsAction.e
 import static com.intellij.notification.NotificationType.WARNING;
 import static com.intellij.openapi.util.text.StringUtilRt.isEmpty;
 import static com.intellij.openapi.vfs.VfsUtil.markDirtyAndRefresh;
-import static com.jetbrains.php.tools.quality.QualityToolAnnotator.GROUP_ID;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemoteMappingExists;
+import static com.jetbrains.php.tools.quality.QualityToolErrorReporter.GROUP_ID;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateToLocalIfRemote;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
