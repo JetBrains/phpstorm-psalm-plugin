@@ -25,9 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.intellij.util.containers.ContainerUtil.emptyList;
-import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateToLocalIfRemote;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
-import static javax.security.auth.login.Configuration.getConfiguration;
 
 public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationInspection> {
   private static final Logger LOG = Logger.getInstance(PsalmAnnotatorProxy.class);
@@ -68,7 +66,7 @@ public class PsalmAnnotatorProxy extends QualityToolAnnotator<PsalmValidationIns
         final Project project = e.getProject();
         if (project != null && !project.isDisposed()) {
           final PsalmValidationInspection inspection = new PsalmValidationInspection();
-          final QualityToolConfiguration configuration = getConfiguration(project, inspection);
+          final QualityToolConfiguration configuration = getConfiguration(project);
 
           try {
             if (configuration != null) {
