@@ -23,11 +23,6 @@ public class PsalmConfigurableForm<C extends PsalmConfiguration> extends Quality
   }
 
   @Override
-  public String getHelpTopic() {
-    return "reference.settings.php.Psalm";
-  }
-
-  @Override
   public @NotNull Pair<Boolean, String> validateMessage(@NonNls String message) {
     final Version version = extractVersion(message.trim().replaceFirst("Psalm.* v?([\\d.]*).*", "$1").trim());
     if ((version == null && !message.contains("dev-master")) || !message.contains(PSALM)) {
