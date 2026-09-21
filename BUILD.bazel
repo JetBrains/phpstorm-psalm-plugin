@@ -6,6 +6,11 @@ load("@rules_jvm//:jvm.bzl", "jvm_library")
 ### auto-generated section `dev intellij.psalm` start
 dev_dist_plugin(
     content_modules = ["intellij.psalm.remoteInterpreter"],
+    descriptor = "resources/META-INF/plugin.xml",
+    descriptor_modules = ["intellij.psalm.remoteInterpreter"],
+    jars = {
+        "lib/psalm.jar": ["intellij.psalm"],
+    },
     main_module = "intellij.psalm",
 )
 ### auto-generated section `dev intellij.psalm` end
