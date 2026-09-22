@@ -306,6 +306,47 @@ public class PsalmCompletionTest extends PhpCompletionTestCase {
     assertContainsElements(myFixture.getLookupElementStrings(), "key");
   }
 
+  public void testNestedObjectShapeArrayItemTicketSample() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "ProductIdentifier", "ProductTitle", "Updated");
+  }
+
+  public void testNestedObjectShapeArrayItemDirect() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "id");
+  }
+
+  public void testNestedObjectShapeArrayItemAssigned() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "id");
+  }
+
+  public void testNestedObjectShapeArrayItemForeach() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "id");
+  }
+
+  public void testNestedObjectShapeArrayItemNestedProperty() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "id");
+  }
+
+  public void testNestedObjectShapeMultidimensionalArrayItemDirect() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "id");
+  }
+
+  public void testNestedObjectShapeUnionArrayItemAssigned() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name", "id");
+  }
+
+  public void testNestedObjectShapeTupleItemCompletionIsIndexSpecific() {
+    doInitCompletion();
+    assertContainsElements(myFixture.getLookupElementStrings(), "name");
+    assertDoesntContain(myFixture.getLookupElementStrings(), "id");
+  }
+
   @NeedsIndex.Full
   public void testObjectAndArrayShapesMultipleFiles() {
     addPhpFileToProject("a.php", """   
