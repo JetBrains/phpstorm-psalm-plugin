@@ -42,8 +42,8 @@ import static com.intellij.notification.NotificationType.WARNING;
 import static com.intellij.openapi.util.text.StringUtilRt.isEmpty;
 import static com.intellij.openapi.vfs.VfsUtil.markDirtyAndRefresh;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemoteMappingExists;
-import static com.jetbrains.php.tools.quality.QualityToolErrorReporter.GROUP_ID;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateToLocalIfRemote;
+import static com.jetbrains.php.tools.quality.QualityToolErrorReporterKt.PHP_QUALITY_TOOLS_NOTIFICATION_GROUP;
 import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.getToolOutput;
 
 public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
@@ -93,7 +93,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
 
   public static void notifyAboutMissingConfig(@NotNull Project project, @NotNull String path) {
     final Notification notification =
-      new Notification(GROUP_ID, PsalmQualityToolType.INSTANCE.getDisplayName(),
+      new Notification(PHP_QUALITY_TOOLS_NOTIFICATION_GROUP, PsalmQualityToolType.INSTANCE.getDisplayName(),
                        PsalmBundle.message("psalm.config.not.found", path), WARNING);
 
     notification.addAction(new AnAction(PsalmBundle.message("action.show.inspection.settings.text")) {
@@ -121,7 +121,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
           notification.expire();
         }
         catch (QualityToolValidationException | ExecutionException exception) {
-          Notifications.Bus.notify(new Notification(GROUP_ID, PsalmQualityToolType.INSTANCE.getDisplayName(),
+          Notifications.Bus.notify(new Notification(PHP_QUALITY_TOOLS_NOTIFICATION_GROUP, PsalmQualityToolType.INSTANCE.getDisplayName(),
                                                   PsalmBundle.message("psalm.config.not.generated"), WARNING));
           
         }
