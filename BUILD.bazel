@@ -12,6 +12,9 @@ dev_dist_plugin(
         "lib/psalm.jar": ["intellij.psalm"],
     },
     main_module = "intellij.psalm",
+    mode_refused_content_modules = {
+        "frontend": ["intellij.psalm.remoteInterpreter"],
+    },
 )
 ### auto-generated section `dev intellij.psalm` end
 
