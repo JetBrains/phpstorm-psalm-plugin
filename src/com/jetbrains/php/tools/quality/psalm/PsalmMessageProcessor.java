@@ -36,7 +36,8 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   private static final @NonNls String COLUMN_NUMBER_ATTR = "column";
   private static final String MESSAGE_ATTR = "message";
   private static final @NonNls String SEVERITY_ATTR = "severity";
-  private static final Pattern MISSING_FILE_MESSAGE = Pattern.compile("Cannot find file (.+?) to include");
+  private static final @NonNls String MISSING_FILE_MARKER = "Cannot find file ";
+  private static final Pattern MISSING_FILE_MESSAGE = Pattern.compile(MISSING_FILE_MARKER + "(.+?) to include");
   final Project myProject;
   private final @Nullable TempFolderMapping myTempFolderMapping;
 
@@ -54,8 +55,9 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   @Override
   protected void addMessage(QualityToolMessage message) {
     if (myTempFolderMapping != null && !message.isInternalError()) {
-      Matcher matcher = MISSING_FILE_MESSAGE.matcher(message.getMessageText());
-      if (matcher.find()) {
+      String text = message.getMessageText();
+      Matcher matcher = text.contains(MISSING_FILE_MARKER) ? MISSING_FILE_MESSAGE.matcher(text) : null;
+      if (matcher != null && matcher.find()) {
         String reportedPath = matcher.group(1);
         String originalPath = myTempFolderMapping.toOriginalPath(reportedPath);
         if (originalPath != null) {
