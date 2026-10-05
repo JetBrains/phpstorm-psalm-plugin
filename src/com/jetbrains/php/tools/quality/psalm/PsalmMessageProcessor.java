@@ -3,6 +3,7 @@ package com.jetbrains.php.tools.quality.psalm;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.jetbrains.php.tools.quality.ParsedProblem;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolMessage;
@@ -11,18 +12,15 @@ import com.jetbrains.php.util.PhpPathUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.List;
 
 import static com.intellij.openapi.util.io.FileUtilRt.toSystemIndependentName;
 import static com.jetbrains.php.tools.quality.psalm.PsalmGlobalInspection.PSALM_ANNOTATOR_INFO;
-import static java.util.Collections.singletonList;
 
 public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   private static final @NonNls String WARNING_MESSAGE_START = "<file name=";
@@ -62,11 +60,6 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   @Override
-  protected XMLMessageHandler getXmlMessageHandler() {
-    return new PsalmXmlMessageHandler();
-  }
-
-  @Override
   public int getMessageStart(@NotNull String line) {
     return line.indexOf(WARNING_MESSAGE_START);
   }
@@ -77,17 +70,13 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   @Override
-  protected void processMessage(InputSource source) throws SAXException, IOException {
+  protected void processMessage(@NotNull String message) {
+    final List<ParsedProblem> problems = new PsalmReportParser().parse(message);
     if (myFile != null) {
-      super.processMessage(source);
+      addParsedProblems(problems);
     }
     else {
-      PsalmXmlMessageHandler messageHandler = (PsalmXmlMessageHandler)getXmlMessageHandler();
-      mySAXParser.parse(source, messageHandler);
-      final ProblemDescription problemDescription =
-        new ProblemDescription(messageHandler.getSeverity(), messageHandler.getLineNumber(), messageHandler.getColumn(),
-                               messageHandler.getMessageText(), messageHandler.getFile());
-      appendProblems(myProject, PSALM_ANNOTATOR_INFO, singletonList(problemDescription));
+      appendProblems(myProject, PSALM_ANNOTATOR_INFO, problems);
     }
   }
 
@@ -128,33 +117,6 @@ public class PsalmMessageProcessor extends QualityToolXmlMessageProcessor {
       if (!FileUtil.isAncestor(tempRoot, systemIndependentPath, true)) return null;
       String relativePath = FileUtil.getRelativePath(tempRoot, systemIndependentPath, '/');
       return relativePath == null ? null : originalRoot + "/" + relativePath;
-    }
-  }
-
-  private static class PsalmXmlMessageHandler extends CheckstyleXmlMessageHandler {
-    String myFile;
-    int myColumn = 0;
-
-    @Override
-    protected void onFile(@Nullable String fileName) {
-      myFile = fileName;
-    }
-
-    @Override
-    protected void onMessage(@NotNull QualityToolMessage.Severity severity, int line, int column, @Nullable String message) {
-      mySeverity = severity;
-      myLineNumber = line;
-      myColumn = column;
-      myMessageBuf.append(message);
-    }
-
-    @Override
-    public int getColumn() {
-      return myColumn - 1;
-    }
-
-    public String getFile() {
-      return myFile;
     }
   }
 }

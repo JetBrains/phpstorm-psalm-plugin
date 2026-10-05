@@ -14,9 +14,9 @@ import com.intellij.profile.codeInspection.InspectionProfileManager;
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiManager;
+import com.jetbrains.php.tools.quality.ParsedProblem;
 import com.jetbrains.php.tools.quality.QualityToolValidationException;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
-import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import com.jetbrains.php.util.PhpPathUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +42,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
   public boolean showInfo = false;
   public boolean findUnusedCode = false;
   public boolean findUnusedSuppress = false;
-  public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PSALM_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_PSALM");
+  public static final Key<List<ParsedProblem>> PSALM_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_PSALM");
 
   @Override
   protected void checkCmdOptions(@NotNull Project project) {
@@ -120,7 +120,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
   }
 
   @Override
-  protected Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> getKey() {
+  protected Key<List<ParsedProblem>> getKey() {
     return PSALM_ANNOTATOR_INFO;
   }
 

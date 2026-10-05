@@ -15,4 +15,4 @@ takesAnInt(<weak_warning descr="psalm: InvalidScalarArgument: Argument 1 of take
  */
 $condition = rand(0, 5);
 if ($condition) {
-<weak_warning descr="psalm: TypeDoesNotContainType: Found a contradiction when evaluating $condition and trying to reconcile type 'int(0)' to !falsy">} elseif ($condition) {}</weak_warning>
+} elseif (<weak_warning descr="psalm: TypeDoesNotContainType: Found a contradiction when evaluating $condition and trying to reconcile type 'int(0)' to !falsy">$condition) {}</weak_warning>
