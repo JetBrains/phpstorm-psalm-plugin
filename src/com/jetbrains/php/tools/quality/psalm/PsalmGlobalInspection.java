@@ -7,6 +7,7 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -46,17 +47,21 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
 
   @Override
   protected void checkCmdOptions(@NotNull Project project) {
+    final String basePath = project.getBasePath();
+    if (basePath == null) return;
     final List<String> options = getBaseCommandLineOptions(null, project);
-    Path path = Paths.get(project.getBasePath(), "psalm.xml");
-    if (!options.contains("-c") && !Files.exists(path)) {
-      notifyAboutMissingConfig(project, path.toString());
-    }
-    else {
-      path = Paths.get(options.get(options.indexOf("-c") + 1));
-      path = PhpPathUtils.tryParsePath(updateToLocalIfRemote(path.toString(), project, PsalmQualityToolType.INSTANCE));
-      if (options.contains("-c") && path != null && !Files.exists(path)) {
-        notifyAboutMissingConfig(project, path.toString());
+    final int configOptionIndex = options.indexOf("-c");
+    if (configOptionIndex < 0 || configOptionIndex + 1 >= options.size()) {
+      final Path defaultPath = Paths.get(basePath, "psalm.xml");
+      if (!Files.exists(defaultPath)) {
+        notifyAboutMissingConfig(project, defaultPath.toString());
       }
+      return;
+    }
+    final Path path = PhpPathUtils.tryParsePath(
+      updateToLocalIfRemote(Paths.get(options.get(configOptionIndex + 1)).toString(), project, PsalmQualityToolType.INSTANCE));
+    if (path != null && !Files.exists(path)) {
+      notifyAboutMissingConfig(project, path.toString());
     }
   }
 
@@ -84,7 +89,9 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
           }
           getToolOutput(project, configuration.getInterpreterId(), configuration.getToolPath(), configuration.getTimeout(),
                         PsalmBundle.message("action.generate.psalm.xml.in.project.root"), null, "--init", ".", "3");
-          final Path configPath = Paths.get(project.getBasePath(), "psalm.xml");
+          final String basePath = project.getBasePath();
+          if (basePath == null) return;
+          final Path configPath = Paths.get(basePath, "psalm.xml");
           markDirtyAndRefresh(true, false, false, configPath);
           updateInspectionSettings(configPath);
           notification.expire();
@@ -97,7 +104,7 @@ public class PsalmGlobalInspection extends QualityToolValidationGlobalInspection
       }
 
       private void updateInspectionSettings(Path configPath) {
-        VirtualFile projectDir = project.getBaseDir();
+        VirtualFile projectDir = ProjectUtil.guessProjectDir(project);
         if (projectDir == null) return;
         final PsiDirectory file = PsiManager.getInstance(project).findDirectory(projectDir);
         if (file == null) return;
