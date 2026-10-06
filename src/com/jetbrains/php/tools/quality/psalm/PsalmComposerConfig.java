@@ -58,7 +58,7 @@ public class PsalmComposerConfig extends QualityToolsComposerConfig<PsalmConfigu
   }
 
   private boolean applyRuleset(@NotNull Project project, @NotNull String customRuleset) {
-    return modifyRulesetInspectionSetting(project, tool -> PsalmOptionsConfiguration.getInstance(project).setConfig(customRuleset));
+    return modifyRulesetInspectionSetting(project, () -> PsalmOptionsConfiguration.getInstance(project).setConfig(customRuleset));
   }
 
   @Override
