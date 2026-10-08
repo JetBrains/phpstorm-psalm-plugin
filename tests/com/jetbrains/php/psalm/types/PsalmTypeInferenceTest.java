@@ -745,6 +745,10 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
     doTypeTest();
   }
 
+  public void testAdvancedCallableMetadata() {
+    doTypeTestWithParameterisedTypes();
+  }
+
   public void testAdvancedCallableMethodRef() {
     addPhpFileToProject("a.php", """
       <?php
