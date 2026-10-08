@@ -73,6 +73,11 @@ public class PsalmInspectionsTest extends PhpInspectionTestCase {
     doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
   }
 
+  public void testPartialFunctionApplicationCallableParams() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP860,
+                        () -> doInspectionTest(PsalmAdvanceCallableParamsInspection.class));
+  }
+
   public void testDocSignatureExtendedStringDocType() {
     doInspectionTest(PhpDocSignatureInspection.class);
   }
