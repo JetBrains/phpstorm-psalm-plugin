@@ -129,6 +129,7 @@ jvm_library(
     ),
     module_name = "intellij.psalm.tests",
     visibility = ["//visibility:public"],
+    runtime_deps = ["//phpstorm:php-resources"],
 )
 
 jvm_library(
@@ -157,6 +158,7 @@ jvm_library(
         "@community//platform/platform-impl:ide-impl_test_lib",
         "@community//platform/platform-util-io:ide-util-io_test_lib",
         "@community//platform/ide-core:ide-core_test_lib",
+        "//phpstorm:php-resources_test_lib",
     ],
     deps = [
         # do not sort,
