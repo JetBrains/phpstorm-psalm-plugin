@@ -8,7 +8,10 @@ dev_dist_plugin(
     content_modules = ["intellij.psalm.remoteInterpreter"],
     descriptor = "resources/META-INF/plugin.xml",
     jars = {
-        "lib/psalm.jar": ["intellij.psalm"],
+        "lib/psalm.jar": [
+            "intellij.psalm",
+            "intellij.psalm.remoteInterpreter",
+        ],
     },
     main_module = "intellij.psalm",
     mode_refused_content_modules = {
