@@ -33,5 +33,4 @@
     <orderEntry type="module" module-name="intellij.php.resources" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.libraries.junit4" scope="TEST" />
   </component>
-  <component name="TestModuleProperties" production-module="intellij.psalm" />
 </module>

@@ -146,10 +146,7 @@ jvm_library(
         ],
         allow_empty = True,
     ),
-    associates = [
-        "//phpstorm/psalm",
-        "//phpstorm/psalm:psalm_test_lib",
-    ],
+    module_name = "intellij.psalm.tests",
     resource_strip_prefix = "testData",
     resources = glob(
         ["testData/**/*"],
@@ -196,6 +193,8 @@ jvm_library(
         "@community//platform/util:util-ui_test_lib",
         "@community//platform/execution",
         "@community//platform/execution:execution_test_lib",
+        "//phpstorm/psalm",
+        "//phpstorm/psalm:psalm_test_lib",
         "//phpstorm/php-backend:php-backend-tests",
         "//phpstorm/php-backend:php-backend-tests_test_lib",
         "//phpstorm/php-frontback-impl:php-frontback-impl-tests",
