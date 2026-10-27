@@ -101,14 +101,16 @@ jvm_library(
         "@community//platform/execution:execution_test_lib",
     ],
 )
+### auto-generated section `build intellij.psalm` end
 
+### auto-generated section `plugin intellij.psalm` start
 ij_plugin(
     name = "psalm_plugin",
     descriptor_module = ":psalm",
     content_modules = ["//phpstorm/psalm/remoteInterpreter"],
     visibility = ["//visibility:public"],
 )
-### auto-generated section `build intellij.psalm` end
+### auto-generated section `plugin intellij.psalm` end
 
 ### auto-generated section `iml intellij.psalm` start
 exports_files(
