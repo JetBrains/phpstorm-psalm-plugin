@@ -1,232 +1,288 @@
 package com.jetbrains.php.psalm.types;
 
-import com.intellij.openapi.vfs.VirtualFileFilter;
-import com.intellij.psi.impl.PsiManagerEx;
+import com.intellij.openapi.application.ReadAction;
+import com.intellij.openapi.project.Project;
+import com.intellij.testFramework.fixtures.CodeInsightTestFixture;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
 import com.jetbrains.php.PhpIndex;
-import com.jetbrains.php.codeInsight.PhpTypeInferenceTestCase;
+import com.jetbrains.php.codeInsight.PhpTypeInferenceTestFixture;
 import com.jetbrains.php.config.PhpLanguageLevel;
+import com.jetbrains.php.fixtures.PhpTestDataLayout;
 import com.jetbrains.php.lang.psi.elements.Field;
 import com.jetbrains.php.lang.psi.elements.Function;
 import com.jetbrains.php.lang.psi.elements.Parameter;
 import com.jetbrains.php.lang.psi.elements.Variable;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
-import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Test;
 
-public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
+import static com.jetbrains.php.codeInsight.PhpTypeInferenceTestFixture.phpTypeInferenceFixture;
+import static com.jetbrains.php.fixtures.PhpCodeInsightTestFixture.doLanguageLevelTest;
+import static com.jetbrains.php.fixtures.PhpTestFixtures.phpProjectFixture;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@TestApplication
+public class PsalmTypeInferenceTest {
+  private static final TestFixture<Project> projectFixture = phpProjectFixture();
+  private final TestFixture<PhpTypeInferenceTestFixture> php =
+    phpTypeInferenceFixture(projectFixture, new PhpTestDataLayout("codeInsight/typeInference").withHome(TEST_DATA_HOME));
+
   public static final String TEST_DATA_HOME = "/phpstorm/psalm/testData/";
 
-  @Override
-  protected @NotNull String getTestDataHome() {
-    return TEST_DATA_HOME;
-  }
 
-  @Override
-  protected String getFixtureTestDataFolder() {
-    return "codeInsight/typeInference";
-  }
 
+  @Test
   public void testGenericArray$simpleKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericArray$simpleValue() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericArray$nonEmptyArray() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericArray$nestedKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericArray$nestedValue() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericArray$nestedValueWithKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericArray$union() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericArray$nonArray() {
-    doTypeTest(); // no particular guarantees here
+    php.get().doTypeTest(); // no particular guarantees here
   }
 
+  @Test
   public void testGenericArray$nestedClassString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmParam() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmReturn() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmReturnGeneric() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmVarField() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmVarVar() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testClassString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testCallableString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNumericString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testLowercaseString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNonEmptyLowercaseString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTruthyString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNonFalsyString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTraitString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testScalar() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNumeric() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testIntMask() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testIntMaskOf() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testArrayKeyTemplateType() {
-    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP850, () -> {
-      doTypeTest();
+    doLanguageLevelTest(php.get().getProject(), PhpLanguageLevel.PHP850, () -> {
+      php.get().doTypeTest();
     });
   }
 
+  @Test
   public void testArrayKeyVarType() {
-    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP850, () -> {
-      doTypeTest();
+    doLanguageLevelTest(php.get().getProject(), PhpLanguageLevel.PHP850, () -> {
+      php.get().doTypeTest();
     });
   }
 
+  @Test
   public void testTypesFromExtendedClassConstants() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTypesFromExtendedClassConstantsWildcard() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testFunctionTemplate() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testMethodTemplate() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testClassTemplate() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmTagsTemplate() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testWithoutTemplate() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testClosure() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testIntArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testListArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testStringArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testUnknownArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testScalarGeneric() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPluralClassStringWithArgument() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPluralClassString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testExtendedTypes() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNonEmptyList() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNonEmptyListWithoutTypes() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNonEmptyString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testIterableKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallable() {
-    myFixture.addFileToProject("a.php", """
+    php.get().getFixture().addFileToProject("a.php", """
       <?php
       class Foo {}
       /**
@@ -239,35 +295,42 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
       function b(){
           return a();
       }""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallableInSameFile() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallableImported() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallableUnionType() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallableKeyword() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testElementTypeOfArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testArrayKeyOfMultiDimensionalArray() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testStubsConsistencyFunction() {
-    myFixture.addFileToProject("a.php", """
+    php.get().getFixture().addFileToProject("a.php", """
       <?php
 
       /**
@@ -276,13 +339,16 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
       function f(): string
       {
       }""");
-    Function function = PhpIndex.getInstance(getProject()).getFunctionsByFQN("\\f").iterator().next();
-    assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), function.getGlobalType());
-    doTypeTest();
+    ReadAction.runBlocking(() -> {
+      Function function = PhpIndex.getInstance(php.get().getProject()).getFunctionsByFQN("\\f").iterator().next();
+      assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), function.getGlobalType());
+    });
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testStubsConsistencyParameter() {
-    myFixture.addFileToProject("a.php", """
+    php.get().getFixture().addFileToProject("a.php", """
       <?php
 
       /**
@@ -291,13 +357,16 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
       function f(string $a)
       {
       }""");
-    Parameter param = PhpIndex.getInstance(getProject()).getFunctionsByFQN("\\f").iterator().next().getParameter(0);
-    assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), param.getGlobalType());
-    doTypeTest();
+    ReadAction.runBlocking(() -> {
+      Parameter param = PhpIndex.getInstance(php.get().getProject()).getFunctionsByFQN("\\f").iterator().next().getParameter(0);
+      assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), param.getGlobalType());
+    });
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testStubsConsistencyField() {
-    myFixture.addFileToProject("a.php", """
+    php.get().getFixture().addFileToProject("a.php", """
       <?php
 
       class A {
@@ -306,37 +375,47 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
            */
           public string $f;
       }""");
-    Field field = PhpIndex.getInstance(getProject()).getClassesByFQN("\\A").iterator().next().getOwnFields()[0];
-    assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), field.getGlobalType());
-    doTypeTest();
+    ReadAction.runBlocking(() -> {
+      Field field = PhpIndex.getInstance(php.get().getProject()).getClassesByFQN("\\A").iterator().next().getOwnFields()[0];
+      assertEquals(new PhpType().add(PhpType.INT).add(PhpType.STRING), field.getGlobalType());
+    });
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testStubsConsistencyVariable() {
-    myFixture.addFileToProject("a.php", """
+    php.get().getFixture().addFileToProject("a.php", """
       <?php
 
       /**
        * @psalm-var int $vvv
        */
       $vvv ='a';""");
-    Variable variable = PhpIndex.getInstance(getProject()).getVariablesByName("vvv").iterator().next();
-    assertEquals(new PhpType().add(PhpType.INT), variable.getGlobalType());
-    doTypeTest();
+    ReadAction.runBlocking(() -> {
+      Variable variable = PhpIndex.getInstance(php.get().getProject()).getVariablesByName("vvv").iterator().next();
+      assertEquals(new PhpType().add(PhpType.INT), variable.getGlobalType());
+    });
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmVarOnCorrectVariable() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testPsalmArrayShape() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testPsalmMultilineArrayShape() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testPsalmArrayShapeMultipleFiles() {
+    CodeInsightTestFixture myFixture = php.get().getFixture();
     myFixture.addFileToProject("aa.php", """
       <?php
       /**
@@ -364,55 +443,67 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
       function ff1(){}
       }""");
 
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testTemplateClassString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateExtends() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateExtendsNamespace() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateExtendsMultipleTemplates() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateImplements() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testReturnTemplatedClass() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplatedClassVariableDocType() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testReturnTemplatedClassNamespace() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testLocalClassString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testLocalClassStringNamespace() {
-    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP800, () -> doTypeTest());
+    doLanguageLevelTest(php.get().getProject(), PhpLanguageLevel.PHP800, () -> php.get().doTypeTest());
   }
 
+  @Test
   public void testLocalTypeUnwrappingSameFile() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testLocalTypeUnwrappingDifferentFile() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
       class C
       {
@@ -431,110 +522,136 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
           }
       }
       """);
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplatedIteratorInForeach() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testExtendedClassesWithFallthroughTemplates() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testExtendedClassesWithFallthroughTemplatesNamespaced() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericsConstructorInference() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testMultipleTags() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testSuperMember() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testSuperMemberRecursive() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testSubstituteExtendedClasses() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateExtendsByPassing() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateExtendsByPassingStaticReturn() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateWrappedArray() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
+  @Test
   public void testTemplateUnwrappedArray() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateUnwrappedArrayConstructorCall() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateUnwrappedArrayConstructorCallNonArrayPassed() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplateWrappedClass() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testParameterUnwrap() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testIssues$wi85100DryRunRegressions() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testParameterUnwrapToArray() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testParameterUnwrapToStaticGeneric() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testClassNamesFromClassStringDocVar() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testArrayShapePlural() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testArrayShapeNumeric() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericDocMethod() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testArrayDocMethod() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTypeAlias() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTypeAliasGlobal() {
-    myFixture.addFileToProject("aa.php", """
+    php.get().getFixture().addFileToProject("aa.php", """
       <?php
 
       class Foo {}
@@ -546,27 +663,32 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
       class Phone {
 
       }""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTypeAliasPlural() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testInferredVarParameter() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNestedListInMultilineDoc() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericYield() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericYieldDifferentFile() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
       /**
        * @template-covariant TValue
@@ -601,23 +723,27 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
            */
           private $a;
       }""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericIteratorBases() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericIteratorSubstitutionByImplementedMethod() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericPassingParameter() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericPassingParameterDifferentFile() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
       /**
        * @template T
@@ -638,11 +764,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
           public function f(){}
 
       }""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericPassingParameterStaticDifferentFile() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
       /**
        * @template TValue
@@ -657,19 +784,22 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
            */
           public function first() { }
       }""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericPassingParameterStatic() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericIterableUnwrap() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericIterableUnwrapDifferentFile() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
       /**
        * @template T
@@ -683,11 +813,12 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
           public function f($param) {
           }
       }""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testElementTypeOfGenericClassDifferentFile() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
 
       /**
@@ -717,40 +848,48 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
 
           }
       }""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testElementTypeOfGenericClass() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericFlipClassParameters() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericPassingParameterMultipleSubstitutions() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testInnerParametrizedParts() {
     // no exception
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallableInferred() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallableDoc() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallableMetadata() {
-    doTypeTestWithParameterisedTypes();
+    php.get().doTypeTestWithParameterisedTypes();
   }
 
+  @Test
   public void testAdvancedCallableMethodRef() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
       namespace X;
       /**
@@ -761,86 +900,104 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
        * @return AA<T, T1>
        */
       function collect($a, $a1) {}""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testAdvancedCallableMethodRefCallable() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testTemplatedArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testDocTypesInParentheses() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmScalarTypeArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testPsalmNotNumericArrayKey() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testArrayShapeMultiAssignmentOmittedElements() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testVarOnPromotedProperty() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testVarOnPromotedPropertyWithDocCommentOnMethod() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testParametrisedPolymorphicCallName() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
 
       class Two {
           public static function getOne(): One {}
       }
       """);
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testKeyOfValueOf() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testValueOfBackedEnumInArray() {
-    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP810, () -> doTypeTest());
+    doLanguageLevelTest(php.get().getProject(), PhpLanguageLevel.PHP810, () -> php.get().doTypeTest());
   }
 
+  @Test
   public void testValueOfBackedEnumInArrayShorthand() {
-    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP810, () -> doTypeTest());
+    doLanguageLevelTest(php.get().getProject(), PhpLanguageLevel.PHP810, () -> php.get().doTypeTest());
   }
 
+  @Test
   public void testFetchExtendsThroughIntermediateValue() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testFetchExtendsFromParentClass() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testExpandFallthroughTemplatesInConstructor() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testLiteralString() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testMetaFromSuperParameter() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testMetaFromSuperParameterGlobal() {
-    addPhpFileToProject("a.php", """
+    php.get().addPhpFileToProject("a.php", """
       <?php
       /**
        * @template T
@@ -854,107 +1011,126 @@ public class PsalmTypeInferenceTest extends PhpTypeInferenceTestCase {
            */
           public function rand($min, $max);
       }""");
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
-  @Override
-  protected void lockPhpFilesLoading(VirtualFileFilter filter) {
-    ((PsiManagerEx)myFixture.getPsiManager()).setAssertOnFileLoadingFilter(VirtualFileFilter.NONE, getTestRootDisposable());
-  }
-
+  @Test
   public void testMultipleInheritanceWithExtends() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testLiteralType() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNegativeInt() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNonNegativeInt() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testNonPositiveInt() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericClassStringParameterWithSuperTypeForT() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericClassStringConstructor() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericClassStringConstructorWithPromotedProperty() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testGenericClassStringConstructorWithPromotedPropertyWithParamTag() {
-    doTypeTest();
+    php.get().doTypeTest();
   }
 
+  @Test
   public void testDocMethodReturnsGenericList() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testDocMethodReturnsClassTemplateList() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testGenericAndStatic$static() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testGenericAndStatic$staticWithEntities() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testGenericAndStatic$this() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testGenericAndStatic$arrayObject() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testGenericAndStatic$queryBuilder() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testReturnStaticOrThis$this() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testReturnStaticOrThis$thisWithForeach() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testReturnStaticOrThis$arrayOfThis() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testReturnStaticOrThis$static() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testLocalTypeUnwrappingTagOrderMustNotMatter() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testNewExpressionWithClassString() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testClassStringConstructorParameterTypeStaticCall() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 
+  @Test
   public void testFloatType() {
-    doTypeTest(true);
+    php.get().doTypeTest(true);
   }
 }

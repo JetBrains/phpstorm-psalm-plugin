@@ -1,32 +1,38 @@
 package com.jetbrains.php.psalm.lang;
 
+import com.intellij.openapi.application.ReadAction;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiPolyVariantReference;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.ResolveResult;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
 import com.intellij.util.containers.ContainerUtil;
-import com.jetbrains.php.fixtures.PhpCodeInsightFixtureTestCase;
+import com.jetbrains.php.fixtures.PhpCodeInsightTestFixture;
+import com.jetbrains.php.fixtures.PhpTestDataLayout;
 import com.jetbrains.php.lang.psi.elements.Field;
 import com.jetbrains.php.lang.psi.elements.Method;
 import com.jetbrains.php.lang.psi.elements.PhpClass;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
-import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
-  @Override
-  protected @NotNull String getTestDataHome() {
-    return PsalmTypeInferenceTest.TEST_DATA_HOME;
-  }
+import static com.jetbrains.php.fixtures.PhpCodeInsightTestFixture.phpCodeInsightFixture;
+import static com.jetbrains.php.fixtures.PhpTestFixtures.phpProjectFixture;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-  @Override
-  protected String getFixtureTestDataFolder() {
-    return "resolve";
-  }
+@TestApplication
+public class PsalmResolveTest {
+  private static final TestFixture<Project> projectFixture = phpProjectFixture();
+  private final TestFixture<PhpCodeInsightTestFixture> php =
+    phpCodeInsightFixture(projectFixture, new PhpTestDataLayout("resolve").withHome(PsalmTypeInferenceTest.TEST_DATA_HOME));
 
+  @Test
   public void testExtendedClassConstantReferenceWithWildcard() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 
@@ -42,17 +48,20 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                     $c;
                 }
                 """);
-    PsiReference reference = reference();
-    PsiPolyVariantReference polyVariantReference = assertInstanceOf(reference, PsiPolyVariantReference.class);
-    ResolveResult[] multiResolve = polyVariantReference.multiResolve(false);
-    assertSize(2, multiResolve);
-    Field first = assertInstanceOf(multiResolve[0].getElement(), Field.class);
-    Field second = assertInstanceOf(multiResolve[1].getElement(), Field.class);
-    assertEquals(Set.of("\\C.A_1", "\\C.A_2"), Set.of(first.getFQN(), second.getFQN()));
+    PsiReference reference = php.get().reference();
+    ReadAction.runBlocking(() -> {
+      PsiPolyVariantReference polyVariantReference = assertInstanceOf(PsiPolyVariantReference.class, reference);
+      ResolveResult[] multiResolve = polyVariantReference.multiResolve(false);
+      assertEquals(2, multiResolve.length);
+      Field first = assertInstanceOf(Field.class, multiResolve[0].getElement());
+      Field second = assertInstanceOf(Field.class, multiResolve[1].getElement());
+      assertEquals(Set.of("\\C.A_1", "\\C.A_2"), Set.of(first.getFQN(), second.getFQN()));
+    });
   }
 
+  @Test
   public void testExtendedClassConstantReferenceWithFullWildcard() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 
@@ -68,18 +77,21 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                     $c;
                 }
                 """);
-    PsiReference reference = reference();
-    PsiPolyVariantReference polyVariantReference = assertInstanceOf(reference, PsiPolyVariantReference.class);
-    ResolveResult[] multiResolve = polyVariantReference.multiResolve(false);
-    assertSize(3, multiResolve);
-    Set<String> fqns = ContainerUtil.map2Set(multiResolve, it -> {
-      return assertInstanceOf(it.getElement(), Field.class).getFQN();
+    PsiReference reference = php.get().reference();
+    ReadAction.runBlocking(() -> {
+      PsiPolyVariantReference polyVariantReference = assertInstanceOf(PsiPolyVariantReference.class, reference);
+      ResolveResult[] multiResolve = polyVariantReference.multiResolve(false);
+      assertEquals(3, multiResolve.length);
+      Set<String> fqns = ContainerUtil.map2Set(multiResolve, it -> {
+        return assertInstanceOf(Field.class, it.getElement()).getFQN();
+      });
+      assertEquals(Set.of("\\C.A_1", "\\C.A_2", "\\C.B_2"), fqns);
     });
-    assertEquals(Set.of("\\C.A_1", "\\C.A_2", "\\C.B_2"), fqns);
   }
 
+  @Test
   public void testResolveAliasReferenceToType() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -91,13 +103,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                  \s
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("A_OR_B", resolved.getText());
-    assertEquals("@psalm-type A_OR_B = A|B", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("A_OR_B", resolved.getText());
+      assertEquals("@psalm-type A_OR_B = A|B", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void testResolveImportedAliasReferenceToType() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -108,13 +123,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                  \s
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("MyFooAlias", resolved.getText());
-    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("MyFooAlias", resolved.getText());
+      assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void testResolveImportedAliasFromMultilineReferenceToType() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -127,13 +145,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                  \s
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("MyFooAlias", resolved.getText());
-    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("MyFooAlias", resolved.getText());
+      assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void testResolveImportedAliasFromPluralReferenceToType() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -144,13 +165,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                  \s
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("MyFooAlias", resolved.getText());
-    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("MyFooAlias", resolved.getText());
+      assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void testResolveImportedFromStatement() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -161,13 +185,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                     $phone = $param->toArray();
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("MyFooAlias", resolved.getText());
-    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("MyFooAlias", resolved.getText());
+      assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void testResolveImportedFromStatementToContainingClass() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -180,13 +207,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                 }
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("MyFooAlias", resolved.getText());
-    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("MyFooAlias", resolved.getText());
+      assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void testResolveAliasToReferenceTypeFromClosure() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -201,13 +231,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                 }
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("MyFooAlias", resolved.getText());
-    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("MyFooAlias", resolved.getText());
+      assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void testResolveImportedFromMemberToContainingClass() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -221,13 +254,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                 function foo($a) {}
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("MyFooAlias", resolved.getText());
-    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("MyFooAlias", resolved.getText());
+      assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void testResolveImportedFromClass() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 /**
@@ -238,13 +274,16 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                 function foo($a) {
                 }
                 """);
-    PsiElement resolved = resolve();
-    assertEquals("MyFooAlias", resolved.getText());
-    assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    PsiElement resolved = php.get().resolve();
+    ReadAction.runBlocking(() -> {
+      assertEquals("MyFooAlias", resolved.getText());
+      assertEquals("@psalm-import-type FooAlias from Phone as MyFooAlias", resolved.getParent().getText());
+    });
   }
 
+  @Test
   public void test_find_constant_by_special_self_class_name_in__see_tag() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 
@@ -257,12 +296,15 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                     }
                 }""");
 
-    PhpClass phpClass = assertInstanceOf(resolve(), PhpClass.class);
-    assertEquals("\\C", phpClass.getFQN());
+    PhpClass phpClass = assertInstanceOf(PhpClass.class, php.get().resolve());
+    ReadAction.runBlocking(() -> {
+      assertEquals("\\C", phpClass.getFQN());
+    });
   }
 
+  @Test
   public void test_find_constant_by_special_parent_class_name_in__see_tag() {
-    configure("""
+    php.get().configure("""
                 
                 <?php
                 
@@ -277,43 +319,63 @@ public class PsalmResolveTest extends PhpCodeInsightFixtureTestCase {
                     }
                 }""");
 
-    PhpClass phpClass = assertInstanceOf(resolve(), PhpClass.class);
-    assertEquals("\\B", phpClass.getFQN());
+    PhpClass phpClass = assertInstanceOf(PhpClass.class, php.get().resolve());
+    ReadAction.runBlocking(() -> {
+      assertEquals("\\B", phpClass.getFQN());
+    });
   }
 
+  @Test
   public void testGenericMixinMethod() {
-    configureByFile();
-    Method method = assertInstanceOf(resolve(), Method.class);
-    assertEquals("\\MixinClass.mixinClassMethod", method.getFQN());
+    php.get().configureByFile();
+    Method method = assertInstanceOf(Method.class, php.get().resolve());
+    ReadAction.runBlocking(() -> {
+      assertEquals("\\MixinClass.mixinClassMethod", method.getFQN());
+    });
   }
 
+  @Test
   public void testGenericMixinField() {
-    configureByFile();
-    Field field = assertInstanceOf(resolve(), Field.class);
-    assertEquals("\\MixinClass.$mixinClassProperty", field.getFQN());
+    php.get().configureByFile();
+    Field field = assertInstanceOf(Field.class, php.get().resolve());
+    ReadAction.runBlocking(() -> {
+      assertEquals("\\MixinClass.$mixinClassProperty", field.getFQN());
+    });
   }
 
+  @Test
   public void testGenericMixinDecorator() {
-    configureByFile();
-    Method method = assertInstanceOf(resolve(), Method.class);
-    assertEquals("\\ApiClient.request", method.getFQN());
+    php.get().configureByFile();
+    Method method = assertInstanceOf(Method.class, php.get().resolve());
+    ReadAction.runBlocking(() -> {
+      assertEquals("\\ApiClient.request", method.getFQN());
+    });
   }
 
+  @Test
   public void testGenericMixinSeveralMixins() {
-    configureByFile();
-    Method method = assertInstanceOf(resolve(), Method.class);
-    assertEquals("\\MixinClass2.mixinClassMethod2", method.getFQN());
+    php.get().configureByFile();
+    Method method = assertInstanceOf(Method.class, php.get().resolve());
+    ReadAction.runBlocking(() -> {
+      assertEquals("\\MixinClass2.mixinClassMethod2", method.getFQN());
+    });
   }
 
+  @Test
   public void testGenericMixinUnionTwoClassesWithMixins() {
-    configureByFile();
-    Method method = assertInstanceOf(resolve(), Method.class);
-    assertEquals("\\MixinClass2.mixinClassMethod2", method.getFQN());
+    php.get().configureByFile();
+    Method method = assertInstanceOf(Method.class, php.get().resolve());
+    ReadAction.runBlocking(() -> {
+      assertEquals("\\MixinClass2.mixinClassMethod2", method.getFQN());
+    });
   }
 
+  @Test
   public void testGenericMixinGenericAndPlainMixins() {
-    configureByFile();
-    Method method = assertInstanceOf(resolve(), Method.class);
-    assertEquals("\\MixinClass2.mixinClassMethod2", method.getFQN());
+    php.get().configureByFile();
+    Method method = assertInstanceOf(Method.class, php.get().resolve());
+    ReadAction.runBlocking(() -> {
+      assertEquals("\\MixinClass2.mixinClassMethod2", method.getFQN());
+    });
   }
 }

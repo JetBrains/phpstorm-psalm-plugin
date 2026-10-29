@@ -1,45 +1,53 @@
 package com.jetbrains.php.psalm.lang;
 
-import com.jetbrains.php.PhpFixesTestCase;
+import com.intellij.openapi.project.Project;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
+import com.jetbrains.php.PhpFixesTestFixture;
+import com.jetbrains.php.fixtures.PhpTestDataLayout;
 import com.jetbrains.php.lang.inspections.PhpFullyQualifiedNameUsageInspection;
 import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
 import com.jetbrains.php.lang.inspections.codeStyle.PhpPluralMixedCanBeReplacedWithArrayInspection;
 import com.jetbrains.php.lang.inspections.phpdoc.PhpVarTagWithoutVariableNameInspection;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
-import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Test;
 
-public class PsalmFixesTest extends PhpFixesTestCase {
-  @Override
-  protected @NotNull String getTestDataHome() {
-    return PsalmTypeInferenceTest.TEST_DATA_HOME;
-  }
+import static com.jetbrains.php.PhpFixesTestFixture.phpFixesFixture;
+import static com.jetbrains.php.fixtures.PhpTestFixtures.phpProjectFixture;
 
-  @Override
-  protected String getFixtureTestDataFolder() {
-    return "codeInsight/fixes";
-  }
+@TestApplication
+public class PsalmFixesTest {
+  private static final TestFixture<Project> projectFixture = phpProjectFixture();
+  private final TestFixture<PhpFixesTestFixture> php =
+    phpFixesFixture(projectFixture, new PhpTestDataLayout("codeInsight/fixes").withHome(PsalmTypeInferenceTest.TEST_DATA_HOME));
 
+  @Test
   public void testNestedImport() {
-    doTestQuickFix("Replace qualifier with an import", new PhpFullyQualifiedNameUsageInspection());
+    php.get().doTestQuickFix("Replace qualifier with an import", new PhpFullyQualifiedNameUsageInspection());
   }
 
+  @Test
   public void testNestedImportFQN() {
-    doTestQuickFix("Remove unnecessary qualifier", new PhpUnnecessaryFullyQualifiedNameInspection());
+    php.get().doTestQuickFix("Remove unnecessary qualifier", new PhpUnnecessaryFullyQualifiedNameInspection());
   }
 
+  @Test
   public void testPluralMixed() {
-    doTestQuickFix("Replace with 'array'", new PhpPluralMixedCanBeReplacedWithArrayInspection());
+    php.get().doTestQuickFix("Replace with 'array'", new PhpPluralMixedCanBeReplacedWithArrayInspection());
   }
 
+  @Test
   public void testPluralMixedWithKeys() {
-    doCheckNoQuickFix("Replace with 'array'", new PhpPluralMixedCanBeReplacedWithArrayInspection());
+    php.get().doCheckNoQuickFix("Replace with 'array'", new PhpPluralMixedCanBeReplacedWithArrayInspection());
   }
 
+  @Test
   public void testVarTagWithoutVariableName() {
-    doTestQuickFix("Add '$a'", new PhpVarTagWithoutVariableNameInspection());
+    php.get().doTestQuickFix("Add '$a'", new PhpVarTagWithoutVariableNameInspection());
   }
 
+  @Test
   public void testFqnUsageInWildcard() {
-    doTestQuickFix("Remove unnecessary qualifier", new PhpUnnecessaryFullyQualifiedNameInspection());
+    php.get().doTestQuickFix("Remove unnecessary qualifier", new PhpUnnecessaryFullyQualifiedNameInspection());
   }
 }

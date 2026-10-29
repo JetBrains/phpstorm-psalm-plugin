@@ -1,8 +1,12 @@
 package com.jetbrains.php.psalm.lang;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.jetbrains.php.PhpInspectionTestCase;
+import com.intellij.openapi.project.Project;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
+import com.jetbrains.php.PhpInspectionTestFixture;
 import com.jetbrains.php.config.PhpLanguageLevel;
+import com.jetbrains.php.fixtures.PhpTestDataLayout;
 import com.jetbrains.php.lang.inspections.PhpUndefinedClassInspection;
 import com.jetbrains.php.lang.inspections.PhpUnnecessaryFullyQualifiedNameInspection;
 import com.jetbrains.php.lang.inspections.controlFlow.PhpUnreachableStatementInspection;
@@ -15,134 +19,162 @@ import com.jetbrains.php.lang.inspections.phpdoc.PhpRedundantVariableDocTypeInsp
 import com.jetbrains.php.lang.inspections.phpdoc.PhpVarTagWithoutVariableNameInspection;
 import com.jetbrains.php.psalm.lang.inspections.PsalmAdvanceCallableParamsInspection;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
-import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Test;
 
-public class PsalmInspectionsTest extends PhpInspectionTestCase {
-  @Override
-  protected @NotNull String getTestDataHome() {
-    return PsalmTypeInferenceTest.TEST_DATA_HOME;
-  }
+import static com.jetbrains.php.PhpInspectionTestFixture.phpInspectionFixture;
+import static com.jetbrains.php.fixtures.PhpCodeInsightTestFixture.doLanguageLevelTest;
+import static com.jetbrains.php.fixtures.PhpTestFixtures.phpProjectFixture;
 
-  @Override
-  protected String getFixtureTestDataFolder() {
-    return "codeInsight/inspections";
-  }
+@TestApplication
+public class PsalmInspectionsTest {
+  private static final TestFixture<Project> projectFixture = phpProjectFixture();
+  private final TestFixture<PhpInspectionTestFixture> php =
+    phpInspectionFixture(projectFixture, new PhpTestDataLayout("codeInsight/inspections").withHome(PsalmTypeInferenceTest.TEST_DATA_HOME));
 
+  @Test
   public void testUndefinedClassExtendedScalar() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  @Test
   public void testUndefinedClassArray() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  @Test
   public void testUndefinedClassClosure() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  @Test
   public void testUndefinedClassTemplate() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  @Test
   public void testUndefinedClassPsalmType() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  @Test
   public void testUndefinedClassNoReturn() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  @Test
   public void testUndefinedClassArrayValueOfBackedEnum() {
-    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP810, () -> doInspectionTest(PhpUndefinedClassInspection.class));
+    doLanguageLevelTest(php.get().getProject(), PhpLanguageLevel.PHP810, () -> php.get().doInspectionTest(PhpUndefinedClassInspection.class));
   }
 
+  @Test
   public void testDocRefInsideDocType() {
-    doInfoTest();
+    php.get().doInfoTest();
   }
 
+  @Test
   public void testTypeAlreadyExists() {
-    doInspectionTest(PhpDocDuplicateTypeInspection.class);
+    php.get().doInspectionTest(PhpDocDuplicateTypeInspection.class);
   }
 
+  @Test
   public void testNoReturn() {
-    doInspectionTest(PhpUnreachableStatementInspection.class);
+    php.get().doInspectionTest(PhpUnreachableStatementInspection.class);
   }
 
+  @Test
   public void testAdvancedCallableParams() {
-    addPhpFileToProject("a.php", "<?php\nfunction ff(): int {}");
-    doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
+    php.get().addPhpFileToProject("a.php", "<?php\nfunction ff(): int {}");
+    php.get().doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
   }
 
+  @Test
   public void testPartialFunctionApplicationCallableParams() {
-    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP860,
-                        () -> doInspectionTest(PsalmAdvanceCallableParamsInspection.class));
+    doLanguageLevelTest(php.get().getProject(), PhpLanguageLevel.PHP860,
+                        () -> php.get().doInspectionTest(PsalmAdvanceCallableParamsInspection.class));
   }
 
+  @Test
   public void testDocSignatureExtendedStringDocType() {
-    doInspectionTest(PhpDocSignatureInspection.class);
+    php.get().doInspectionTest(PhpDocSignatureInspection.class);
   }
 
+  @Test
   public void testArrayShapeExtendsFunctionSignature() {
-    doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
+    php.get().doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
   }
 
+  @Test
   public void testGenericsExtendFunctionSignature() {
-    doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
+    php.get().doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
   }
 
+  @Test
   public void testSpecialTypesExtendSignature() {
-    doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
+    php.get().doInspectionTest(false, HighlightDisplayLevel.WARNING, PhpDocSignatureIsNotCompleteInspection.class, PhpRedundantDocCommentInspection.class);
   }
 
+  @Test
   public void testArrayShape() {
-    doInspectionTest(PhpRedundantVariableDocTypeInspection.class);
+    php.get().doInspectionTest(PhpRedundantVariableDocTypeInspection.class);
   }
 
+  @Test
   public void testGenericsExtendVarType() {
-    doInspectionTest(PhpRedundantVariableDocTypeInspection.class);
+    php.get().doInspectionTest(PhpRedundantVariableDocTypeInspection.class);
   }
 
+  @Test
   public void testPsalmTraceVar() {
-    doInfoTest();
+    php.get().doInfoTest();
   }
 
+  @Test
   public void testReturnGenericTemplate() {
-    doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
+    php.get().doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
   }
 
+  @Test
   public void testVariadicClosureParams() {
-    doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
+    php.get().doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
   }
 
+  @Test
   public void testVariadicArrowFunctionParams() {
-    doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
+    php.get().doInspectionTest(PsalmAdvanceCallableParamsInspection.class);
   }
 
+  @Test
   public void testParamTagInsideCallable() {
-    doInspectionTest(PhpVarTagWithoutVariableNameInspection.class);
+    php.get().doInspectionTest(PhpVarTagWithoutVariableNameInspection.class);
   }
 
+  @Test
   public void testFindWildcardsUsagesForConstants() {
-    doUnfairInspectionTest(PhpUnusedDeclarationInspection.class);
+    php.get().doUnfairInspectionTest(PhpUnusedDeclarationInspection.class);
   }
 
+  @Test
   public void testFindWildcardsClassReferenceUnnecessaryFQN() {
-    doInspectionTest(PhpUnnecessaryFullyQualifiedNameInspection.class);
+    php.get().doInspectionTest(PhpUnnecessaryFullyQualifiedNameInspection.class);
   }
 
+  @Test
   public void testLiteralTypeDuplicate() {
-    doInspectionTest(PhpDocDuplicateTypeInspection.class);
+    php.get().doInspectionTest(PhpDocDuplicateTypeInspection.class);
   }
 
+  @Test
   public void testLiteralTypeUnresolvedClass() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  @Test
   public void testNonEmptyListWithoutTypes() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 
+  @Test
   public void testNonEmptyArrayAsConditionForType() {
-    doInspectionTest(PhpUndefinedClassInspection.class);
+    php.get().doInspectionTest(PhpUndefinedClassInspection.class);
   }
 }

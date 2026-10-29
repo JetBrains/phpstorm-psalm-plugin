@@ -1,23 +1,25 @@
 package com.jetbrains.php.psalm;
 
+import com.intellij.openapi.project.Project;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
+import com.jetbrains.php.fixtures.PhpTestDataLayout;
 import com.jetbrains.php.psalm.types.PsalmTypeInferenceTest;
-import com.jetbrains.php.refactoring.PhpRefactoringBaseTest;
-import org.jetbrains.annotations.NotNull;
+import com.jetbrains.php.refactoring.PhpRefactoringTestFixture;
+import org.junit.jupiter.api.Test;
 
+import static com.jetbrains.php.fixtures.PhpTestFixtures.phpProjectFixture;
+import static com.jetbrains.php.refactoring.PhpRefactoringTestFixture.phpRefactoringFixture;
 import static com.jetbrains.php.refactoring.move.dnd.PhpMoveClassesDragAndDropTest.doMove;
 
-public class PhpMoveClassesDragAndDropPsalmTest extends PhpRefactoringBaseTest {
-  @Override
-  protected @NotNull String getTestDataHome() {
-    return PsalmTypeInferenceTest.TEST_DATA_HOME;
-  }
+@TestApplication
+public class PhpMoveClassesDragAndDropPsalmTest {
+  private static final TestFixture<Project> projectFixture = phpProjectFixture();
+  private final TestFixture<PhpRefactoringTestFixture> php =
+    phpRefactoringFixture(projectFixture, new PhpTestDataLayout("moveDragAndDrop").withHome(PsalmTypeInferenceTest.TEST_DATA_HOME));
 
-  @Override
-  protected String getFixtureTestDataFolder() {
-    return "moveDragAndDrop";
-  }
-
+  @Test
   public void testGenericsListType() throws Exception {
-    doMove(myFixture, getTestDataPath(), getTestName(), "/N1", "N1", "/N");
+    doMove(php.get().getFixture(), php.get().getTestDataPath(), php.get().getTestName(), "/N1", "N1", "/N");
   }
 }
