@@ -30,6 +30,16 @@ public class PsalmParameterInfoTest {
     doTest("a: int|string, b: int");
   }
 
+  @Test
+  public void testPsalmDocVariadicClosure() {
+    doTest("...items: string");
+  }
+
+  @Test
+  public void testPsalmDocVariadicArrayClosure() {
+    doTest("...items: string[]");
+  }
+
   private void doTest(String parameterInfo) {
     PsalmAdvancedClosureParameterInfoHandler handler = new PsalmAdvancedClosureParameterInfoHandler();
     php.get().configureByFile("php");
