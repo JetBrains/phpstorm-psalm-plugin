@@ -3,9 +3,11 @@ package com.jetbrains.php.psalm.quality.tools
 import com.jetbrains.php.tools.quality.ParsedProblem
 import com.jetbrains.php.tools.quality.QualityToolMessage.Severity
 import com.jetbrains.php.tools.quality.psalm.PsalmReportParser
-import junit.framework.TestCase
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
-class PsalmReportParserTest : TestCase() {
+class PsalmReportParserTest {
   private val report = """
     <?xml version="1.0" encoding="UTF-8"?>
     <checkstyle>
@@ -19,6 +21,7 @@ class PsalmReportParserTest : TestCase() {
     </checkstyle>
   """.trimIndent()
 
+  @Test
   fun testProblemsOfAllFiles() {
     assertEquals(
       listOf(
@@ -30,30 +33,36 @@ class PsalmReportParserTest : TestCase() {
     )
   }
 
+  @Test
   fun testEmptyReport() {
     assertTrue(PsalmReportParser().parse("""<checkstyle></checkstyle>""").isEmpty())
   }
 
+  @Test
   fun testProblemWithoutLineIsSkipped() {
     val problems = PsalmReportParser().parse("""<file name="a.php"><error severity="error" message="m"/></file>""")
     assertTrue(problems.isEmpty())
   }
 
+  @Test
   fun testProblemWithBadLineIsSkipped() {
     val problems = PsalmReportParser().parse("""<file name="a.php"><error line="x" severity="error" message="m"/></file>""")
     assertTrue(problems.isEmpty())
   }
 
+  @Test
   fun testMissingColumnGivesZero() {
     val problems = PsalmReportParser().parse("""<file name="a.php"><error line="2" severity="error" message="m"/></file>""")
     assertEquals(0, problems.single().column)
   }
 
+  @Test
   fun testOtherElementIsNotAProblem() {
     val problems = PsalmReportParser().parse("""<file name="a.php"><note line="2" severity="error" message="m"/></file>""")
     assertTrue(problems.isEmpty())
   }
 
+  @Test
   fun testMalformedReportKeepsEarlierProblems() {
     val problems = PsalmReportParser().parse(report.substringBefore("</file>") + "<broken")
     assertEquals(2, problems.size)

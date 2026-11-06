@@ -1,14 +1,28 @@
 package com.jetbrains.php.tools.quality.psalm
 
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.util.Disposer
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.intellij.platform.testFramework.junit5.codeInsight.fixture.codeInsightProjectFixture
+import com.intellij.testFramework.junit5.TestApplication
+import com.intellij.testFramework.junit5.TestDisposable
 import com.intellij.util.ui.UIUtil
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import javax.swing.JCheckBox
 import javax.swing.JLabel
 
-class PsalmOptionsPanelParityTest : BasePlatformTestCase() {
+@TestApplication
+class PsalmOptionsPanelParityTest {
+  private val projectFixture = codeInsightProjectFixture()
+  private val project get() = projectFixture.get()
+
+  @TestDisposable
+  lateinit var testRootDisposable: Disposable
 
   private val captions = listOf("Show info", "Find unused code", "Find unused @psalm-suppress")
 
@@ -20,6 +34,7 @@ class PsalmOptionsPanelParityTest : BasePlatformTestCase() {
 
   private fun config(): PsalmOptionsConfiguration = PsalmOptionsConfiguration.getInstance(project)
 
+  @Test
   fun testResetIsNotModifiedThenDetectsChange() {
     config().apply {
       setShowInfo(true)
@@ -29,12 +44,13 @@ class PsalmOptionsPanelParityTest : BasePlatformTestCase() {
     }
     val panel = createPanel()
     panel.reset()
-    assertFalse("Freshly reset panel must not be modified", panel.isModified)
+    assertFalse(panel.isModified, "Freshly reset panel must not be modified")
 
     config().setShowInfo(false)
-    assertTrue("isModified must detect the checkbox differing from the configuration", panel.isModified)
+    assertTrue(panel.isModified, "isModified must detect the checkbox differing from the configuration")
   }
 
+  @Test
   fun testApplyWritesUiStateBack() {
     config().apply {
       setShowInfo(true)
@@ -59,19 +75,20 @@ class PsalmOptionsPanelParityTest : BasePlatformTestCase() {
     assertEquals("/tmp/psalm.xml", config().config)
   }
 
+  @Test
   fun testStructurePlacesControls() {
     val root = createPanel().getOptionsPanel()
 
     val checkboxTexts = UIUtil.findComponentsOfType(root, JCheckBox::class.java)
       .mapNotNull { it.text?.filterNot(Char::isISOControl) }
     for (caption in captions) {
-      assertTrue("Missing checkbox '$caption' in $checkboxTexts", checkboxTexts.any { it.contains(caption) })
+      assertTrue(checkboxTexts.any { it.contains(caption) }, "Missing checkbox '$caption' in $checkboxTexts")
     }
 
-    assertNotNull("Config-path field missing",
-                  UIUtil.findComponentOfType(root, PhpTextFieldWithSdkBasedBrowse::class.java))
+    assertNotNull(UIUtil.findComponentOfType(root, PhpTextFieldWithSdkBasedBrowse::class.java),
+                  "Config-path field missing")
 
     val labels = UIUtil.findComponentsOfType(root, JLabel::class.java).mapNotNull { it.text?.filterNot(Char::isISOControl) }
-    assertTrue("Configuration-file label missing: $labels", labels.any { it.contains("Configuration file") })
+    assertTrue(labels.any { it.contains("Configuration file") }, "Configuration-file label missing: $labels")
   }
 }
