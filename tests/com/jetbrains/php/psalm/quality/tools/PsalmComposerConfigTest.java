@@ -1,29 +1,35 @@
 package com.jetbrains.php.psalm.quality.tools;
 
-import com.intellij.openapi.util.io.FileUtilRt;
-import com.jetbrains.php.config.composer.QualityToolsComposerConfigTest;
-import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
-import com.jetbrains.php.tools.quality.psalm.PsalmConfiguration;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
+import com.jetbrains.php.config.composer.QualityToolsComposerConfigTestFixture;
 import com.jetbrains.php.tools.quality.psalm.PsalmConfigurationManager;
-import com.jetbrains.php.util.PhpOsUtil;
-import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Test;
 
-public class PsalmComposerConfigTest extends QualityToolsComposerConfigTest {
+import static com.jetbrains.php.config.composer.QualityToolsComposerConfigTestFixture.qualityToolsComposerConfigFixture;
 
-  @Override
-  protected QualityToolConfigurationManager<PsalmConfiguration> getQualityToolConfigurationManager() {
-    return PsalmConfigurationManager.getInstance(getProject());
+@TestApplication
+public class PsalmComposerConfigTest {
+  private final TestFixture<QualityToolsComposerConfigTestFixture> qualityTool =
+    qualityToolsComposerConfigFixture(project -> PsalmConfigurationManager.getInstance(project), "psalm", "vimeo/psalm");
+
+  @Test
+  public void testGeneral() {
+    qualityTool.get().doTestGeneral();
   }
 
-  @NotNull
-  @Override
-  protected String getPath() {
-    return FileUtilRt.toSystemIndependentName(myFixture.getTempDirPath()) + "/vendor/bin/psalm" + (PhpOsUtil.isWindows(getProject()) ? ".bat" : "");
+  @Test
+  public void testNoVersion() {
+    qualityTool.get().doTestNoVersion();
   }
 
-  @NotNull
-  @Override
-  protected String getPackageName() {
-    return "vimeo/psalm";
+  @Test
+  public void testEmpty() {
+    qualityTool.get().doTestEmpty();
+  }
+
+  @Test
+  public void testEmptyJSON() {
+    qualityTool.get().doTestEmptyJSON();
   }
 }
