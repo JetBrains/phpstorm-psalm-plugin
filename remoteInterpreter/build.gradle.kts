@@ -24,7 +24,6 @@ dependencies {
 
   intellijPlatform {
     psalmPlatform(project)
-    localPlugin(project(":"))
   }
 }
 

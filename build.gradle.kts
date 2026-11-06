@@ -40,7 +40,10 @@ kotlin {
 
 dependencies {
   implementation(kotlin("stdlib"))
-  testImplementation("junit:junit:4.13.2")
+  testImplementation(platform("org.junit:junit-bom:6.1.3"))
+  testImplementation("org.junit.jupiter:junit-jupiter")
+  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+  testRuntimeOnly("junit:junit:4.13.2")
   testRuntimeOnly(project(":remoteInterpreter"))
 
   intellijPlatform {
@@ -53,6 +56,7 @@ configureJvm()
 
 tasks {
   test {
+    useJUnitPlatform()
     systemProperty("idea.home.path", projectDir.absolutePath)
   }
 
