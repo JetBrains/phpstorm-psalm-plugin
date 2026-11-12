@@ -934,6 +934,11 @@ public class PsalmTypeInferenceTest {
   }
 
   @Test
+  public void testArrayShapeMultiAssignmentEmptyList() {
+    php.get().doTypeTest();
+  }
+
+  @Test
   public void testVarOnPromotedProperty() {
     php.get().doTypeTest();
   }
