@@ -2,6 +2,7 @@ package com.jetbrains.php.psalm.types;
 
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture;
 import com.intellij.testFramework.junit5.TestApplication;
 import com.intellij.testFramework.junit5.fixture.TestFixture;
@@ -9,17 +10,25 @@ import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.codeInsight.PhpTypeInferenceTestFixture;
 import com.jetbrains.php.config.PhpLanguageLevel;
 import com.jetbrains.php.fixtures.PhpTestDataLayout;
+import com.jetbrains.php.lang.psi.PhpPsiUtil;
 import com.jetbrains.php.lang.psi.elements.Field;
 import com.jetbrains.php.lang.psi.elements.Function;
 import com.jetbrains.php.lang.psi.elements.Parameter;
+import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
+import com.jetbrains.php.lang.psi.elements.PhpTypedElement;
 import com.jetbrains.php.lang.psi.elements.Variable;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static com.jetbrains.php.codeInsight.PhpTypeInferenceTestFixture.phpTypeInferenceFixture;
 import static com.jetbrains.php.fixtures.PhpCodeInsightTestFixture.doLanguageLevelTest;
 import static com.jetbrains.php.fixtures.PhpTestFixtures.phpProjectFixture;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestApplication
 public class PsalmTypeInferenceTest {
@@ -885,6 +894,59 @@ public class PsalmTypeInferenceTest {
   @Test
   public void testAdvancedCallableMetadata() {
     php.get().doTypeTestWithParameterisedTypes();
+  }
+
+  @Test
+  public void testIssues$wi86393TicketExamples() {
+    var file = php.get().configureByFile();
+    php.get().lockPhpFilesLoading();
+    ReadAction.runBlocking(() -> assertAll(
+      () -> assertTypeAfter(file, "$items = $arrayClosure();", "$items['key']"),
+      () -> assertTypeAfter(file, "foreach ($items as $item) {", "$item"),
+      () -> assertTypeAfter(file, "foreach ($listClosure() as $item) {", "$item"),
+      () -> assertTypeAfter(file, "$inner = $outer();", "$inner(new Foo())")));
+  }
+
+  private static void assertTypeAfter(PsiFile file, String anchor, String expression) {
+    assertEquals(Set.of("\\Bar"), typeAfter(file, anchor, expression).filterUnknown().getTypes(), expression);
+  }
+
+  private static PhpType typeAfter(PsiFile file, String anchor, String expression) {
+    var text = file.getText();
+    int anchorOffset = text.indexOf(anchor);
+    assertTrue(anchorOffset >= 0, anchor);
+    int nextLineStart = text.indexOf('\n', anchorOffset + anchor.length()) + 1;
+    int nextLineEnd = text.indexOf('\n', nextLineStart);
+    var line = text.substring(nextLineStart, nextLineEnd < 0 ? text.length() : nextLineEnd);
+    int expressionInLine = line.indexOf(expression);
+    assertTrue(expressionInLine >= 0, expression);
+    int expressionOffset = nextLineStart + expressionInLine;
+    var element = PhpPsiUtil.findElementOfClassAtRange(file, expressionOffset, expressionOffset + expression.length(),
+                                                       PhpPsiElement.class, true, true);
+    var typedElement = assertInstanceOf(PhpTypedElement.class, element, expression);
+    return typedElement.getGlobalType().global(file.getProject());
+  }
+
+  @Test
+  public void testIssues$wi86393RelatedReturnTypes() {
+    php.get().doTypeTest();
+  }
+
+  @Test
+  public void testIssues$wi86393NestedArrayAccess() {
+    var file = php.get().configureByFile();
+    php.get().lockPhpFilesLoading();
+    ReadAction.runBlocking(() -> assertTypeAfter(file, "$inner = nestedArrayFactory()();", "$inner(new Foo())['key']"));
+  }
+
+  @Test
+  public void testIssues$wi86393ScalarControl() {
+    php.get().doTypeTest();
+  }
+
+  @Test
+  public void testIssues$wi86393GenericTemplateControl() {
+    php.get().doTypeTest();
   }
 
   @Test
